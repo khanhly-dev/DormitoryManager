@@ -1326,28 +1326,13 @@
       },
       "Dormitory.Admin.Application/1.0.0": {
         "dependencies": {
-          "Dormitory.Admin.EntityFrameworkCore": "1.0.0"
+          "Dormitory.EntityFrameworkCore": "1.0.0"
         },
         "runtime": {
           "Dormitory.Admin.Application.dll": {}
         },
         "compile": {
           "Dormitory.Admin.Application.dll": {}
-        }
-      },
-      "Dormitory.Admin.EntityFrameworkCore/1.0.0": {
-        "dependencies": {
-          "Dormitory.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.15",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.15",
-          "Microsoft.Extensions.Configuration.FileExtensions": "5.0.0",
-          "Microsoft.Extensions.Configuration.Json": "5.0.0"
-        },
-        "runtime": {
-          "Dormitory.Admin.EntityFrameworkCore.dll": {}
-        },
-        "compile": {
-          "Dormitory.Admin.EntityFrameworkCore.dll": {}
         }
       },
       "Dormitory.Domain/1.0.0": {
@@ -1367,6 +1352,21 @@
         },
         "compile": {
           "Dormitory.Domain.Shared.dll": {}
+        }
+      },
+      "Dormitory.EntityFrameworkCore/1.0.0": {
+        "dependencies": {
+          "Dormitory.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.15",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.15",
+          "Microsoft.Extensions.Configuration.FileExtensions": "5.0.0",
+          "Microsoft.Extensions.Configuration.Json": "5.0.0"
+        },
+        "runtime": {
+          "Dormitory.EntityFrameworkCore.dll": {}
+        },
+        "compile": {
+          "Dormitory.EntityFrameworkCore.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -3796,17 +3796,17 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Dormitory.Admin.EntityFrameworkCore/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Dormitory.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "Dormitory.Domain.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Dormitory.EntityFrameworkCore/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

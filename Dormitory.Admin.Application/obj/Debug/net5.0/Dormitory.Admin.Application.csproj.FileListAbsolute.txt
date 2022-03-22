@@ -11,8 +11,8 @@ D:\Project\DormitoryManager\Dormitory.Admin.Application\obj\Debug\net5.0\refint\
 D:\Project\DormitoryManager\Dormitory.Admin.Application\obj\Debug\net5.0\Dormitory.Admin.Application.pdb
 D:\Project\DormitoryManager\Dormitory.Admin.Application\obj\Debug\net5.0\ref\Dormitory.Admin.Application.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\appsettings.json
-D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.Admin.EntityFrameworkCore.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.Domain.dll
-D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.Admin.EntityFrameworkCore.pdb
 D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.Domain.pdb
 D:\Project\DormitoryManager\Dormitory.Admin.Application\obj\Debug\net5.0\Dormitory.Admin.Application.csproj.CopyComplete
+D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.dll
+D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.pdb

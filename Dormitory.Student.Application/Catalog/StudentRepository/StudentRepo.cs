@@ -18,7 +18,7 @@ namespace Dormitory.Student.Application.Catalog.StudentRepository
         }
         public async Task<List<StudentDto>> GetAllStudent()
         {
-            var listStudent = await _studentDbContext.StudentEntities.AsNoTracking().Select(x => new StudentDto
+            var listStudent = await _studentDbContext.UserStudentEntities.AsNoTracking().Select(x => new StudentDto
             {
                 Id = x.Id,
                 Name = x.Name,

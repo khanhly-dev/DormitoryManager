@@ -12,7 +12,7 @@ D:\Project\DormitoryManager\Dormitory.Student.Application\obj\Debug\net5.0\Dormi
 D:\Project\DormitoryManager\Dormitory.Student.Application\obj\Debug\net5.0\ref\Dormitory.Student.Application.dll
 D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\appsettings.json
 D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\Dormitory.Domain.dll
-D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\Dormitory.Student.EntityFrameworkCore.dll
-D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\Dormitory.Student.EntityFrameworkCore.pdb
 D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\Dormitory.Domain.pdb
 D:\Project\DormitoryManager\Dormitory.Student.Application\obj\Debug\net5.0\Dormitory.Student.Application.csproj.CopyComplete
+D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.dll
+D:\Project\DormitoryManager\Dormitory.Student.Application\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.pdb

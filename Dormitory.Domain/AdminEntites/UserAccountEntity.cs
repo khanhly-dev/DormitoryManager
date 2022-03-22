@@ -14,5 +14,6 @@ namespace Dormitory.Domain.AdminEntites
         public string Email { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedTime { get; set; }
+        public int UserAdminId { get; set; }
     }
 }

@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "Dormitory.Admin.Application/1.0.0": {
         "dependencies": {
-          "Dormitory.Admin.EntityFrameworkCore": "1.0.0"
+          "Dormitory.EntityFrameworkCore": "1.0.0"
         },
         "runtime": {
           "Dormitory.Admin.Application.dll": {}
@@ -1112,7 +1112,12 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "Dormitory.Admin.EntityFrameworkCore/1.0.0": {
+      "Dormitory.Domain/1.0.0": {
+        "runtime": {
+          "Dormitory.Domain.dll": {}
+        }
+      },
+      "Dormitory.EntityFrameworkCore/1.0.0": {
         "dependencies": {
           "Dormitory.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.15",
@@ -1121,12 +1126,7 @@
           "Microsoft.Extensions.Configuration.Json": "5.0.0"
         },
         "runtime": {
-          "Dormitory.Admin.EntityFrameworkCore.dll": {}
-        }
-      },
-      "Dormitory.Domain/1.0.0": {
-        "runtime": {
-          "Dormitory.Domain.dll": {}
+          "Dormitory.EntityFrameworkCore.dll": {}
         }
       }
     }
@@ -1837,12 +1837,12 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "Dormitory.Admin.EntityFrameworkCore/1.0.0": {
+    "Dormitory.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Dormitory.Domain/1.0.0": {
+    "Dormitory.EntityFrameworkCore/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

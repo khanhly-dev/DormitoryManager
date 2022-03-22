@@ -1561,7 +1561,17 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Dormitory.Admin.EntityFrameworkCore/1.0.0": {
+      "Dormitory.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Dormitory.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Dormitory.Domain.dll": {}
+        }
+      },
+      "Dormitory.EntityFrameworkCore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
@@ -1572,20 +1582,10 @@
           "Microsoft.Extensions.Configuration.Json": "5.0.0"
         },
         "compile": {
-          "bin/placeholder/Dormitory.Admin.EntityFrameworkCore.dll": {}
+          "bin/placeholder/Dormitory.EntityFrameworkCore.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Dormitory.Admin.EntityFrameworkCore.dll": {}
-        }
-      },
-      "Dormitory.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "compile": {
-          "bin/placeholder/Dormitory.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Dormitory.Domain.dll": {}
+          "bin/placeholder/Dormitory.EntityFrameworkCore.dll": {}
         }
       }
     }
@@ -5922,20 +5922,20 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "Dormitory.Admin.EntityFrameworkCore/1.0.0": {
-      "type": "project",
-      "path": "../Dormitory.Admin.EntityFrameworkCore/Dormitory.Admin.EntityFrameworkCore.csproj",
-      "msbuildProject": "../Dormitory.Admin.EntityFrameworkCore/Dormitory.Admin.EntityFrameworkCore.csproj"
-    },
     "Dormitory.Domain/1.0.0": {
       "type": "project",
       "path": "../Dormitory.Domain/Dormitory.Domain.csproj",
       "msbuildProject": "../Dormitory.Domain/Dormitory.Domain.csproj"
+    },
+    "Dormitory.EntityFrameworkCore/1.0.0": {
+      "type": "project",
+      "path": "../Dormitory.EntityFrameworkCore/Dormitory.EntityFrameworkCore.csproj",
+      "msbuildProject": "../Dormitory.EntityFrameworkCore/Dormitory.EntityFrameworkCore.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Dormitory.Admin.EntityFrameworkCore >= 1.0.0"
+      "Dormitory.EntityFrameworkCore >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5965,8 +5965,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\Project\\DormitoryManager\\Dormitory.Admin.EntityFrameworkCore\\Dormitory.Admin.EntityFrameworkCore.csproj": {
-              "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Admin.EntityFrameworkCore\\Dormitory.Admin.EntityFrameworkCore.csproj"
+            "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj": {
+              "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj"
             }
           }
         }

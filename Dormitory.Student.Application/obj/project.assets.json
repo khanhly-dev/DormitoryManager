@@ -1571,7 +1571,7 @@
           "bin/placeholder/Dormitory.Domain.dll": {}
         }
       },
-      "Dormitory.Student.EntityFrameworkCore/1.0.0": {
+      "Dormitory.EntityFrameworkCore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
@@ -1582,10 +1582,10 @@
           "Microsoft.Extensions.Configuration.Json": "5.0.0"
         },
         "compile": {
-          "bin/placeholder/Dormitory.Student.EntityFrameworkCore.dll": {}
+          "bin/placeholder/Dormitory.EntityFrameworkCore.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Dormitory.Student.EntityFrameworkCore.dll": {}
+          "bin/placeholder/Dormitory.EntityFrameworkCore.dll": {}
         }
       }
     }
@@ -5927,15 +5927,15 @@
       "path": "../Dormitory.Domain/Dormitory.Domain.csproj",
       "msbuildProject": "../Dormitory.Domain/Dormitory.Domain.csproj"
     },
-    "Dormitory.Student.EntityFrameworkCore/1.0.0": {
+    "Dormitory.EntityFrameworkCore/1.0.0": {
       "type": "project",
-      "path": "../Dormitory.Student.EntityFrameworkCore/Dormitory.Student.EntityFrameworkCore.csproj",
-      "msbuildProject": "../Dormitory.Student.EntityFrameworkCore/Dormitory.Student.EntityFrameworkCore.csproj"
+      "path": "../Dormitory.EntityFrameworkCore/Dormitory.EntityFrameworkCore.csproj",
+      "msbuildProject": "../Dormitory.EntityFrameworkCore/Dormitory.EntityFrameworkCore.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Dormitory.Student.EntityFrameworkCore >= 1.0.0"
+      "Dormitory.EntityFrameworkCore >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5965,8 +5965,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\Project\\DormitoryManager\\Dormitory.Student.EntityFrameworkCore\\Dormitory.Student.EntityFrameworkCore.csproj": {
-              "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Student.EntityFrameworkCore\\Dormitory.Student.EntityFrameworkCore.csproj"
+            "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj": {
+              "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj"
             }
           }
         }

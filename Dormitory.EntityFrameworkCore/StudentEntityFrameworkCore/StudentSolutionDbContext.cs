@@ -10,11 +10,12 @@ namespace Dormitory.EntityFrameworkCore.StudentEntityFrameworkCore
 {
     public class StudentSolutionDbContext : DbContext
     {
-        public StudentSolutionDbContext(DbContextOptions option) : base(option)
+        public StudentSolutionDbContext(DbContextOptions<StudentSolutionDbContext> option) : base(option)
         {
 
         }
 
-        public DbSet<Student> Students { get; set; }
+        public DbSet<UserAccountEntity> UserAccountEntities { get; set; }
+        public DbSet<UserStudentEntity> UserStudentEntities { get; set; }
     }
 }

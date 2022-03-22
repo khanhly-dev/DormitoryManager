@@ -10,11 +10,12 @@ namespace Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore
 {
     public class AdminSolutionDbContext : DbContext
     {
-        public AdminSolutionDbContext(DbContextOptions options) : base(options)
+        public AdminSolutionDbContext(DbContextOptions<AdminSolutionDbContext> options) : base(options)
         {
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserAccountEntity> UserAccountEntities { get; set; }
+        public DbSet<UserAdminEntity> UserAdminEntities { get; set; }
     }
 }

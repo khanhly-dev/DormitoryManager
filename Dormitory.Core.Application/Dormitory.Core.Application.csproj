@@ -5,9 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dormitory.Admin.EntityFrameworkCore\Dormitory.Admin.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Dormitory.Domain.Shared\Dormitory.Domain.Shared.csproj" />
-    <ProjectReference Include="..\Dormitory.Student.EntityFrameworkCore\Dormitory.Student.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Dormitory.EntityFrameworkCore\Dormitory.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

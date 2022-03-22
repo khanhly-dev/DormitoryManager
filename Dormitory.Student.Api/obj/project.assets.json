@@ -1570,20 +1570,7 @@
           "bin/placeholder/Dormitory.Domain.Shared.dll": {}
         }
       },
-      "Dormitory.Student.Application/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "Dormitory.Student.EntityFrameworkCore": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Dormitory.Student.Application.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Dormitory.Student.Application.dll": {}
-        }
-      },
-      "Dormitory.Student.EntityFrameworkCore/1.0.0": {
+      "Dormitory.EntityFrameworkCore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
@@ -1594,10 +1581,23 @@
           "Microsoft.Extensions.Configuration.Json": "5.0.0"
         },
         "compile": {
-          "bin/placeholder/Dormitory.Student.EntityFrameworkCore.dll": {}
+          "bin/placeholder/Dormitory.EntityFrameworkCore.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Dormitory.Student.EntityFrameworkCore.dll": {}
+          "bin/placeholder/Dormitory.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Dormitory.Student.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Dormitory.EntityFrameworkCore": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Dormitory.Student.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Dormitory.Student.Application.dll": {}
         }
       }
     }
@@ -5759,15 +5759,15 @@
       "path": "../Dormitory.Domain.Shared/Dormitory.Domain.Shared.csproj",
       "msbuildProject": "../Dormitory.Domain.Shared/Dormitory.Domain.Shared.csproj"
     },
+    "Dormitory.EntityFrameworkCore/1.0.0": {
+      "type": "project",
+      "path": "../Dormitory.EntityFrameworkCore/Dormitory.EntityFrameworkCore.csproj",
+      "msbuildProject": "../Dormitory.EntityFrameworkCore/Dormitory.EntityFrameworkCore.csproj"
+    },
     "Dormitory.Student.Application/1.0.0": {
       "type": "project",
       "path": "../Dormitory.Student.Application/Dormitory.Student.Application.csproj",
       "msbuildProject": "../Dormitory.Student.Application/Dormitory.Student.Application.csproj"
-    },
-    "Dormitory.Student.EntityFrameworkCore/1.0.0": {
-      "type": "project",
-      "path": "../Dormitory.Student.EntityFrameworkCore/Dormitory.Student.EntityFrameworkCore.csproj",
-      "msbuildProject": "../Dormitory.Student.EntityFrameworkCore/Dormitory.Student.EntityFrameworkCore.csproj"
     }
   },
   "projectFileDependencyGroups": {

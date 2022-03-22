@@ -14,5 +14,6 @@ namespace Dormitory.Domain.StudentEntities
         public string Email { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedTime { get; set; }
+        public int UserStudentId { get; set; }
     }
 }
