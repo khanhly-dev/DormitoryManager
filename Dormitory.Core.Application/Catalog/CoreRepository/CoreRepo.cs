@@ -62,6 +62,7 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("TenantId", tenantId.ToString()),
                 };
 
                 var secretBytes = Encoding.UTF8.GetBytes(CoreConstant.Secret);
@@ -83,7 +84,7 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
                 return tokenJson;
             }else
             {
-                return "No authentication";
+                return "Your authentication information is incorrect";
             }
         }
     }

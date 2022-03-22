@@ -35,7 +35,6 @@ namespace Dormitory.Student.Api
             services.AddAuthentication("Oauth")
                 .AddJwtBearer("Oauth", config =>
                 {
-
                     var secretBytes = Encoding.UTF8.GetBytes(CoreConstant.Secret);
                     var key = new SymmetricSecurityKey(secretBytes);
 
