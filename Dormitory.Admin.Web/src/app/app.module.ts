@@ -8,7 +8,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
