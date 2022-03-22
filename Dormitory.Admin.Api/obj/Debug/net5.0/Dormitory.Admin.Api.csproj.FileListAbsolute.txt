@@ -38,7 +38,6 @@ D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Microsoft.Ident
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
-D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
@@ -62,3 +61,8 @@ D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Dormitory.Domai
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Dormitory.Admin.Application.pdb
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Dormitory.Admin.EntityFrameworkCore.pdb
 D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Dormitory.Domain.pdb
+D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Microsoft.Practices.ServiceLocation.dll
+D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\XAct.Core.PCL.dll
+D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Dormitory.Domain.Shared.dll
+D:\Project\DormitoryManager\Dormitory.Admin.Api\bin\Debug\net5.0\Dormitory.Domain.Shared.pdb

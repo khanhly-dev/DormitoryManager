@@ -1,4 +1,5 @@
 ﻿using Dormitory.Student.Application.Catalog.StudentRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace Dormitory.Student.Api.Controllers
             _studentRepo = studentRepo;
         }
         [HttpGet("all")]
+        [Authorize]
         public async Task<IActionResult> GetAllUser()
         {
             var listStudent = await _studentRepo.GetAllStudent();

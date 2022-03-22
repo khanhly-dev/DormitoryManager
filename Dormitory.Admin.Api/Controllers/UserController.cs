@@ -1,4 +1,5 @@
 ﻿using Dormitory.Admin.Application.Catalog.UserRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -12,7 +13,9 @@ namespace Dormitory.Admin.Api.Controllers
         {
             _userRepo = userRepo;
         }
+
         [HttpGet("all")]
+        [Authorize]
         public async Task<IActionResult> GetAllUser()
         {
             var listUser = await _userRepo.GetAllUser();

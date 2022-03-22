@@ -1,4 +1,5 @@
 using Dormitory.Admin.Application.Catalog.UserRepository;
+using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,17 +10,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api
 {
     public class Startup
     {
-        readonly string CorsPolicy = "_corsPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +32,21 @@ namespace Dormitory.Admin.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Oauth")
+                .AddJwtBearer("Oauth", config =>
+                {
+
+                    var secretBytes = Encoding.UTF8.GetBytes(CoreConstant.Secret);
+                    var key = new SymmetricSecurityKey(secretBytes);
+
+                    config.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = CoreConstant.Issuer,
+                        ValidAudience = CoreConstant.Audiance,
+                        IssuerSigningKey = key
+                    };
+                });
+
             services.AddCors(option =>
             {
                 option.AddPolicy("_corsPolicy",
@@ -63,15 +80,15 @@ namespace Dormitory.Admin.Api
             }
             app.UseCors("CorsPolicy");
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

@@ -19,13 +19,5 @@ namespace Dormitory.Core.Api.Controllers
             var access_token = await _coreRepo.Authenticate(userName, password, tenantId);
             return Ok(access_token);
         }
-
-        [HttpGet("test")]
-        [Authorize]
-        public async Task<IActionResult> test()
-        {
-            var t = "test authen";
-            return Ok(t);
-        }
     }
 }
