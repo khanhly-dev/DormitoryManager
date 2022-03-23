@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Core.Api.Controllers
 {
     [Route("api/core")]
+    [Produces("application/json")]
     public class CoreController : Controller
     {
         private readonly ICoreRepo _coreRepo;
@@ -13,11 +14,11 @@ namespace Dormitory.Core.Api.Controllers
         {
             _coreRepo = coreRepo;
         }
-        [HttpGet("login")]
-        public async Task<IActionResult> Login(string userName, string password, int tenantId)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromForm] string userName, [FromForm] string password, [FromForm] int tenantId)
         {
             var access_token = await _coreRepo.Authenticate(userName, password, tenantId);
-            return Ok(access_token);
+            return Ok(new { access_token = access_token });
         }
     }
 }

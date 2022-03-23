@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <nz-card style="width: 350px;" [nzTitle]="title">
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <b>Tài khoản:</b>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="24" nzHasFeedback>
+                    <input nz-input formControlName="userName" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <b>Mật khẩu:</b>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="24" nzHasFeedback>
+                    <input nz-input type="password" formControlName="password" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Đăng nhập</button>
+        </form>
+    </nz-card>
+    <ng-template #title>
+        <div style="text-align: center;">
+            <h5>Đăng nhập</h5>
+        </div>
+    </ng-template>
+</div>

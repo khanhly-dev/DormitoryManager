@@ -22,6 +22,7 @@ namespace Dormitory.Student.Api
 {
     public class Startup
     {
+        readonly string MyAllowSpecificorigin = "_myAllowSpecificorigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -48,11 +49,10 @@ namespace Dormitory.Student.Api
 
             services.AddCors(option =>
             {
-                option.AddPolicy("_corsPolicy",
+                option.AddPolicy("_myAllowSpecificorigins",
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin()
                     );
             });
 
@@ -77,7 +77,7 @@ namespace Dormitory.Student.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dormitory.Student.Api v1"));
             }
-            app.UseCors("CorsPolicy");
+            app.UseCors(MyAllowSpecificorigin);
 
             app.UseRouting();
 
