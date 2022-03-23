@@ -26,7 +26,7 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
             _adminDbContext = adminDbContext;
             _studentDbContext = studentDbContext;
         }
-        public async Task<string> Authenticate(string userName, string password, int tenantId)
+        public async Task<LoginStatusDto> Authenticate(string userName, string password, int tenantId)
         {
             var user = new UserDto();
             //neu nguoi dang nhap la sinh vien
@@ -81,10 +81,20 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
 
                 var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
 
-                return tokenJson;
+                return new LoginStatusDto
+                {
+                    UserName = user.UserName,
+                    Access_token = tokenJson,
+                    IsLoginSuccess = true
+                };
             }else
             {
-                return "Your authentication information is incorrect";
+                return new LoginStatusDto
+                {
+                    UserName = null,
+                    Access_token = null,
+                    IsLoginSuccess = false,
+                };
             }
         }
     }

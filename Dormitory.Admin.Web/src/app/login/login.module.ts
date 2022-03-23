@@ -29,7 +29,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzInputModule,
     NzButtonModule,
     NzIconModule,
-    NzSelectModule
+    NzSelectModule,
   ]
 })
 export class LoginModule { }

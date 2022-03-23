@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dormitory.Core.Application.Catalog.CoreRepository.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
 {
     public interface ICoreRepo
     {
-        public Task<string> Authenticate(string userName, string password, int tenantId);
+        public Task<LoginStatusDto> Authenticate(string userName, string password, int tenantId);
     }
 }

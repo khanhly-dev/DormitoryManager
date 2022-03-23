@@ -1,14 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginServiceProxy } from 'src/app/service/core-service/core-service-proxy';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    Authorization: 'my-auth-token'
-  })
-};
 
 @Component({
   selector: 'app-login',
@@ -17,20 +10,23 @@ const httpOptions = {
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
-  access_token = "";
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
-  submitForm() : void{
+  submitForm(): void {
     if (this.validateForm.valid) {
       let formValue = this.validateForm.value;
       this.loginService.login(formValue.userName, formValue.password, 1)
-      .subscribe((x) => {
-        console.log("test", x)
-      });
-      
+        .subscribe((x) => {
+          console.log(x)
+          if (x.isLoginSuccess && x.access_token !== null && x.access_token !== undefined && x.access_token !== "") {
+            localStorage.setItem("access_token", x.access_token);
+            this.router.navigate(["/main"]);
+          }
+          else {
+            this.router.navigate(["/login"]);
+            alert('Tài khoản hoặc mật khẩu không chính xác! Vui lòng đăng nhập lại!')
+          }
+        })
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -42,9 +38,9 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpClient,
     private fb: FormBuilder,
-    private loginService: LoginServiceProxy
+    private loginService: LoginServiceProxy,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {

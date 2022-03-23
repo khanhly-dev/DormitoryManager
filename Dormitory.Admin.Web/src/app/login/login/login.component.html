@@ -1,4 +1,7 @@
-<div class="position-absolute top-50 start-50 translate-middle">
+<div style="position: absolute; width: 100%;">
+    <img src="assets/login-background.jpg" alt="" style="width: 100%; height: 100vh; opacity: 0.5; z-index: 0;">
+</div>
+<div class="position-absolute top-50 start-50 translate-middle login-page">
     <nz-card style="width: 350px;" [nzTitle]="title">
         <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
             <b>Tài khoản:</b>

@@ -17,8 +17,9 @@ namespace Dormitory.Core.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromForm] string userName, [FromForm] string password, [FromForm] int tenantId)
         {
-            var access_token = await _coreRepo.Authenticate(userName, password, tenantId);
-            return Ok(new { access_token = access_token });
+            var loginInfo = await _coreRepo.Authenticate(userName, password, tenantId);
+            return Ok(loginInfo);
+ 
         }
     }
 }
