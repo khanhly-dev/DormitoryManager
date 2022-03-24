@@ -4,14 +4,16 @@ using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
+namespace Dormitory.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(AdminSolutionDbContext))]
-    partial class AdminSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220324143758_create db")]
+    partial class createdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +40,9 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Tenant")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserAdminId")
                         .HasColumnType("int");
 
@@ -49,7 +54,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
                     b.ToTable("UserAccountEntities");
                 });
 
-            modelBuilder.Entity("Dormitory.Domain.AdminEntites.UserAdminEntity", b =>
+            modelBuilder.Entity("Dormitory.Domain.AdminEntites.UserInfoEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +78,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserAdminEntities");
+                    b.ToTable("UserInfoEntities");
                 });
 #pragma warning restore 612, 618
         }

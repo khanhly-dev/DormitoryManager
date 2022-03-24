@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dormitory.Student.Application.Catalog.StudentRepository.Dtos
+namespace Dormitory.Domain.AppEntities
 {
-    public class StudentDto
+    public class AreaEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime DOB { get; set; }
-        public string StudentCode { get; set; }
+        public int TotalRoom { get; set; }
     }
 }

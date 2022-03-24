@@ -1,4 +1,4 @@
-﻿using Dormitory.Domain.AdminEntites;
+﻿using Dormitory.Domain.AppEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,17 @@ namespace Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore
         }
 
         public DbSet<UserAccountEntity> UserAccountEntities { get; set; }
-        public DbSet<UserAdminEntity> UserAdminEntities { get; set; }
+        public DbSet<UserInfoEntity> UserInfoEntities { get; set; }
+        public DbSet<AreaEntity> AreaEntities { get; set; }
+        public DbSet<ContractEntity> ContractEntities { get; set; }
+        public DbSet<ContractInfoEntity> ContractInfoEntities { get; set; }
+        public DbSet<CriteriaConfigEntity> CriteriaConfigEntities { get; set; }
+        public DbSet<FacilityEntity> FacilityEntities { get; set; }
+        public DbSet<FacilityInRoomEntity> FacilityInRoomEntities { get; set; }
+        public DbSet<RoomEntity> RoomEntities { get; set; }
+        public DbSet<RoomServiceEntity> RoomServiceEntities { get; set; }
+        public DbSet<ServiceEntity> ServiceEntities { get; set; }
+        public DbSet<StudentCritatiaEntity> StudentCritatiaEntities { get; set; }
+        public DbSet<StudentEntity> StudentEntities { get; set; }
     }
 }

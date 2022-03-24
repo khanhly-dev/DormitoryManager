@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dormitory.Domain.AdminEntites
+namespace Dormitory.Domain.AppEntities
 {
-    public class UserAdminEntity
+    public class UserInfoEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

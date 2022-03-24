@@ -1,8 +1,8 @@
 ﻿using Dormitory.Core.Application.Catalog.CoreRepository.Dtos;
+using Dormitory.Domain.AppEntities;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.Domain.Shared.Extension;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
-using Dormitory.EntityFrameworkCore.StudentEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -18,43 +18,22 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
     public class CoreRepo : ICoreRepo
     {
         private readonly AdminSolutionDbContext _adminDbContext;
-        private readonly StudentSolutionDbContext _studentDbContext;
         public CoreRepo(
-            AdminSolutionDbContext adminDbContext,
-            StudentSolutionDbContext studentDbContext)
+            AdminSolutionDbContext adminDbContext)
         {
             _adminDbContext = adminDbContext;
-            _studentDbContext = studentDbContext;
         }
         public async Task<LoginStatusDto> Authenticate(string userName, string password, int tenantId)
         {
-            var user = new UserDto();
-            //neu nguoi dang nhap la sinh vien
-            if(tenantId == DataConfigConstant.studentTenantId)
-            {
-                user = await _studentDbContext.UserAccountEntities
-                    .Where(x => x.UserName == userName && x.Password == CoreExtensions.Encrypt(password))
-                    .Select(x => new UserDto
-                    {
-                        Id = x.Id,
-                        UserName = x.UserName,
-                        Password = x.Password,
-                        Email = x.Email,
-                    }).FirstOrDefaultAsync();
-            }
-            //neu nguoi dang nhap la quan ly ktx
-            if(tenantId == DataConfigConstant.adminTenantId)
-            {
-                user = await _adminDbContext.UserAccountEntities
-                    .Where(x => x.UserName == userName && x.Password == CoreExtensions.Encrypt(password))
-                    .Select(x => new UserDto
-                    {
-                        Id = x.Id,
-                        UserName = x.UserName,
-                        Password = x.Password,
-                        Email = x.Email,
-                    }).FirstOrDefaultAsync();
-            }
+            var user = await _adminDbContext.UserAccountEntities
+                .Where(x => x.UserName == userName && x.Password == CoreExtensions.Encrypt(password) && x.Tenant == tenantId)
+                .Select(x => new UserDto
+                {
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    Password = x.Password,
+                    Email = x.Email,
+                }).FirstOrDefaultAsync();
 
             if(user != null)
             {
@@ -96,6 +75,21 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
                     IsLoginSuccess = false,
                 };
             }
+        }
+
+        public async Task<int> Register(RegisterRequest request)
+        {
+            var user = new UserAccountEntity();
+            user.UserName = request.UserName;
+            user.Password = CoreExtensions.Encrypt(request.Password);
+            user.Email = request.Email;
+            user.IsDeleted = false;
+            user.UserInfoId = request.UserInfoId;
+            user.CreatedTime = DateTime.Now;
+            user.Tenant = request.Tenant;
+
+            await _adminDbContext.AddAsync(user);
+            return await _adminDbContext.SaveChangesAsync();
         }
     }
 }

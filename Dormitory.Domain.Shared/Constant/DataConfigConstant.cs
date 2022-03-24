@@ -10,5 +10,8 @@ namespace Dormitory.Domain.Shared.Constant
     {
         public static int studentTenantId = 0;
         public static int adminTenantId = 1;
+
+        public static int female = 0;
+        public static int male = 1;
     }
 }

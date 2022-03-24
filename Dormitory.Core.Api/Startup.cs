@@ -1,16 +1,12 @@
 using Dormitory.Core.Application.Catalog.CoreRepository;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
-using Dormitory.EntityFrameworkCore.StudentEntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
@@ -57,9 +53,6 @@ namespace Dormitory.Core.Api
                     .AllowAnyMethod()
                     );
             });
-
-            services.AddDbContext<StudentSolutionDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("StudentDatabase")));
 
             services.AddDbContext<AdminSolutionDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("AdminDatabase")));

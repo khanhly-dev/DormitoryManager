@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dormitory.Domain.StudentEntities
+namespace Dormitory.Domain.AppEntities
 {
     public class UserAccountEntity
     {
@@ -14,6 +14,7 @@ namespace Dormitory.Domain.StudentEntities
         public string Email { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedTime { get; set; }
-        public int UserStudentId { get; set; }
+        public int Tenant { get; set; }
+        public int UserInfoId { get; set; }
     }
 }

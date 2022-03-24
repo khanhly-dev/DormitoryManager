@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Dormitory.EntityFrameworkCore\Dormitory.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Catalog\" />
+  </ItemGroup>
+
 </Project>

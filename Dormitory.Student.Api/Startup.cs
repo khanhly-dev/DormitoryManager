@@ -1,6 +1,4 @@
 using Dormitory.Domain.Shared.Constant;
-using Dormitory.EntityFrameworkCore.StudentEntityFrameworkCore;
-using Dormitory.Student.Application.Catalog.StudentRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -55,11 +53,6 @@ namespace Dormitory.Student.Api
                     .AllowAnyMethod()
                     );
             });
-
-            services.AddDbContext<StudentSolutionDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("StudentDatabase")));
-
-            services.AddTransient<IStudentRepo, StudentRepo>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

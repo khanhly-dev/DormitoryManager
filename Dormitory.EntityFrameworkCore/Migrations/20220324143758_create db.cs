@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
+namespace Dormitory.EntityFrameworkCore.Migrations
 {
-    public partial class createadmindb : Migration
+    public partial class createdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +18,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Tenant = table.Column<int>(type: "int", nullable: false),
                     UserAdminId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -26,7 +27,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAdminEntities",
+                name: "UserInfoEntities",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -39,7 +40,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAdminEntities", x => x.Id);
+                    table.PrimaryKey("PK_UserInfoEntities", x => x.Id);
                 });
         }
 
@@ -49,7 +50,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations.AdminSolutionDb
                 name: "UserAccountEntities");
 
             migrationBuilder.DropTable(
-                name: "UserAdminEntities");
+                name: "UserInfoEntities");
         }
     }
 }
