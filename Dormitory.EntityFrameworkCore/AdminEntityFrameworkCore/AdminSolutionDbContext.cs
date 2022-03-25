@@ -1,4 +1,5 @@
-﻿using Dormitory.Domain.AppEntities;
+﻿using Dormitory.Domain.AppEntites;
+using Dormitory.Domain.AppEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,5 +29,6 @@ namespace Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore
         public DbSet<ServiceEntity> ServiceEntities { get; set; }
         public DbSet<StudentCritatiaEntity> StudentCritatiaEntities { get; set; }
         public DbSet<StudentEntity> StudentEntities { get; set; }
+        public DbSet<ContractTimeConfigEntity> ContractTimeConfigEntities { get; set; }
     }
 }

@@ -19,6 +19,24 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Dormitory.Domain.AppEntites.ContractTimeConfigEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MonthConfig")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContractTimeConfigEntities");
+                });
+
             modelBuilder.Entity("Dormitory.Domain.AppEntities.AreaEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -29,7 +47,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalRoom")
+                    b.Property<int?>("TotalRoom")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -113,8 +131,8 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalCount")
                         .HasColumnType("int");
@@ -164,7 +182,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<int>("MaxSlot")
                         .HasColumnType("int");
 
-                    b.Property<int>("MinSlot")
+                    b.Property<int?>("MinSlot")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -254,6 +272,9 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BaseAdress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Class")
                         .HasColumnType("nvarchar(max)");
 
@@ -261,6 +282,9 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ethnic")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
@@ -279,6 +303,9 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RelativePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Religion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentCode")

@@ -20,7 +20,6 @@ namespace Dormitory.Core.Api.Controllers
         {
             var loginInfo = await _coreRepo.Authenticate(userName, password, tenantId);
             return Ok(loginInfo);
- 
         }
 
         [HttpPost("register")]

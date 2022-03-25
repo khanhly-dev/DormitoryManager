@@ -1,3 +1,8 @@
+using Dormitory.Admin.Application.Catalog.AreaRepository;
+using Dormitory.Admin.Application.Catalog.CriteriaRepository;
+using Dormitory.Admin.Application.Catalog.FacilityRepository;
+using Dormitory.Admin.Application.Catalog.RoomRepository;
+using Dormitory.Admin.Application.Catalog.ServiceRepository;
 using Dormitory.Admin.Application.Catalog.UserRepository;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
@@ -60,6 +65,11 @@ namespace Dormitory.Admin.Api
             options.UseSqlServer(Configuration.GetConnectionString("AdminDatabase")));
 
             services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<IAreaRepo, AreaRepo>();
+            services.AddTransient<IFacilityRepo, FacilityRepo>();
+            services.AddTransient<IRoomRepo, RoomRepo>();
+            services.AddTransient<IServiceRepo, ServiceRepo>();
+            services.AddTransient<ICriteriaRepo, CriteriaRepo>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

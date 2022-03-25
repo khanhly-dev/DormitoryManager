@@ -11,6 +11,7 @@ namespace Dormitory.Domain.AppEntities
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DOB { get; set; }
+        public string BaseAdress { get; set; }
         public string Adress { get; set; }
         public string Class { get; set; }
         public string StudentCode { get; set; }
@@ -21,5 +22,7 @@ namespace Dormitory.Domain.AppEntities
         public string AcademicYear { get; set; }
         public string RelativeName { get; set; }
         public string RelativePhone { get; set; }
+        public string Ethnic { get; set; }
+        public string Religion { get; set; }
     }
 }

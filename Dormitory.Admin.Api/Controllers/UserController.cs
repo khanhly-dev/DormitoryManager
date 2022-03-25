@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/user")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserRepo _userRepo;
@@ -15,7 +16,6 @@ namespace Dormitory.Admin.Api.Controllers
         }
 
         [HttpGet("all")]
-        [Authorize]
         public async Task<IActionResult> GetAllUser()
         {
             var listUser = await _userRepo.GetAllUser();
