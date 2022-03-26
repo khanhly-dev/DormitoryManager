@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "MSbubKMrK+3I4XlosAHJnKTOTbZ7q9poHOL8mLDnzav+9py0cyr9h6I+EwauPvju5OUsXoYfqBwHwhNHrQ5EOQ==",
+  "dgSpecHash": "/g/CEaW2IBuj94k340K3QOT1dGOnzJTrdNuohRqpeFErjvKhu3kSYr3E6S3FxCgezhLnFwNxnTW0VNxlc/ZpBw==",
   "success": true,
   "projectFilePath": "D:\\Project\\DormitoryManager\\Dormitory.Domain.Shared\\Dormitory.Domain.Shared.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Khanh\\.nuget\\packages\\commonservicelocator\\1.3.0\\commonservicelocator.1.3.0.nupkg.sha512",
-    "C:\\Users\\Khanh\\.nuget\\packages\\xact.core.pcl\\0.0.5014\\xact.core.pcl.0.0.5014.nupkg.sha512"
+    "C:\\Users\\devkh\\.nuget\\packages\\commonservicelocator\\1.3.0\\commonservicelocator.1.3.0.nupkg.sha512",
+    "C:\\Users\\devkh\\.nuget\\packages\\xact.core.pcl\\0.0.5014\\xact.core.pcl.0.0.5014.nupkg.sha512"
   ],
   "logs": [
     {

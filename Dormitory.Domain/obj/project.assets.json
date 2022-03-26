@@ -8,7 +8,7 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Khanh\\.nuget\\packages\\": {}
+    "C:\\Users\\devkh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -16,11 +16,11 @@
       "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\Dormitory.Domain.csproj",
       "projectName": "Dormitory.Domain",
       "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\Dormitory.Domain.csproj",
-      "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
       "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

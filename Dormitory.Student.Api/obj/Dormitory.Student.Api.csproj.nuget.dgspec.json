@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Domain.Shared\\Dormitory.Domain.Shared.csproj",
         "projectName": "Dormitory.Domain.Shared",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain.Shared\\Dormitory.Domain.Shared.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,11 +70,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\Dormitory.Domain.csproj",
         "projectName": "Dormitory.Domain",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\Dormitory.Domain.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -124,11 +124,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj",
         "projectName": "Dormitory.EntityFrameworkCore",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -212,11 +212,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Student.Api\\Dormitory.Student.Api.csproj",
         "projectName": "Dormitory.Student.Api",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Student.Api\\Dormitory.Student.Api.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Student.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -286,11 +286,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Student.Application\\Dormitory.Student.Application.csproj",
         "projectName": "Dormitory.Student.Application",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Student.Application\\Dormitory.Student.Application.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Student.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

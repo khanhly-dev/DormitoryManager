@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Admin.Application\\Dormitory.Admin.Application.csproj",
         "projectName": "Dormitory.Admin.Application",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Admin.Application\\Dormitory.Admin.Application.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Admin.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -68,11 +68,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\Dormitory.Domain.csproj",
         "projectName": "Dormitory.Domain",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\Dormitory.Domain.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -122,11 +122,11 @@
         "projectUniqueName": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj",
         "projectName": "Dormitory.EntityFrameworkCore",
         "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj",
-        "packagesPath": "C:\\Users\\Khanh\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\devkh\\.nuget\\packages\\",
         "outputPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Khanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devkh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
