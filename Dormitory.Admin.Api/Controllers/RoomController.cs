@@ -16,13 +16,13 @@ namespace Dormitory.Admin.Api.Controllers
             _roomRepo = roomRepo;
         }
         [HttpGet("get-list")]
-        public async Task<IActionResult> GetListArea(PageRequestBase request)
+        public async Task<IActionResult> GetListRoom(PageRequestBase request)
         {
             var listArea = await _roomRepo.GetList(request);
             return Ok(listArea);
         }
         [HttpPost("create-or-update")]
-        public async Task<IActionResult> CreateOrUpdateArea(RoomEntity request)
+        public async Task<IActionResult> CreateOrUpdateRoom(RoomEntity request)
         {
             var responseStatus = "";
             var result = await _roomRepo.CreateOrUpdate(request);
@@ -37,7 +37,7 @@ namespace Dormitory.Admin.Api.Controllers
             return Ok(responseStatus);
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteArea(int id)
+        public async Task<IActionResult> DeleteRoom(int id)
         {
             var responseStatus = "";
             var result = await _roomRepo.Delete(id);

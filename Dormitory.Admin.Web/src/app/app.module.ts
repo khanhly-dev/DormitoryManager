@@ -21,6 +21,11 @@ const antDesignIcons = AllIcons as {
 };
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+registerLocaleData(en);
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,8 +43,9 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     BrowserAnimationsModule
   ],
   providers: [
-    AuthGuardService
+    AuthGuardService,
+    { provide: NZ_I18N, useValue: en_US }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

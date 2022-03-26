@@ -20,7 +20,6 @@ namespace Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore
         public DbSet<UserInfoEntity> UserInfoEntities { get; set; }
         public DbSet<AreaEntity> AreaEntities { get; set; }
         public DbSet<ContractEntity> ContractEntities { get; set; }
-        public DbSet<ContractInfoEntity> ContractInfoEntities { get; set; }
         public DbSet<CriteriaConfigEntity> CriteriaConfigEntities { get; set; }
         public DbSet<FacilityEntity> FacilityEntities { get; set; }
         public DbSet<FacilityInRoomEntity> FacilityInRoomEntities { get; set; }

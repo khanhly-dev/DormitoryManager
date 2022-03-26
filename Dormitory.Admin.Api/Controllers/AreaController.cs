@@ -17,13 +17,13 @@ namespace Dormitory.Admin.Api.Controllers
             _areaRepo = areaRepo;
         }
         [HttpGet("get-list")]
-        public async Task<IActionResult> GetListArea(PageRequestBase request)
+        public async Task<IActionResult> GetListArea([FromQuery] PageRequestBase request)
         {
             var listArea = await _areaRepo.GetList(request);
             return Ok(listArea);
         }
         [HttpPost("create-or-update")]
-        public async Task<IActionResult> CreateOrUpdateArea(AreaEntity request)
+        public async Task<IActionResult> CreateOrUpdateArea([FromForm] AreaEntity request)
         {
             var responseStatus = "";
             var result = await _areaRepo.CreateOrUpdate(request);
@@ -38,7 +38,7 @@ namespace Dormitory.Admin.Api.Controllers
             return Ok(responseStatus);
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteArea(int id)
+        public async Task<IActionResult> DeleteArea([FromQuery] int id)
         {
             var responseStatus = "";
             var result = await _areaRepo.Delete(id);

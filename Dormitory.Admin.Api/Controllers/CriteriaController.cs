@@ -16,13 +16,13 @@ namespace Dormitory.Admin.Api.Controllers
             _criteriaRepo = criteriaRepo;
         }
         [HttpGet("get-list")]
-        public async Task<IActionResult> GetListArea(PageRequestBase request)
+        public async Task<IActionResult> GetListCriteria(PageRequestBase request)
         {
             var list = await _criteriaRepo.GetList(request);
             return Ok(list);
         }
         [HttpPost("create-or-update")]
-        public async Task<IActionResult> CreateOrUpdateArea(CriteriaConfigEntity request)
+        public async Task<IActionResult> CreateOrUpdateCriteria(CriteriaConfigEntity request)
         {
             var responseStatus = "";
             var result = await _criteriaRepo.CreateOrUpdate(request);
@@ -37,7 +37,7 @@ namespace Dormitory.Admin.Api.Controllers
             return Ok(responseStatus);
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteArea(int id)
+        public async Task<IActionResult> DeleteCriteria(int id)
         {
             var responseStatus = "";
             var result = await _criteriaRepo.Delete(id);
