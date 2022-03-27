@@ -29,6 +29,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzInputNumberModule,
     NzInputModule,
     NzSelectModule,
-    NzGridModule
+    NzGridModule,
+    NzAvatarModule
   ]
 })
 export class MainModule { }

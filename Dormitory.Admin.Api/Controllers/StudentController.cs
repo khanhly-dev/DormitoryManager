@@ -1,13 +1,14 @@
 ﻿using Dormitory.Admin.Application.Catalog.StudentRepository;
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/student")]
-    //[Authorize]
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly IStudentRepo _studentRepo;

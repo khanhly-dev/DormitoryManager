@@ -25,7 +25,7 @@ export class ServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListService("", 1, 10)
+    this.getListService("", this.pageIndex, 10)
   }
 
   getListService(keyWord: string, pageIndex: number, pageSize: number) {
@@ -36,13 +36,13 @@ export class ServiceComponent implements OnInit {
 
   deleteService(id: number) {
     this.serviceService.delete(id).subscribe(() => {
-      this.getListService("", 1, 10)
+      this.getListService("", this.pageIndex, 10)
     })
   }
 
   createOrUpdateService(data: any) {
     this.serviceService.createOrUpdate(data).subscribe(x => {
-      this.getListService("", 1, 10)
+      this.getListService("", this.pageIndex, 10)
     })
   }
 

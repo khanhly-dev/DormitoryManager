@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -7,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
   isCollapsed = false;
-
-  constructor() { }
+  userName : string = "";
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
+    this.userName = localStorage.getItem("user") ?? "";
   }
 
+  logOut()
+  {
+    localStorage.clear();
+    this.router.navigate(["/login"]);
+  }
 }

@@ -19,6 +19,12 @@ export class LoginComponent implements OnInit {
           console.log(x)
           if (x.isLoginSuccess && x.access_token !== null && x.access_token !== undefined && x.access_token !== "") {
             localStorage.setItem("access_token", x.access_token);
+            localStorage.setItem("user", x.userName);
+            setTimeout(() => {
+              alert("Phiên đăng nhập đã hết hạn")
+              localStorage.clear();
+              this.router.navigate(["/login"]);
+            }, 3600000);
             this.router.navigate(["/main"]);
           }
           else {
@@ -48,6 +54,9 @@ export class LoginComponent implements OnInit {
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
+    if (localStorage.getItem("access_token") != null || localStorage.getItem("access_token") != undefined) {
+      this.router.navigate(["/main"]);
+    }
   }
 }
 

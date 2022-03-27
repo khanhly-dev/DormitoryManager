@@ -26,7 +26,7 @@ export class FacilityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListFacility("", 1, 10)
+    this.getListFacility("", this.pageIndex, 10)
   }
 
   getListFacility(keyWord: string, pageIndex: number, pageSize: number) {
@@ -37,13 +37,13 @@ export class FacilityComponent implements OnInit {
 
   deleteFacility(id: number) {
     this.facilityService.delete(id).subscribe(() => {
-      this.getListFacility("", 1, 10)
+      this.getListFacility("", this.pageIndex, 10)
     })
   }
 
   createOrUpdateFacility(data: any) {
     this.facilityService.createOrUpdate(data).subscribe(x => {
-      this.getListFacility("", 1, 10)
+      this.getListFacility("", this.pageIndex, 10)
     })
   }
 

@@ -25,7 +25,7 @@ export class AreaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListArea("", 1, 10)
+    this.getListArea("", this.pageIndex, 10)
   }
 
   getListArea(keyWord: string, pageIndex: number, pageSize: number) {
@@ -36,13 +36,13 @@ export class AreaComponent implements OnInit {
 
   deleteArea(id: number) {
     this.areaService.delete(id).subscribe(() => {
-      this.getListArea("", 1, 10)
+      this.getListArea("", this.pageIndex, 10)
     })
   }
 
   createOrUpdateArea(data: any) {
     this.areaService.createOrUpdate(data).subscribe(x => {
-      this.getListArea("", 1, 10)
+      this.getListArea("", this.pageIndex, 10)
     })
   }
 

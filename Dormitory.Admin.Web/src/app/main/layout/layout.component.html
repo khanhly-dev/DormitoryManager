@@ -22,6 +22,19 @@
         <nz-header>
             <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
                 (click)="isCollapsed = !isCollapsed"></i>
+            <div style="float: right; margin-right: 40px;">
+                <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
+                <a nz-dropdown [nzDropdownMenu]="menu">
+                    {{userName}}
+                    <i nz-icon nzType="down"></i>
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu nzSelectable>
+                        <li nz-menu-item (click)="logOut()">Đăng xuất</li>
+                    </ul>
+                </nz-dropdown-menu>
+            </div>
+
         </nz-header>
         <nz-content>
             <nz-breadcrumb>

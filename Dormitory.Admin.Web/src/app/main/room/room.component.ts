@@ -34,7 +34,7 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListRoom("", 1, 10);
+    this.getListRoom("", this.pageIndex, 10);
     this.getListAreaSelect();
   }
 
@@ -52,13 +52,13 @@ export class RoomComponent implements OnInit {
 
   deleteRoom(id: number) {
     this.roomService.delete(id).subscribe(() => {
-      this.getListRoom("", 1, 10)
+      this.getListRoom("", this.pageIndex, 10)
     })
   }
 
   createOrUpdateRoom(data: any) {
     this.roomService.createOrUpdate(data).subscribe(x => {
-      this.getListRoom("", 1, 10)
+      this.getListRoom("", this.pageIndex, 10)
     })
   }
 

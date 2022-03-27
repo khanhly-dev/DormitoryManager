@@ -2,13 +2,14 @@
 using Dormitory.Admin.Application.Catalog.RoomRepository.Requests;
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/room")]
-    //[Authorize]
+    [Authorize]
     public class RoomController : Controller
     {
         private readonly IRoomRepo _roomRepo;

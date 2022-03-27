@@ -25,7 +25,7 @@ export class CriteriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListCriteria("", 1, 10)
+    this.getListCriteria("", this.pageIndex, 10)
   }
 
   getListCriteria(keyWord: string, pageIndex: number, pageSize: number) {
@@ -36,13 +36,13 @@ export class CriteriaComponent implements OnInit {
 
   deleteCriteria(id: number) {
     this.criteriaService.delete(id).subscribe(() => {
-      this.getListCriteria("", 1, 10)
+      this.getListCriteria("", this.pageIndex, 10)
     })
   }
 
   createOrUpdateCriteria(data: any) {
     this.criteriaService.createOrUpdate(data).subscribe(x => {
-      this.getListCriteria("", 1, 10)
+      this.getListCriteria("", this.pageIndex, 10)
     })
   }
 

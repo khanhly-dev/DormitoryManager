@@ -25,7 +25,7 @@ export class ContractTimeConfigComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListConfig("", 1, 10)
+    this.getListConfig("", this.pageIndex, 10)
   }
 
   getListConfig(keyWord: string, pageIndex: number, pageSize: number) {
@@ -36,13 +36,13 @@ export class ContractTimeConfigComponent implements OnInit {
 
   deleteConfig(id: number) {
     this.contractConfigService.delete(id).subscribe(() => {
-      this.getListConfig("", 1, 10)
+      this.getListConfig("", this.pageIndex, 10)
     })
   }
 
   createOrUpdateConfig(data: any) {
     this.contractConfigService.createOrUpdate(data).subscribe(x => {
-      this.getListConfig("", 1, 10)
+      this.getListConfig("", this.pageIndex, 10)
     })
   }
 
