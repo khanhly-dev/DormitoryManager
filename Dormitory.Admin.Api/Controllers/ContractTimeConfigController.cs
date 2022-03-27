@@ -1,13 +1,14 @@
 ﻿using Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository;
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntites;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/contract-time-config")]
-    //[Authorize]
+    [Authorize]
     public class ContractTimeConfigController : Controller
     {
         private readonly IContractTimeConfigRepo _contractTimeConfigRepo;
@@ -16,13 +17,13 @@ namespace Dormitory.Admin.Api.Controllers
             _contractTimeConfigRepo = contractTimeConfigRepo;
         }
         [HttpGet("get-list")]
-        public async Task<IActionResult> GetListContractConfig(PageRequestBase request)
+        public async Task<IActionResult> GetListContractConfig([FromQuery] PageRequestBase request)
         {
             var listArea = await _contractTimeConfigRepo.GetList(request);
             return Ok(listArea);
         }
         [HttpPost("create-or-update")]
-        public async Task<IActionResult> CreateOrUpdateContractConfig(ContractTimeConfigEntity request)
+        public async Task<IActionResult> CreateOrUpdateContractConfig([FromForm] ContractTimeConfigEntity request)
         {
             var responseStatus = "";
             var result = await _contractTimeConfigRepo.CreateOrUpdate(request);
@@ -34,10 +35,10 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(responseStatus);
+            return Ok(new { responseStatus });
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteContractConfig(int id)
+        public async Task<IActionResult> DeleteContractConfig([FromQuery] int id)
         {
             var responseStatus = "";
             var result = await _contractTimeConfigRepo.Delete(id);
@@ -49,7 +50,7 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(responseStatus);
+            return Ok(new { responseStatus });
         }
     }
 }

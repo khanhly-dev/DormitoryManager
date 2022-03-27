@@ -1,15 +1,74 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FacilityDto } from 'src/app/dto/output-dto';
+import { PageResultBase } from 'src/app/dto/page-result-base';
+import { FacilityServiceProxy } from 'src/app/service/admin-service/facility-service-proxy';
 
 @Component({
   selector: 'app-facility',
   templateUrl: './facility.component.html',
-  styleUrls: ['./facility.component.css']
 })
 export class FacilityComponent implements OnInit {
+  modalTitle: string = "";
+  validateForm!: FormGroup;
+  listArea!: PageResultBase<FacilityDto>;
+  pageIndex: number = 1;
+  pageSize!: number;
+  isVisible = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private facilityService: FacilityServiceProxy, private fb: FormBuilder) {
+    this.validateForm = this.fb.group({
+      id: [],
+      name: ['', [Validators.required]],
+      totalCount: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+    });
   }
 
+  ngOnInit(): void {
+    this.getListFacility("", 1, 10)
+  }
+
+  getListFacility(keyWord: string, pageIndex: number, pageSize: number) {
+    this.facilityService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
+      this.listArea = x;
+    })
+  }
+
+  deleteFacility(id: number) {
+    this.facilityService.delete(id).subscribe(() => {
+      this.getListFacility("", 1, 10)
+    })
+  }
+
+  createOrUpdateFacility(data: any) {
+    this.facilityService.createOrUpdate(data).subscribe(x => {
+      this.getListFacility("", 1, 10)
+    })
+  }
+
+  showModal(modalTitle: string, data?: FacilityDto): void {
+    if (data != null) {
+      this.validateForm.patchValue(data);
+    }
+    else {
+      this.validateForm.reset();
+      this.validateForm.value.id = 0
+    }
+    this.modalTitle = modalTitle;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.submitForm();
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  submitForm(): void {
+    this.createOrUpdateFacility(this.validateForm.value);
+  }
 }

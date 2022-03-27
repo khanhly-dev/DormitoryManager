@@ -14,7 +14,7 @@ export class RoomComponent implements OnInit {
   validateForm!: FormGroup;
   listArea!: PageResultBase<RoomDto>;
   areaSelect : BaseSelectDto[] = [];
-  pageIndex!: number;
+  pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
 

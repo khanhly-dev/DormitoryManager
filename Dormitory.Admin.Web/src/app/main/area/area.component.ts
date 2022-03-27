@@ -12,7 +12,7 @@ export class AreaComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
   listArea!: PageResultBase<AreaDto>;
-  pageIndex!: number;
+  pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
 

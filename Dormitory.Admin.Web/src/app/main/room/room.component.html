@@ -1,4 +1,19 @@
-<button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới phòng')"><span>Thêm mới</span></button>
+<div nz-row>
+    <div nz-col nzSpan="12">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch/>
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search" (click)="getListRoom(inputSearch.value, 1, 10)"></i></button>
+        </ng-template>
+    </div>
+    <div nz-col nzSpan="12">
+        <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+            <span>Thêm mới</span>
+        </button>
+    </div>
+</div>
+<br>
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
@@ -52,11 +67,11 @@
     </ng-container>
 </nz-modal>
 
-<nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined">
+<nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined" [nzFrontPagination]="false">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Tên khu</th>
+            <th>Tên phòng</th>
             <th>Giá phòng</th>
             <th>Khu</th>
             <th nzWidth="120px">Sức chứa tối đa</th>
@@ -84,3 +99,5 @@
         </tr>
     </tbody>
 </nz-table>
+<nz-pagination *ngIf="listArea != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listArea.totalRecords" [nzPageSize]="10" 
+(nzPageIndexChange)="getListRoom('', pageIndex, 10)"></nz-pagination>

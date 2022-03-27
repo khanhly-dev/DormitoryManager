@@ -12,6 +12,7 @@ import { RoomComponent } from './room/room.component';
 import { FacilityComponent } from './facility/facility.component';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { ContractTimeConfigComponent } from './contract-time-config/contract-time-config.component';
+import { ServiceComponent } from './service/service.component';
 
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -27,6 +28,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     FacilityComponent,
     CriteriaComponent,
     ContractTimeConfigComponent,
+    ServiceComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +58,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     ReactiveFormsModule,
     NzInputNumberModule,
     NzInputModule,
-    NzSelectModule
+    NzSelectModule,
+    NzGridModule
   ]
 })
 export class MainModule { }

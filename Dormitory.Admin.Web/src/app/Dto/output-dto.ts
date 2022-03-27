@@ -21,3 +21,28 @@ export interface RoomDto {
     emptySlot: number;
     filledSlot: number;
 }
+
+export interface FacilityDto {
+    id: number;
+    name: string
+    totalCount: number;
+    status: string;
+}
+
+export interface ServiceDto {
+    id: number;
+    name: string
+    price: number;
+}
+
+export interface CriteriaDto {
+    id: number;
+    name: string
+    point: number;
+}
+
+export interface ContractConfig {
+    id: number;
+    name: string
+    monthConfig: number;
+}
