@@ -14,5 +14,6 @@ namespace Dormitory.Admin.Application.Catalog.AreaRepository
         public Task<PageResult<AreaDto>> GetList(PageRequestBase request);
         public Task<int> CreateOrUpdate(AreaEntity request);
         public Task<int> Delete(int id);
+        public Task<List<AreaSelectDto>> GetListAreaSelect();
     }
 }

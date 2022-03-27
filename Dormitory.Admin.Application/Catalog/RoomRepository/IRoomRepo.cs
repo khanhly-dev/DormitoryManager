@@ -1,4 +1,5 @@
 ﻿using Dormitory.Admin.Application.Catalog.RoomRepository.Dtos;
+using Dormitory.Admin.Application.Catalog.RoomRepository.Requests;
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
 using System;
@@ -12,7 +13,7 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
     public interface IRoomRepo
     {
         public Task<PageResult<RoomDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(RoomEntity request);
+        public Task<int> CreateOrUpdate(CreateOrUpdateRoomRequest request);
         public Task<int> Delete(int id);
     }
 }

@@ -91,18 +91,6 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.ToTable("ContractEntities");
                 });
 
-            modelBuilder.Entity("Dormitory.Domain.AppEntities.ContractInfoEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContractInfoEntities");
-                });
-
             modelBuilder.Entity("Dormitory.Domain.AppEntities.CriteriaConfigEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -173,10 +161,10 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmptySlot")
+                    b.Property<int?>("EmptySlot")
                         .HasColumnType("int");
 
-                    b.Property<int>("FilledSlot")
+                    b.Property<int?>("FilledSlot")
                         .HasColumnType("int");
 
                     b.Property<int>("MaxSlot")

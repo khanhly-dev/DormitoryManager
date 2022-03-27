@@ -1,4 +1,5 @@
 ﻿using Dormitory.Admin.Application.Catalog.RoomRepository.Dtos;
+using Dormitory.Admin.Application.Catalog.RoomRepository.Requests;
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
         {
             _dbContext = dbContext;
         }
-        public async Task<int> CreateOrUpdate(RoomEntity request)
+        public async Task<int> CreateOrUpdate(CreateOrUpdateRoomRequest request)
         {
             var room = new RoomEntity()
             {
@@ -28,8 +29,8 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                 AreaId = request.AreaId,
                 MaxSlot = request.MaxSlot,
                 MinSlot = request.MinSlot,
-                FilledSlot = request.FilledSlot,
-                EmptySlot = request.MaxSlot - request.FilledSlot,
+                FilledSlot = request.FilledSlot.HasValue ? request.FilledSlot.Value : 0,
+                EmptySlot = request.FilledSlot.HasValue ? request.MaxSlot - request.FilledSlot.Value : request.MaxSlot,
             };
             if (room.Id == 0)
             {
@@ -81,8 +82,8 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                     AreaId = x.r.AreaId,
                     AreaName = x.a.Name,
                     MaxSlot = x.r.MaxSlot,
-                    FilledSlot = x.r.FilledSlot,
-                    MinSlot = x.r.MinSlot ?? -1,
+                    FilledSlot = x.r.FilledSlot.Value,
+                    MinSlot = x.r.MinSlot ?? 0,
                 }).ToListAsync();
 
             var pageResult = new PageResult<RoomDto>()

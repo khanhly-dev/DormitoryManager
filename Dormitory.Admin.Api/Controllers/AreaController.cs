@@ -2,6 +2,7 @@
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -22,6 +23,12 @@ namespace Dormitory.Admin.Api.Controllers
             var listArea = await _areaRepo.GetList(request);
             return Ok(listArea);
         }
+        [HttpGet("get-list-select")]
+        public async Task<IActionResult> GetListAreaSelect()
+        {
+            var listArea = await _areaRepo.GetListAreaSelect();
+            return Ok(listArea);
+        }
         [HttpPost("create-or-update")]
         public async Task<IActionResult> CreateOrUpdateArea([FromForm] AreaEntity request)
         {
@@ -35,7 +42,7 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(responseStatus);
+            return Ok(new { responseStatus });
         }
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteArea([FromQuery] int id)
@@ -50,7 +57,7 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(responseStatus);
+            return Ok(new { responseStatus });
         }
     }
 }

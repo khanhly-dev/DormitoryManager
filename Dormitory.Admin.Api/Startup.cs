@@ -75,7 +75,7 @@ namespace Dormitory.Admin.Api
             services.AddTransient<IStudentRepo, StudentRepo>();
             services.AddTransient<IContractTimeConfigRepo, ContractTimeConfigRepo>();
 
-
+            services.AddDirectoryBrowser();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -92,10 +92,17 @@ namespace Dormitory.Admin.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dormitory.Admin.Api v1"));
             }
-            app.UseCors(MyAllowSpecificorigin);
+            app.UseHttpsRedirection();
 
             app.UseRouting();
-
+          
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+            });
+            app.UseCors(MyAllowSpecificorigin);
             app.UseAuthentication();
 
             app.UseAuthorization();

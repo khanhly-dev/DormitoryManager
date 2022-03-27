@@ -76,9 +76,15 @@ namespace Dormitory.Core.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dormitory.Core.Api v1"));
             }
-            app.UseCors(MyAllowSpecificorigin);
 
             app.UseRouting();
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+            });
+            app.UseCors(MyAllowSpecificorigin);
 
             app.UseAuthentication();
 

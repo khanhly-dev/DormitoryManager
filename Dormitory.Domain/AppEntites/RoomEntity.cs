@@ -14,7 +14,7 @@ namespace Dormitory.Domain.AppEntities
         public int AreaId { get; set; }
         public int MaxSlot { get; set; }
         public int? MinSlot { get; set; }
-        public int EmptySlot { get; set; }
-        public int FilledSlot { get; set; }
+        public int? EmptySlot { get; set; }
+        public int? FilledSlot { get; set; }
     }
 }

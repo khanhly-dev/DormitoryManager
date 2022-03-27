@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AreaComponent } from './area/area.component';
 import { RoomComponent } from './room/room.component';
 import { FacilityComponent } from './facility/facility.component';
@@ -19,7 +22,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -41,7 +48,14 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzDropDownModule,
     NzTableModule,
     NzButtonModule,
-    NzPaginationModule
+    NzPaginationModule,
+    NzModalModule,
+    NzFormModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzInputNumberModule,
+    NzInputModule,
+    NzSelectModule
   ]
 })
 export class MainModule { }

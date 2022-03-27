@@ -1,3 +1,26 @@
+<button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')"><span>Thêm mới</span></button>
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Tên khu</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên khu">
+                    <input nz-input formControlName="name"/>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7">Tổng số phòng</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-input-number formControlName="totalRoom" [nzStep]="1" style="width: 100%"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+
+        </form>
+    </ng-container>
+</nz-modal>
+
 <nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined">
     <thead>
         <tr>
@@ -13,7 +36,7 @@
             <td>{{ data.name }}</td>
             <td>{{ data.totalRoom }}</td>
             <td>
-                <button nz-button nzSize="small" nzType="primary">Sửa</button>&nbsp;
+                <button nz-button nzSize="small" nzType="primary" (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
                 <button nz-button nzSize="small" nzDanger nzType="primary" (click)="deleteArea(data.id)">Xoá</button>
             </td>
         </tr>

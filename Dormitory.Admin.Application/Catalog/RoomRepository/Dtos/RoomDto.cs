@@ -22,6 +22,6 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository.Dtos
                 return (int)(MaxSlot - FilledSlot);
             }
         }
-        public int FilledSlot { get; set; }
+        public int? FilledSlot { get; set; }
     }
 }

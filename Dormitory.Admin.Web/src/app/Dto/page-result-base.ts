@@ -1,4 +1,4 @@
-export interface pageResultBase<T> {
+export interface PageResultBase<T> {
     pageIndex: number;
     pageSize: number;
     totalRecords: number;

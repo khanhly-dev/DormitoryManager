@@ -20,6 +20,7 @@ namespace Dormitory.Admin.Application.Catalog.AreaRepository
         }
         public async Task<int> CreateOrUpdate(AreaEntity request)
         {
+            
             var area = new AreaEntity()
             {
                 Id = request.Id,
@@ -71,7 +72,7 @@ namespace Dormitory.Admin.Application.Catalog.AreaRepository
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    TotalRoom = x.TotalRoom ?? -1,
+                    TotalRoom = x.TotalRoom ?? 0,
                 }).ToListAsync();
 
             var pageResult = new PageResult<AreaDto>()
@@ -82,6 +83,20 @@ namespace Dormitory.Admin.Application.Catalog.AreaRepository
                 Items = data
             };
             return pageResult;
+        }
+
+        public async Task<List<AreaSelectDto>> GetListAreaSelect()
+        {
+            var query = from a in _dbContext.AreaEntities
+                        select a;
+
+            var data = await query.Select(x => new AreaSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+            }).ToListAsync();
+
+            return data;
         }
     }
 }
