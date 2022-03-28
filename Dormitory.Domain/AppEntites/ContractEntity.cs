@@ -9,13 +9,15 @@ namespace Dormitory.Domain.AppEntities
     public class ContractEntity
     {
         public int Id { get; set; }
+        public string ContractCode { get; set; }
+        public DateTime DateCreated { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public int? RoomId { get; set; }
+        public int? DesiredRoomId { get; set; }
         public int StudentId { get; set; }
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
         public int? AdminConfirmStatus { get; set; }
         public int? StudentConfirmStatus { get; set; }
-        public int ContractInfoId { get; set; }
     }
 }

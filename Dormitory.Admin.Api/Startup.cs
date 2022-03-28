@@ -1,4 +1,5 @@
 using Dormitory.Admin.Application.Catalog.AreaRepository;
+using Dormitory.Admin.Application.Catalog.ContractRepositoty;
 using Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository;
 using Dormitory.Admin.Application.Catalog.CriteriaRepository;
 using Dormitory.Admin.Application.Catalog.FacilityRepository;
@@ -74,6 +75,7 @@ namespace Dormitory.Admin.Api
             services.AddTransient<ICriteriaRepo, CriteriaRepo>();
             services.AddTransient<IStudentRepo, StudentRepo>();
             services.AddTransient<IContractTimeConfigRepo, ContractTimeConfigRepo>();
+            services.AddTransient<IContractRepo, ContractRepo>();
 
             services.AddDirectoryBrowser();
             services.AddControllers();

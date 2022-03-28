@@ -16,3 +16,5 @@ D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormito
 D:\Project\DormitoryManager\Dormitory.Admin.Application\obj\Debug\net5.0\Dormitory.Admin.Application.csproj.CopyComplete
 D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.dll
 D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.pdb
+D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.Domain.Shared.dll
+D:\Project\DormitoryManager\Dormitory.Admin.Application\bin\Debug\net5.0\Dormitory.Domain.Shared.pdb

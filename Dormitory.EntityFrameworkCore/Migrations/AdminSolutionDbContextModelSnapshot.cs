@@ -65,7 +65,13 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<int?>("AdminConfirmStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("ContractInfoId")
+                    b.Property<string>("ContractCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DesiredRoomId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("FromDate")
@@ -74,7 +80,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceId")
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<int?>("StudentConfirmStatus")
@@ -286,6 +292,9 @@ namespace Dormitory.EntityFrameworkCore.Migrations
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Point")
+                        .HasColumnType("int");
 
                     b.Property<string>("RelativeName")
                         .HasColumnType("nvarchar(max)");

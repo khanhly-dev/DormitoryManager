@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "fb5ddef0-609a-4d2e-ad11-35c26b54b9d9"
+    "analytics": "6c85e050-561c-4fd2-b45d-fb59e02f8649"
   },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Dormitory.Student.Web": {
+    "Dormitory.Admin.Web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,14 +20,19 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dormitory.student.web",
+            "outputPath": "dist/dormitory.admin.web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "src/styles.css",
@@ -72,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Dormitory.Student.Web:build:production"
+              "browserTarget": "Dormitory.Admin.Web:build:production"
             },
             "development": {
-              "browserTarget": "Dormitory.Student.Web:build:development"
+              "browserTarget": "Dormitory.Admin.Web:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Dormitory.Student.Web:build"
+            "browserTarget": "Dormitory.Admin.Web:build"
           }
         },
         "test": {
@@ -98,7 +103,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
             ],
             "scripts": []
           }
@@ -106,5 +112,5 @@
       }
     }
   },
-  "defaultProject": "Dormitory.Student.Web"
+  "defaultProject": "Dormitory.Admin.Web"
 }

@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dormitory.Domain.Shared\Dormitory.Domain.Shared.csproj" />
     <ProjectReference Include="..\Dormitory.EntityFrameworkCore\Dormitory.EntityFrameworkCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Catalog\ContractRepositoty\" />
   </ItemGroup>
 
 </Project>

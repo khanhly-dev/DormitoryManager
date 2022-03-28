@@ -7,12 +7,12 @@ import { LayoutComponent } from './layout/layout.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AreaComponent } from './area/area.component';
-import { RoomComponent } from './room/room.component';
-import { FacilityComponent } from './facility/facility.component';
-import { CriteriaComponent } from './criteria/criteria.component';
-import { ContractTimeConfigComponent } from './contract-time-config/contract-time-config.component';
-import { ServiceComponent } from './service/service.component';
+import { AreaComponent } from './base-categories/area/area.component';
+import { RoomComponent } from './base-categories/room/room.component';
+import { FacilityComponent } from './base-categories/facility/facility.component';
+import { CriteriaComponent } from './base-categories/criteria/criteria.component';
+import { ContractTimeConfigComponent } from './base-categories/contract-time-config/contract-time-config.component';
+import { ServiceComponent } from './base-categories/service/service.component';
 
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -30,6 +30,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { ContractPendingComponent } from './manage/contract-pending/contract-pending.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     FacilityComponent,
     CriteriaComponent,
     ContractTimeConfigComponent,
-    ServiceComponent
+    ServiceComponent,
+    ContractPendingComponent
   ],
   imports: [
     CommonModule,

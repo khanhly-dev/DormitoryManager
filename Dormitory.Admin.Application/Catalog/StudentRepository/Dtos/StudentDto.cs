@@ -24,5 +24,6 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository.Dtos
         public string RelativePhone { get; set; }
         public string Ethnic { get; set; }
         public string Religion { get; set; }
+        public int? Point { get; set; }
     }
 }

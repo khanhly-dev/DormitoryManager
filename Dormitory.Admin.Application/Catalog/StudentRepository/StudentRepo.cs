@@ -38,6 +38,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 RelativePhone = request.RelativePhone,
                 Religion = request.Religion,
                 StudentCode = request.StudentCode,
+                Point = request.Point.HasValue ? request.Point.Value : 0,
             };
             if (student.Id == 0)
             {
@@ -98,6 +99,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                     Class = x.Class,
                     Gender = x.Gender,
                     StudentCode = x.StudentCode,
+                    Point = x.Point,
                 }).ToListAsync();
 
             var pageResult = new PageResult<StudentDto>()

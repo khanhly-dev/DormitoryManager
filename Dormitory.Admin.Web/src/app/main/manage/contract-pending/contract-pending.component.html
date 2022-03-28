@@ -1,0 +1,69 @@
+<div nz-row>
+    <div nz-col nzSpan="12">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch/>
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search" (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
+        </ng-template>
+    </div>
+</div>
+<br>
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Tên khu</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên khu">
+                    <input nz-input formControlName="name" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7">Tổng số phòng</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-input-number formControlName="totalRoom" [nzStep]="1" style="width: 100%"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+
+        </form>
+    </ng-container>
+</nz-modal>
+
+<nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined" [nzFrontPagination]="false"> 
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ngày đăng ký</th>
+            <th>Mã đơn đăng kí</th>
+            <th>Tên sinh viên</th>
+            <th>Mã sinh viên</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Phòng mong muốn</th>
+            <th>Điểm</th>
+            <th>Trạng thái duyệt</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.id }}</td>
+            <td>{{ data.dateCreated }}</td>
+            <td>{{ data.contractCode }}</td>
+            <td>{{ data.studentName }}</td>
+            <td>{{ data.studentCode }}</td>
+            <td>{{ data.studentPhone }}</td>
+            <td>{{ data.adress }}</td>
+            <td>{{ data.desiredRoomName }}</td>
+            <td>{{ data.point }}</td>
+            <td>{{ data.adminConfirmStatus }}</td>
+            <td>
+                <button nz-button nzSize="small" nzDanger nzType="primary" (click)="deleteContract(data.id)">Xoá</button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<nz-pagination *ngIf="listArea != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listArea.totalRecords" [nzPageSize]="10" 
+(nzPageIndexChange)="getListContractPending('', pageIndex, 10)"></nz-pagination>
