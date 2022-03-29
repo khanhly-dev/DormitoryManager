@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dormitory.Domain.AppEntities
+namespace Dormitory.Student.Application.Catalog.SignUpDormitory.Requests
 {
-    public class StudentCritatiaEntity
+    public class SetStudentPointRepuest
     {
-        public int Id { get; set; }
         public int StudentId { get; set; }
-        public int CritariaId { get; set; }
+        public List<int> ListCriteriaId { get; set; }
     }
 }

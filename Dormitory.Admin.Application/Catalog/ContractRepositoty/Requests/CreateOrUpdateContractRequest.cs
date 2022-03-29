@@ -12,7 +12,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Requests
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public int? RoomId { get; set; }
-        public int? DesiredRoomId { get; set; }
+        public float? DesiredPrice { get; set; }
         public int StudentId { get; set; }
         public int? ServiceId { get; set; }
         public int? AdminConfirmStatus { get; set; }

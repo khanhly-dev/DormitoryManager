@@ -11,7 +11,7 @@ import { ContracConfigServiceProxy } from 'src/app/service/admin-service/contrac
 export class ContractTimeConfigComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
-  listArea!: PageResultBase<ContractConfig>;
+  listContractConfigPending!: PageResultBase<ContractConfig>;
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
@@ -30,7 +30,7 @@ export class ContractTimeConfigComponent implements OnInit {
 
   getListConfig(keyWord: string, pageIndex: number, pageSize: number) {
     this.contractConfigService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
-      this.listArea = x;
+      this.listContractConfigPending = x;
     })
   }
 

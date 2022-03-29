@@ -64,8 +64,7 @@ export interface ContractPendingDto {
     id: number;
     contractCode: string;
     dateCreated: Date;
-    desiredRoomId: number;
-    desiredRoomName: string;
+    desiredPrice: number;
     studentId: number;
     studentName: string;
     studentCode: string;

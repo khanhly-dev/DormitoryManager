@@ -1360,6 +1360,7 @@
       },
       "Dormitory.Student.Application/1.0.0": {
         "dependencies": {
+          "Dormitory.Domain.Shared": "1.0.0",
           "Dormitory.EntityFrameworkCore": "1.0.0"
         },
         "runtime": {

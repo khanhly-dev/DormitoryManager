@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Dormitory.Student.Application\Dormitory.Student.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

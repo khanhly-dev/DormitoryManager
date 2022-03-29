@@ -304,6 +304,9 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
+              "D:\\Project\\DormitoryManager\\Dormitory.Domain.Shared\\Dormitory.Domain.Shared.csproj": {
+                "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.Domain.Shared\\Dormitory.Domain.Shared.csproj"
+              },
               "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj": {
                 "projectPath": "D:\\Project\\DormitoryManager\\Dormitory.EntityFrameworkCore\\Dormitory.EntityFrameworkCore.csproj"
               }

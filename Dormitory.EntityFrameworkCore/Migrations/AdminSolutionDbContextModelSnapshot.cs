@@ -71,8 +71,8 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DesiredRoomId")
-                        .HasColumnType("int");
+                    b.Property<float?>("DesiredPrice")
+                        .HasColumnType("real");
 
                     b.Property<DateTime?>("FromDate")
                         .HasColumnType("datetime2");
@@ -235,7 +235,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.ToTable("ServiceEntities");
                 });
 
-            modelBuilder.Entity("Dormitory.Domain.AppEntities.StudentCritatiaEntity", b =>
+            modelBuilder.Entity("Dormitory.Domain.AppEntities.StudentCriteriaEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudentCritatiaEntities");
+                    b.ToTable("StudentCriteriaEntities");
                 });
 
             modelBuilder.Entity("Dormitory.Domain.AppEntities.StudentEntity", b =>

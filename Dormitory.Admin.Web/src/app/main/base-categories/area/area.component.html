@@ -39,7 +39,7 @@
 <nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined" [nzFrontPagination]="false"> 
     <thead>
         <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên khu</th>
             <th>Tổng số phòng</th>
             <th>Thao tác</th>
@@ -47,7 +47,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of basicTable.data">
-            <td>{{ data.id }}</td>
+            <td>{{ listArea.items.indexOf(data) + 1}}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.totalRoom }}</td>
             <td>

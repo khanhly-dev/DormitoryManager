@@ -11,7 +11,7 @@ import { CriteriaServiceProxy } from 'src/app/service/admin-service/criteria-ser
 export class CriteriaComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
-  listArea!: PageResultBase<CriteriaDto>;
+  listCriteria!: PageResultBase<CriteriaDto>;
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
@@ -30,7 +30,7 @@ export class CriteriaComponent implements OnInit {
 
   getListCriteria(keyWord: string, pageIndex: number, pageSize: number) {
     this.criteriaService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
-      this.listArea = x;
+      this.listCriteria = x;
     })
   }
 

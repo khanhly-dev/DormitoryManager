@@ -29,7 +29,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 FromDate = request.FromDate,
                 ToDate = request.ToDate,  
                 RoomId = request.RoomId,
-                DesiredRoomId = request.DesiredRoomId,
+                DesiredPrice = request.DesiredPrice,
                 StudentId = request.StudentId,
                 ServiceId = request.ServiceId,
                 AdminConfirmStatus = request.AdminConfirmStatus.HasValue ? request.AdminConfirmStatus.Value : DataConfigConstant.adminConfirmStatusFalse,
@@ -72,7 +72,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     FromDate = x.FromDate,
                     ToDate = x.ToDate,
                     RoomId = x.RoomId,
-                    DesiredRoomId = x.DesiredRoomId,
+                    DesiredPrice = x.DesiredPrice,
                     StudentId = x.StudentId,
                     ServiceId = x.ServiceId,
                     AdminConfirmStatus = x.AdminConfirmStatus,
@@ -93,10 +93,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         {
             var query = from a in _dbContext.ContractEntities
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
-                        join r in _dbContext.RoomEntities on a.DesiredRoomId equals r.Id into ra
-                        from r in ra.DefaultIfEmpty()
                         where a.AdminConfirmStatus == DataConfigConstant.adminConfirmStatusFalse
-                        select new { a, s, r};
+                        select new { a, s};
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -113,8 +111,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Id = x.a.Id,
                     ContractCode = x.a.ContractCode,
                     DateCreated = x.a.DateCreated,
-                    DesiredRoomId = x.a.DesiredRoomId,
-                    DesiredRoomName = x.r == null ? null : x.r.Name,
+                    DesiredPrice = x.a.DesiredPrice,
                     StudentId = x.a.StudentId,
                     StudentName = x.s.Name,
                     StudentCode = x.s.StudentCode,

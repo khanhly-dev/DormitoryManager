@@ -11,7 +11,7 @@ import { ServiceServiceProxy } from 'src/app/service/admin-service/service-servi
 export class ServiceComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
-  listArea!: PageResultBase<ServiceDto>;
+  listService!: PageResultBase<ServiceDto>;
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
@@ -30,7 +30,7 @@ export class ServiceComponent implements OnInit {
 
   getListService(keyWord: string, pageIndex: number, pageSize: number) {
     this.serviceService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
-      this.listArea = x;
+      this.listService = x;
     })
   }
 

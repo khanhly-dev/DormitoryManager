@@ -11,7 +11,7 @@ import { FacilityServiceProxy } from 'src/app/service/admin-service/facility-ser
 export class FacilityComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
-  listArea!: PageResultBase<FacilityDto>;
+  listFacility!: PageResultBase<FacilityDto>;
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
@@ -31,7 +31,7 @@ export class FacilityComponent implements OnInit {
 
   getListFacility(keyWord: string, pageIndex: number, pageSize: number) {
     this.facilityService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
-      this.listArea = x;
+      this.listFacility = x;
     })
   }
 

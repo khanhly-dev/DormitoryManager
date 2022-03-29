@@ -14,8 +14,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public DateTime? ToDate { get; set; }
         public int? RoomId { get; set; }
         public string RoomName { get; set; }
-        public int? DesiredRoomId { get; set; }
-        public string DesiredRoomName { get; set; }
+        public float? DesiredPrice { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
         public int? ServiceId { get; set; }

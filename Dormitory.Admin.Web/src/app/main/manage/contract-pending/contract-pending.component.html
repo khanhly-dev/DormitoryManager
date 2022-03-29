@@ -31,17 +31,17 @@
     </ng-container>
 </nz-modal>
 
-<nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined" [nzFrontPagination]="false"> 
+<nz-table #basicTable [nzData]="listContractPending.items" *ngIf="listContractPending != undefined" [nzFrontPagination]="false"> 
     <thead>
         <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Ngày đăng ký</th>
             <th>Mã đơn đăng kí</th>
             <th>Tên sinh viên</th>
             <th>Mã sinh viên</th>
             <th>Số điện thoại</th>
             <th>Địa chỉ</th>
-            <th>Phòng mong muốn</th>
+            <th>Giá phòng mong muốn</th>
             <th>Điểm</th>
             <th>Trạng thái duyệt</th>
             <th>Thao tác</th>
@@ -49,14 +49,14 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of basicTable.data">
-            <td>{{ data.id }}</td>
+            <td>{{ listContractPending.items.indexOf(data) + 1  }}</td>
             <td>{{ data.dateCreated }}</td>
             <td>{{ data.contractCode }}</td>
             <td>{{ data.studentName }}</td>
             <td>{{ data.studentCode }}</td>
             <td>{{ data.studentPhone }}</td>
             <td>{{ data.adress }}</td>
-            <td>{{ data.desiredRoomName }}</td>
+            <td>{{ data.desiredPrice }}</td>
             <td>{{ data.point }}</td>
             <td>{{ data.adminConfirmStatus }}</td>
             <td>
@@ -65,5 +65,5 @@
         </tr>
     </tbody>
 </nz-table>
-<nz-pagination *ngIf="listArea != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listArea.totalRecords" [nzPageSize]="10" 
+<nz-pagination *ngIf="listContractPending != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listContractPending.totalRecords" [nzPageSize]="10" 
 (nzPageIndexChange)="getListContractPending('', pageIndex, 10)"></nz-pagination>

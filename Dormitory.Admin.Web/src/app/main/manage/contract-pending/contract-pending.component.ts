@@ -12,7 +12,7 @@ import { ContracServiceProxy } from 'src/app/service/admin-service/contract-serv
 export class ContractPendingComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
-  listArea!: PageResultBase<ContractPendingDto>;
+  listContractPending!: PageResultBase<ContractPendingDto>;
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
@@ -31,7 +31,7 @@ export class ContractPendingComponent implements OnInit {
 
   getListContractPending(keyWord: string, pageIndex: number, pageSize: number) {
     this.contractService.getListContractPending(keyWord, pageIndex, pageSize).subscribe(x => {
-      this.listArea = x;
+      this.listContractPending = x;
     })
   }
 

@@ -1591,6 +1591,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "Dormitory.Domain.Shared": "1.0.0",
           "Dormitory.EntityFrameworkCore": "1.0.0"
         },
         "compile": {

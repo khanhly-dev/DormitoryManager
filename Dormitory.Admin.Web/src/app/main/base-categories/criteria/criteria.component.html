@@ -36,10 +36,10 @@
     </ng-container>
 </nz-modal>
 
-<nz-table #basicTable [nzData]="listArea.items" *ngIf="listArea != undefined" [nzFrontPagination]="false">
+<nz-table #basicTable [nzData]="listCriteria.items" *ngIf="listCriteria != undefined" [nzFrontPagination]="false">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>STT</th>
             <th>Tên tiêu chuẩn</th>
             <th>Số điểm</th>
             <th>Thao tác</th>
@@ -47,7 +47,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of basicTable.data">
-            <td>{{ data.id }}</td>
+            <td>{{ listCriteria.items.indexOf(data) + 1}}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.point }}</td>
             <td>
@@ -57,5 +57,5 @@
         </tr>
     </tbody>
 </nz-table>
-<nz-pagination *ngIf="listArea != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listArea.totalRecords" [nzPageSize]="10" 
+<nz-pagination *ngIf="listCriteria != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listCriteria.totalRecords" [nzPageSize]="10" 
 (nzPageIndexChange)="getListCriteria('', pageIndex, 10)"></nz-pagination>

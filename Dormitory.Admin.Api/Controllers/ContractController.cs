@@ -34,7 +34,7 @@ namespace Dormitory.Admin.Api.Controllers
         {
             var responseStatus = "";
             var result = await _contractRepo.Create(request);
-            if (result == 1)
+            if (result > 0)
             {
                 responseStatus = "success";
             }
@@ -49,7 +49,7 @@ namespace Dormitory.Admin.Api.Controllers
         {
             var responseStatus = "";
             var result = await _contractRepo.Delete(id);
-            if (result == 1)
+            if (result > 0)
             {
                 responseStatus = "success";
             }

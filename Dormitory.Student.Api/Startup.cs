@@ -1,4 +1,6 @@
 using Dormitory.Domain.Shared.Constant;
+using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
+using Dormitory.Student.Application.Catalog.SignUpDormitory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -54,6 +56,12 @@ namespace Dormitory.Student.Api
                     );
             });
 
+            services.AddDbContext<AdminSolutionDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("AdminDatabase")));
+
+            services.AddTransient<ISignUpDormitoryRepo, SignUpDormitoryRepo>();
+
+            services.AddDirectoryBrowser();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -70,7 +78,8 @@ namespace Dormitory.Student.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dormitory.Student.Api v1"));
             }
-           
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseCors(builder =>

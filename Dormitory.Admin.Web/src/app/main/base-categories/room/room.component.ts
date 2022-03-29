@@ -12,7 +12,7 @@ import { RoomServiceProxy } from 'src/app/service/admin-service/room-service-pro
 export class RoomComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
-  listArea!: PageResultBase<RoomDto>;
+  listRoom!: PageResultBase<RoomDto>;
   areaSelect : BaseSelectDto[] = [];
   pageIndex: number = 1;
   pageSize!: number;
@@ -40,7 +40,7 @@ export class RoomComponent implements OnInit {
 
   getListRoom(keyWord: string, pageIndex: number, pageSize: number) {
     this.roomService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
-      this.listArea = x;
+      this.listRoom = x;
     })
   }
 
