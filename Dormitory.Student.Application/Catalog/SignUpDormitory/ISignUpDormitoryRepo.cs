@@ -1,4 +1,5 @@
-﻿using Dormitory.Student.Application.Catalog.SignUpDormitory.Requests;
+﻿using Dormitory.Student.Application.Catalog.SignUpDormitory.Dtos;
+using Dormitory.Student.Application.Catalog.SignUpDormitory.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
     {
         Task<int> SignUp(SignUpRequest request);
         Task<int> SetStudentPoint(SetStudentPointRepuest request);
+        Task<List<CriteriaDto>> GetListCriteria();
     }
 }

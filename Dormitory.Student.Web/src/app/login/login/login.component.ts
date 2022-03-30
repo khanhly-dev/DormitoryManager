@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
           if (x.isLoginSuccess && x.access_token !== null && x.access_token !== undefined && x.access_token !== "") {
             localStorage.setItem("access_token", x.access_token);
             localStorage.setItem("user", x.userName);
+            localStorage.setItem("userId", x.userId.toString());
             setTimeout(() => {
               alert("Phiên đăng nhập đã hết hạn")
               localStorage.clear();

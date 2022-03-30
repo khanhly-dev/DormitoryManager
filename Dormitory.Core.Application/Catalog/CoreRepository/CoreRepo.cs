@@ -62,6 +62,7 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
 
                 return new LoginStatusDto
                 {
+                    UserId = user.Id,
                     UserName = user.UserName,
                     Access_token = tokenJson,
                     IsLoginSuccess = true
@@ -70,6 +71,7 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
             {
                 return new LoginStatusDto
                 {
+                    UserId = 0,
                     UserName = null,
                     Access_token = null,
                     IsLoginSuccess = false,

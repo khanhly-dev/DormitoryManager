@@ -45,5 +45,11 @@ namespace Dormitory.Student.Api.Controllers
             }
             return Ok(new { responseStatus });
         }
+        [HttpGet("get-list-criteria")]
+        public async Task<IActionResult> GetListCriteria()
+        {
+            var listCriteria = await _signUpDormitoryRepo.GetListCriteria();
+            return Ok(listCriteria);
+        }
     }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
 import { LayoutComponent } from './layout/layout.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,10 +24,13 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [
     LayoutComponent,
+    SignUpComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +52,9 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     NzInputModule,
     NzSelectModule,
     NzGridModule,
-    NzAvatarModule
+    NzAvatarModule,
+    NzCardModule,
+    NzCheckboxModule
   ]
 })
 export class MainModule { }

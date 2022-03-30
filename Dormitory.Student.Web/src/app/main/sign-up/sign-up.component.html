@@ -1,0 +1,111 @@
+<h2 style="text-align: center;">ĐƠN ĐĂNG KÝ Ở KÝ TÚC XÁ</h2>
+<div nz-row>
+    <div nz-col nzSpan="4">
+    </div>
+    <div nz-col nzSpan="16">
+        <div style="background: #ECECEC;padding:30px;">
+            <nz-card [nzBordered]="false">
+                <div nz-row [nzGutter]="24">
+                    <!-- cot 1 -->
+                    <div nz-col class="gutter-row" [nzSpan]="8" *ngIf="student">
+                        <div class="inner-box">
+                            <div class="label-margin">
+                                <b>Họ và tên:</b>
+                                <input nz-input [value]="student.name" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Ngày sinh:</b>
+                                <input nz-input [value]="student.dob" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Tôn giáo:</b>
+                                <input nz-input [value]="student.religion" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Sinh viên lớp:</b>
+                                <input nz-input [value]="student.class" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Điện thoại:</b>
+                                <input nz-input [value]="student.phone" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Nơi đăng ký hộ khẩu thường trú:</b>
+                                <input nz-input [value]="student.baseAdress" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Người liên hệ:</b>
+                                <input nz-input [value]="student.relativeName" readonly nzBorderless />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- cot 2 -->
+                    <div nz-col class="gutter-row" [nzSpan]="8" *ngIf="student">
+                        <div class="inner-box">
+                            <div class="label-margin">
+                                <b>Giới tính:</b>
+                                <input nz-input [value]="student.gender" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Dân tộc:</b>
+                                <input nz-input [value]="student.ethnic" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Khoá:</b>
+                                <input nz-input [value]="student.academicYear" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Mã sinh viên:</b>
+                                <input nz-input [value]="student.studentCode" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Email:</b>
+                                <input nz-input [value]="student.email" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Địa chỉ:</b>
+                                <input nz-input [value]="student.adress" readonly nzBorderless />
+                            </div>
+                            <div class="label-margin">
+                                <b>Điện thoại:</b>
+                                <input nz-input [value]="student.relativePhone" readonly nzBorderless />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- cot 3 -->
+                    <div nz-col class="gutter-row" [nzSpan]="8">
+                        <div class="inner-box">
+                            <p style="text-indent: 30px">Tôi đã nghiên cứu bản Quy chế công tác sinh viên tại Học viên Ngân hàng được ban hành kèm
+                                theo quyết định số 784/QĐ-HVNH ngày 24/7/2020
+                                của Giám đốc Học viện Ngân hàng.</p><br>
+                            <p style="text-indent: 30px">Tôi đề nghị Giám đốc trung tâm Hỗ trợ đào tạo xem xét tiếp nhận đơn và xét duyệt cho tôi
+                                được vào kí túc xá.</p>
+                            <br>
+                            <p style="text-indent: 30px">Tôi cam kết thực hiện tốt và đầy đủ của sinh viên ký túc xá đã quy định trong văn bản và
+                                nội quy, quy định của Học viện Ngân hàng</p>
+                                <br>
+                            <button nz-button nzType="primary" style="width: 100%; height: 50px;">Xác nhận đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </nz-card>
+            <nz-card [nzBordered]="false">
+                <div nz-row [nzGutter]="24">
+                    <!-- cot 1 -->
+                    <div nz-col class="gutter-row" [nzSpan]="16">
+                        <div class="inner-box">
+                            <nz-checkbox-group [(ngModel)]="listCriteria" ></nz-checkbox-group>
+                            <button (click)="test()"> asfaf</button>
+                        </div>
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="8">
+                        <div class="inner-box">
+                        </div>
+                    </div>
+                </div>
+            </nz-card>
+        </div>
+    </div>
+    <div nz-col nzSpan="4">
+    </div>
+</div>

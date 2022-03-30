@@ -1,6 +1,7 @@
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Dormitory.Student.Application.Catalog.SignUpDormitory;
+using Dormitory.Student.Application.Catalog.StudentInfoRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -60,6 +61,7 @@ namespace Dormitory.Student.Api
             options.UseSqlServer(Configuration.GetConnectionString("AdminDatabase")));
 
             services.AddTransient<ISignUpDormitoryRepo, SignUpDormitoryRepo>();
+            services.AddTransient<IStudentInfoRepo, StudentInfoRepo>();
 
             services.AddDirectoryBrowser();
             services.AddControllers();

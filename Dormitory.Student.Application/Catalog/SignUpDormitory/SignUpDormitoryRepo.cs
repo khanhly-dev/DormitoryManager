@@ -1,6 +1,7 @@
 ﻿using Dormitory.Domain.AppEntities;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
+using Dormitory.Student.Application.Catalog.SignUpDormitory.Dtos;
 using Dormitory.Student.Application.Catalog.SignUpDormitory.Requests;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -76,5 +77,18 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
             return await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<List<CriteriaDto>> GetListCriteria()
+        {
+            var query = from c in _dbContext.CriteriaConfigEntities
+                        select c;
+
+            var data = await query.Select(x => new CriteriaDto
+            {
+                Label = x.Name,
+                Value = x.Id
+            }).ToListAsync();
+
+            return data;
+        }
     }
 }
