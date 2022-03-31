@@ -15,6 +15,8 @@ export class SignUpComponent implements OnInit {
   userId : number = 0;
   DesiredPrice : number = 0;
   listCriteriaIdSelected : number[] = [];
+  listPrice : number [] = [];
+  desiredPrice! : number;
 
   constructor(private studentService: StudentServiceProxy, private signUpService: SignUpServiceProxy) {}
 
@@ -25,6 +27,7 @@ export class SignUpComponent implements OnInit {
     }
     this.getStudentByUserId(this.userId);
     this.getListCriteria();
+    this.getRecomendPrice();
   }
 
   getStudentByUserId(userId : number)
@@ -39,14 +42,29 @@ export class SignUpComponent implements OnInit {
       this.listCriteria = x;
     })
   }
+
+  getRecomendPrice()
+  {
+    this.studentService.getRecomendPrice().subscribe(x => {
+      this.listPrice = x;
+    })
+  }
   submitContractPending()
   {
     this.listCriteriaIdSelected = this.listCriteria.filter(x => x.checked == true).map(x => x.value)
-  }
-
-  test()
-  {
-    this.submitContractPending()
-    console.log(this.listCriteriaIdSelected)
+    if(this.listCriteriaIdSelected.length > 0)
+    {
+      this.signUpService.setStudentPoint(this.student.id, this.listCriteriaIdSelected.toString()).subscribe();
+    }
+    this.signUpService.signUpDormitory(this.student.id, this.desiredPrice).subscribe(x => {
+      if(x.responseStatus == "success")
+      {
+        alert("Gửi đơn đăng ký thành công")
+      }
+      else
+      {
+        alert("Gửi đơn đăng ký thất bại")
+      }
+    });
   }
 }

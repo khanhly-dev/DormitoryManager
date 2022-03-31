@@ -2,6 +2,8 @@
 using Dormitory.Student.Application.Catalog.SignUpDormitory.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Dormitory.Student.Api.Controllers
@@ -31,9 +33,13 @@ namespace Dormitory.Student.Api.Controllers
             return Ok(new { responseStatus });
         }
         [HttpPost("set-student-point")]
-        public async Task<IActionResult> SetStudentPoint([FromForm] SetStudentPointRepuest request)
+        public async Task<IActionResult> SetStudentPoint([FromForm] int studentId, [FromForm] string listCriteriaId)
         {
             var responseStatus = "";
+            var listIdResult = listCriteriaId.Split(',').Select(x => Int32.Parse(x)).ToList();
+            var request = new SetStudentPointRepuest();
+            request.StudentId = studentId;
+            request.ListCriteriaId = listIdResult;
             var result = await _signUpDormitoryRepo.SetStudentPoint(request);
             if (result > 0)
             {

@@ -53,6 +53,11 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 return 0;
             }
             var studentPoint = 0;
+            //xoa tat ca ban ghi cham diem cu
+            var listStudentCriteria =  _dbContext.StudentCriteriaEntities.AsNoTracking();
+            _dbContext.StudentCriteriaEntities.RemoveRange(listStudentCriteria);
+            await _dbContext.SaveChangesAsync();
+
             foreach (var item in request.ListCriteriaId)
             {
                 //luu thong tin uu tien cua sinh vien vao db

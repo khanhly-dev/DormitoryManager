@@ -9,6 +9,7 @@
                     <!-- cot 1 -->
                     <div nz-col class="gutter-row" [nzSpan]="8" *ngIf="student">
                         <div class="inner-box">
+                            <h4>Thông tin sinh viên</h4>
                             <div class="label-margin">
                                 <b>Họ và tên:</b>
                                 <input nz-input [value]="student.name" readonly nzBorderless />
@@ -42,6 +43,7 @@
                     <!-- cot 2 -->
                     <div nz-col class="gutter-row" [nzSpan]="8" *ngIf="student">
                         <div class="inner-box">
+                            <h4>.</h4>
                             <div class="label-margin">
                                 <b>Giới tính:</b>
                                 <input nz-input [value]="student.gender" readonly nzBorderless />
@@ -75,27 +77,41 @@
                     <!-- cot 3 -->
                     <div nz-col class="gutter-row" [nzSpan]="8">
                         <div class="inner-box">
-                            <p style="text-indent: 30px">Tôi đã nghiên cứu bản Quy chế công tác sinh viên tại Học viên Ngân hàng được ban hành kèm
+                            <p style="text-indent: 30px">Tôi đã nghiên cứu bản Quy chế công tác sinh viên tại Học viên
+                                Ngân hàng được ban hành kèm
                                 theo quyết định số 784/QĐ-HVNH ngày 24/7/2020
                                 của Giám đốc Học viện Ngân hàng.</p><br>
-                            <p style="text-indent: 30px">Tôi đề nghị Giám đốc trung tâm Hỗ trợ đào tạo xem xét tiếp nhận đơn và xét duyệt cho tôi
+                            <p style="text-indent: 30px">Tôi đề nghị Giám đốc trung tâm Hỗ trợ đào tạo xem xét tiếp nhận
+                                đơn và xét duyệt cho tôi
                                 được vào kí túc xá.</p>
                             <br>
-                            <p style="text-indent: 30px">Tôi cam kết thực hiện tốt và đầy đủ của sinh viên ký túc xá đã quy định trong văn bản và
+                            <p style="text-indent: 30px">Tôi cam kết thực hiện tốt và đầy đủ của sinh viên ký túc xá đã
+                                quy định trong văn bản và
                                 nội quy, quy định của Học viện Ngân hàng</p>
-                                <br>
-                            <button nz-button nzType="primary" style="width: 100%; height: 50px;">Xác nhận đăng ký</button>
+                            <br>
+                            <button nz-button nzType="primary" style="width: 100%; height: 50px;"
+                                (click)="submitContractPending()">
+                                Xác nhận đăng ký
+                            </button>
                         </div>
                     </div>
                 </div>
             </nz-card>
             <nz-card [nzBordered]="false">
                 <div nz-row [nzGutter]="24">
-                    <!-- cot 1 -->
                     <div nz-col class="gutter-row" [nzSpan]="16">
                         <div class="inner-box">
-                            <nz-checkbox-group [(ngModel)]="listCriteria" ></nz-checkbox-group>
-                            <button (click)="test()"> asfaf</button>
+                            <h4>Chọn đối tượng ưu tiên</h4>
+                            <nz-checkbox-group [(ngModel)]="listCriteria"></nz-checkbox-group>
+                            <br><br>
+                            <div class="label-margin">
+                                <b>Mức giá phòng mong muốn:</b>
+                                <br>
+                                <nz-select [(ngModel)]="desiredPrice" style="width: 100%;">
+                                    <nz-option *ngFor="let item of listPrice" [nzValue]="item"
+                                        [nzLabel]="item | currency : 'VND'"></nz-option>
+                                </nz-select>
+                            </div>
                         </div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="8">

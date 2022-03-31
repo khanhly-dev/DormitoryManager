@@ -3,8 +3,22 @@
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="horizontal">
             <li nz-menu-item routerLink="sign-up">Đơn đăng kí</li>
-            <li nz-menu-item>nav 2</li>
-            <li nz-menu-item>nav 3</li>
+            <li nz-menu-item>Xác nhận phòng ở</li>
+            <li nz-menu-item>Gia hạn hợp đồng</li>
+            <li nz-menu-item>Theo dõi tiền phòng</li>
+            <li nz-menu-item>Theo dõi tiền điện nước</li>
+            <div style="float: right; margin-right: 40px;">
+                <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
+                <a nz-dropdown [nzDropdownMenu]="menu">
+                    {{userName}}
+                    <i nz-icon nzType="down"></i>
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu nzSelectable>
+                        <li nz-menu-item (click)="logOut()">Đăng xuất</li>
+                    </ul>
+                </nz-dropdown-menu>
+            </div>
         </ul>
     </nz-header>
     <br>

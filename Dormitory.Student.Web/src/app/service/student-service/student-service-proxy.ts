@@ -21,4 +21,9 @@ export class StudentServiceProxy {
         url = url.replace(/[?&]$/, "");
         return this.http.get<StudentInfoDto>(url, { headers: headers, observe: 'body', responseType: 'json' });
     }
+    getRecomendPrice(): Observable<number[]> {
+        let url = this.baseUrl + `/api/student/get-room-price-range`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<number[]>(url, { headers: headers, observe: 'body', responseType: 'json' });
+    }
 }
