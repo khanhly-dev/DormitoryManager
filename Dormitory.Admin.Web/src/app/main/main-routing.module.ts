@@ -9,6 +9,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { RoomComponent } from './base-categories/room/room.component';
 import { ServiceComponent } from './base-categories/service/service.component';
 import { ContractPendingComponent } from './manage/contract-pending/contract-pending.component';
+import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'room', component: RoomComponent, canActivate: [AuthGuardService] },
       { path: 'contract-config', component: ContractTimeConfigComponent, canActivate: [AuthGuardService] },
       { path: 'contract-pending', component: ContractPendingComponent, canActivate: [AuthGuardService] },
+      { path: 'waiting-room', component: WaitingRoomComponent, canActivate: [AuthGuardService] },
     ]
   },
 ];

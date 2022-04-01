@@ -11,8 +11,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository
 {
     public interface IContractTimeConfigRepo
     {
-        public Task<PageResult<ContractTimeConfigDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(ContractTimeConfigEntity request);
-        public Task<int> Delete(int id);
+        Task<PageResult<ContractTimeConfigDto>> GetList(PageRequestBase request);
+        Task<int> CreateOrUpdate(ContractTimeConfigEntity request);
+        Task<int> Delete(int id);
     }
 }

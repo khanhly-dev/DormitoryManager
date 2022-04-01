@@ -11,8 +11,8 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
 {
     public interface IFacilityRepo
     {
-        public Task<PageResult<FacilityDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(FacilityEntity request);
-        public Task<int> Delete(int id);
+        Task<PageResult<FacilityDto>> GetList(PageRequestBase request);
+        Task<int> CreateOrUpdate(FacilityEntity request);
+        Task<int> Delete(int id);
     }
 }

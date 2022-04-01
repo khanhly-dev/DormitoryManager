@@ -1,29 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContractDto, ContractPendingDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { ContracServiceProxy } from 'src/app/service/admin-service/contract-service-proxy';
 
 @Component({
-  selector: 'app-contract-pending',
-  templateUrl: './contract-pending.component.html',
-  styleUrls: ['./contract-pending.component.css']
+  selector: 'app-waiting-room',
+  templateUrl: './waiting-room.component.html',
+  styleUrls: ['./waiting-room.component.css']
 })
-export class ContractPendingComponent implements OnInit {
+export class WaitingRoomComponent implements OnInit {
   modalTitle: string = "";
-  validateForm!: FormGroup;
   listContractPending!: PageResultBase<ContractPendingDto>;
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
   isSpinning = false;
 
-  constructor(private contractService: ContracServiceProxy, private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      minPoint: [[Validators.required]],
-      maxPoint: [[Validators.required]],
-      confirmStatus: [[Validators.required]],
-    });
+  constructor(private contractService: ContracServiceProxy) {
+
   }
 
   ngOnInit(): void {
@@ -44,22 +38,16 @@ export class ContractPendingComponent implements OnInit {
     })
   }
 
-  showModal(modalTitle: string): void {
-    this.modalTitle = modalTitle;
-    this.isVisible = true;
+  showModal(modalTitle: string, data?: ContractDto): void {
+    
   }
 
   handleOk(): void {
-    this.submitForm();
     this.isVisible = false;
   }
 
   handleCancel(): void {
     this.isVisible = false;
-  }
-
-  submitForm(): void {
-    this.adminConfirmAll(this.validateForm.value);
   }
 
   adminConfirm(contractId: number, confirmStatus: number) {

@@ -20,6 +20,37 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         {
             _dbContext = dbContext;
         }
+
+        public async Task<int> AdminConfirmAllContract(int minPoint, int maxPoint, int confirmStatus)
+        {
+            var query = from a in _dbContext.ContractEntities
+                        join s in _dbContext.StudentEntities on a.StudentId equals s.Id
+                        where s.Point >= minPoint && s.Point < maxPoint
+                        select new { a, s };
+
+            query.Select(x => x.s.Point);
+
+            foreach (var item in query)
+            {
+                item.a.AdminConfirmStatus = confirmStatus;
+            }
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> AdminConfirmContract(int contractId, int confirmStatus)
+        {
+            var contract = await _dbContext.ContractEntities.FindAsync(contractId);
+            if(contract != null)
+            {
+                contract.AdminConfirmStatus = confirmStatus;
+                return await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public async Task<int> Create(CreateOrUpdateContractRequest request)
         {
             var criterial = new ContractEntity()
@@ -32,8 +63,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 DesiredPrice = request.DesiredPrice,
                 StudentId = request.StudentId,
                 ServiceId = request.ServiceId,
-                AdminConfirmStatus = request.AdminConfirmStatus.HasValue ? request.AdminConfirmStatus.Value : DataConfigConstant.adminConfirmStatusFalse,
-                StudentConfirmStatus = request.StudentConfirmStatus.HasValue ? request.StudentConfirmStatus : DataConfigConstant.studetnConfirmStatusFalse,
+                AdminConfirmStatus = request.AdminConfirmStatus.HasValue ? request.AdminConfirmStatus.Value : DataConfigConstant.contractConfirmStatusPending,
+                StudentConfirmStatus = request.StudentConfirmStatus.HasValue ? request.StudentConfirmStatus : DataConfigConstant.contractConfirmStatusPending,
             };
             
             _dbContext.ContractEntities.Add(criterial);
@@ -93,8 +124,11 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         {
             var query = from a in _dbContext.ContractEntities
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
-                        where a.AdminConfirmStatus == DataConfigConstant.adminConfirmStatusFalse
-                        select new { a, s};
+                        join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
+                        from r in  ra.DefaultIfEmpty()
+                        join e in _dbContext.AreaEntities on r.AreaId equals e.Id into re
+                        from e in re.DefaultIfEmpty()
+                        select new { a, s, r, e};
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -119,7 +153,13 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Gender = x.s.Gender,
                     Adress = x.s.Adress,
                     AdminConfirmStatus = x.a.AdminConfirmStatus,
-                    Point = x.s.Point
+                    StudentConfirmStatus = x.a.StudentConfirmStatus,
+                    RoomId = x.a.RoomId,
+                    RoomName = x.r != null ? x.r.Name : null,
+                    AreaName = x.e != null ? x.e.Name : null,
+                    Point = x.s.Point,
+                    AcademicYear = x.s.AcademicYear
+                    
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()

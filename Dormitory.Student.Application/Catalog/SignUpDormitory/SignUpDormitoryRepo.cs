@@ -37,8 +37,8 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 DateCreated = DateTime.Now,
                 DesiredPrice = request.DesiredPrice,
                 StudentId = request.StudentId,
-                AdminConfirmStatus = DataConfigConstant.adminConfirmStatusFalse,
-                StudentConfirmStatus = DataConfigConstant.studetnConfirmStatusFalse,
+                AdminConfirmStatus = DataConfigConstant.contractConfirmStatusPending,
+                StudentConfirmStatus = DataConfigConstant.contractConfirmStatusPending,
             };
 
             _dbContext.ContractEntities.Add(criterial);

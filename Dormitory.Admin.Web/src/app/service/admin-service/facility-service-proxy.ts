@@ -5,29 +5,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { FacilityDto, RoomDto } from 'src/app/dto/output-dto';
 
-const headers = new HttpHeaders({
-    "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
-})
-
 @Injectable({ providedIn: 'root' })
 export class FacilityServiceProxy {
     private baseUrl: string;
+    private headers!: HttpHeaders
 
     constructor(private http: HttpClient) {
         this.baseUrl = "https://localhost:44332";
+        this.headers = new HttpHeaders({
+            "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
+        })
     }
 
     getList(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<FacilityDto>> {
         let url = this.baseUrl + `/api/facility/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
-        return this.http.get<PageResultBase<FacilityDto>>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.get<PageResultBase<FacilityDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/facility/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
 
-        return this.http.delete<any>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     createOrUpdate(data: any): Observable<any> {
@@ -44,6 +44,6 @@ export class FacilityServiceProxy {
         if (data.status !== null || data.status !== undefined)
             content.append("status", data.status);
 
-        return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 }

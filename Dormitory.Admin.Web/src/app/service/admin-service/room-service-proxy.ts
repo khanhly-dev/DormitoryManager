@@ -5,29 +5,28 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { RoomDto } from 'src/app/dto/output-dto';
 
-const headers = new HttpHeaders({
-    "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
-})
-
 @Injectable({ providedIn: 'root' })
 export class RoomServiceProxy {
     private baseUrl: string;
+    private headers!: HttpHeaders
 
     constructor(private http: HttpClient) {
         this.baseUrl = "https://localhost:44332";
+        this.headers = new HttpHeaders({
+            "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
+        })
     }
-
     getList(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<RoomDto>> {
         let url = this.baseUrl + `/api/room/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
-        return this.http.get<PageResultBase<RoomDto>>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.get<PageResultBase<RoomDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/room/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
 
-        return this.http.delete<any>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     createOrUpdate(data: any): Observable<any> {
@@ -50,6 +49,6 @@ export class RoomServiceProxy {
         if (data.filledSlot !== null || data.filledSlot !== undefined)
             content.append("price", data.filledSlot);
 
-        return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 }

@@ -13,9 +13,13 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
 {
     public interface IContractRepo
     {
-        public Task<PageResult<ContractDto>> GetList(PageRequestBase request);
-        public Task<PageResult<ContractPendingDto>> GetListContractPending(PageRequestBase request);
-        public Task<int> Create(CreateOrUpdateContractRequest request);
-        public Task<int> Delete(int id);
+        Task<PageResult<ContractDto>> GetList(PageRequestBase request);
+        Task<PageResult<ContractPendingDto>> GetListContractPending(PageRequestBase request);
+        Task<int> Create(CreateOrUpdateContractRequest request);
+        Task<int> Delete(int id);
+        Task<int> AdminConfirmContract(int contractId, int confirmStatus);
+        Task<int> AdminConfirmAllContract(int minPoint, int maxPoint, int confirmStatus);
+
+
     }
 }

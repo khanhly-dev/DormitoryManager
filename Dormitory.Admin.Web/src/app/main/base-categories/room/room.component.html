@@ -1,103 +1,109 @@
-<div nz-row>
-    <div nz-col nzSpan="12">
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-            <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch/>
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-            <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search" (click)="getListRoom(inputSearch.value, 1, 10)"></i></button>
-        </ng-template>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListRoom(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+        <div nz-col nzSpan="12">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+                <span>Thêm mới</span>
+            </button>
+        </div>
     </div>
-    <div nz-col nzSpan="12">
-        <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
-            <span>Thêm mới</span>
-        </button>
-    </div>
-</div>
-<br>
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-    <ng-container *nzModalContent>
-        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <br>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Tên phòng</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên phòng">
-                    <input nz-input formControlName="name" />
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Tên phòng</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên phòng">
+                        <input nz-input formControlName="name" />
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Giá phòng</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập giá phòng">
-                    <nz-input-number formControlName="price" [nzStep]="1" style="width: 100%"></nz-input-number>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Giá phòng</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập giá phòng">
+                        <nz-input-number formControlName="price" [nzStep]="1" style="width: 100%"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Khu</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy khu của tên phòng">
-                    <nz-select formControlName="areaId">
-                        <nz-option *ngFor="let item of areaSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-                    </nz-select>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Khu</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy khu của tên phòng">
+                        <nz-select formControlName="areaId">
+                            <nz-option *ngFor="let item of areaSelect" [nzValue]="item.id" [nzLabel]="item.name">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Sức chứa lớn nhất</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập sức chứa lớn nhất">
-                    <nz-input-number formControlName="maxSlot" [nzStep]="1" style="width: 100%"></nz-input-number>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Sức chứa lớn nhất</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập sức chứa lớn nhất">
+                        <nz-input-number formControlName="maxSlot" [nzStep]="1" style="width: 100%"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7">Sức chứa nhỏ nhất</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                    <nz-input-number formControlName="minSlot" [nzStep]="1" style="width: 100%"></nz-input-number>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Sức chứa nhỏ nhất</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <nz-input-number formControlName="minSlot" [nzStep]="1" style="width: 100%"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7">Đã có người ở</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                    <nz-input-number formControlName="filledSlot" [nzStep]="1" style="width: 100%"></nz-input-number>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Đã có người ở</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <nz-input-number formControlName="filledSlot" [nzStep]="1" style="width: 100%">
+                        </nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
 
 
-        </form>
-    </ng-container>
-</nz-modal>
+            </form>
+        </ng-container>
+    </nz-modal>
 
-<nz-table #basicTable [nzData]="listRoom.items" *ngIf="listRoom != undefined" [nzFrontPagination]="false">
-    <thead>
-        <tr>
-            <th>STT</th>
-            <th>Tên phòng</th>
-            <th>Giá phòng</th>
-            <th>Khu</th>
-            <th nzWidth="120px">Sức chứa tối đa</th>
-            <th nzWidth="120px">Sức chứa tối thiểu</th>
-            <th nzWidth="120px">Còn trống</th>
-            <th nzWidth="120px">Đã có người ở</th>
-            <th>Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let data of basicTable.data">
-            <td>{{ listRoom.items.indexOf(data) + 1 }}</td>
-            <td>{{ data.name }}</td>
-            <td>{{ data.price | currency : "VND"}}</td>
-            <td>{{ data.areaName }}</td>
-            <td>{{ data.maxSlot }}</td>
-            <td>{{ data.minSlot }}</td>
-            <td>{{ data.emptySlot }}</td>
-            <td>{{ data.filledSlot }}</td>
-            <td>
-                <button nz-button nzSize="small" nzType="primary"
-                    (click)="showModal('Sửa thông tin phòng', data)">Sửa</button>&nbsp;
-                <button nz-button nzSize="small" nzDanger nzType="primary" (click)="deleteRoom(data.id)">Xoá</button>
-            </td>
-        </tr>
-    </tbody>
-</nz-table>
-<nz-pagination *ngIf="listRoom != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listRoom.totalRecords" [nzPageSize]="10" 
-(nzPageIndexChange)="getListRoom('', pageIndex, 10)"></nz-pagination>
+    <nz-table #basicTable [nzData]="listRoom.items" *ngIf="listRoom != undefined" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên phòng</th>
+                <th>Giá phòng</th>
+                <th>Khu</th>
+                <th nzWidth="120px">Sức chứa tối đa</th>
+                <th nzWidth="120px">Sức chứa tối thiểu</th>
+                <th nzWidth="120px">Còn trống</th>
+                <th nzWidth="120px">Đã có người ở</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ listRoom.items.indexOf(data) + 1 }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.price | currency : "VND"}}</td>
+                <td>{{ data.areaName }}</td>
+                <td>{{ data.maxSlot }}</td>
+                <td>{{ data.minSlot }}</td>
+                <td>{{ data.emptySlot }}</td>
+                <td>{{ data.filledSlot }}</td>
+                <td>
+                    <button nz-button nzSize="small" nzType="primary"
+                        (click)="showModal('Sửa thông tin phòng', data)">Sửa</button>&nbsp;
+                    <button nz-button nzSize="small" nzDanger nzType="primary"
+                        (click)="deleteRoom(data.id)">Xoá</button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listRoom != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listRoom.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListRoom('', pageIndex, 10)"></nz-pagination>
+</nz-spin>

@@ -1,0 +1,76 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+        <div nz-col nzSpan="12">
+            <button nz-button [nzType]="'primary'" style="float: right;" (click)="showModal('Cấu hình duyệt tự động')">
+                <span>Duyệt tự động</span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            
+        </ng-container>
+    </nz-modal>
+
+    <nz-table #basicTable [nzData]="listContractPending.items" *ngIf="listContractPending != undefined"
+        [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Khoá</th>
+                <th>Mã sinh viên</th>
+                <th>Tên sinh viên</th>
+                <th>Giới tính</th>
+                <th>Số điện thoại</th>
+                <th>Giá phòng mong muốn</th>
+                <th>Khu ở</th>
+                <th>Phòng ở</th>
+                <th>Trạng thái SV xác nhận</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ listContractPending.items.indexOf(data) + 1 }}</td>
+                <td>{{ data.academicYear }}</td>
+                <td>{{ data.studentCode }}</td>
+                <td>{{ data.studentName }}</td>
+                <td *ngIf="data.gender == 1">Nam</td>
+                <td *ngIf="data.gender == 0">Nữ</td>
+                <td>{{ data.studentPhone }}</td>
+                <td>{{ data.desiredPrice | currency : "VND"}}</td>
+                <td>{{ data.areaName }}</td>
+                <td>{{ data.roomName }}</td>
+                <td *ngIf="data.studentConfirmStatus == 0">Chờ duyệt</td>
+                <td *ngIf="data.studentConfirmStatus == 1">Từ chối</td>
+                <td *ngIf="data.studentConfirmStatus == 2">Chấp nhận</td>
+                <td>
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                        <i nz-icon nzType="bars" nzTheme="outline"></i>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item (click)="adminConfirm(data.id, 2)">Chấp nhận</li>
+                            <li nz-menu-item (click)="adminConfirm(data.id, 1)">Từ chối</li>
+                            <li nz-menu-item nzDanger (click)="deleteContract(data.id)">Xoá</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listContractPending != undefined" [(nzPageIndex)]="pageIndex"
+        [nzTotal]="listContractPending.totalRecords" [nzPageSize]="10"
+        (nzPageIndexChange)="getListContractPending('', pageIndex, 10)">
+    </nz-pagination>
+</nz-spin>

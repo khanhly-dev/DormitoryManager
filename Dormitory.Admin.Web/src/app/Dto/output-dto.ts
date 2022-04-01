@@ -73,4 +73,9 @@ export interface ContractPendingDto {
     gender: number;
     point: number;
     adminConfirmStatus: number;
+    studentConfirmStatus: number;
+    roomId: number;
+    roomName: number;
+    areaName: number;
+    academicYear: string
 }

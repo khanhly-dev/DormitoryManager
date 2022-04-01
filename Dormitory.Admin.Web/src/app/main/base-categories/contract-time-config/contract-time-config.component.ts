@@ -15,6 +15,7 @@ export class ContractTimeConfigComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  isSpinning = false;
 
   constructor(private contractConfigService: ContracConfigServiceProxy, private fb: FormBuilder) {
     this.validateForm = this.fb.group({
@@ -29,8 +30,10 @@ export class ContractTimeConfigComponent implements OnInit {
   }
 
   getListConfig(keyWord: string, pageIndex: number, pageSize: number) {
+    this.isSpinning = true;
     this.contractConfigService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
       this.listContractConfigPending = x;
+      this.isSpinning = false;
     })
   }
 

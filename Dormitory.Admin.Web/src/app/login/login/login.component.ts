@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
       let formValue = this.validateForm.value;
       this.loginService.login(formValue.userName, formValue.password, 1)
         .subscribe((x) => {
-          console.log(x)
           if (x.isLoginSuccess && x.access_token !== null && x.access_token !== undefined && x.access_token !== "") {
             localStorage.setItem("access_token", x.access_token);
             localStorage.setItem("user", x.userName);

@@ -17,6 +17,7 @@ export class RoomComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  isSpinning = false;
 
   constructor(
     private roomService: RoomServiceProxy, 
@@ -39,8 +40,10 @@ export class RoomComponent implements OnInit {
   }
 
   getListRoom(keyWord: string, pageIndex: number, pageSize: number) {
+    this.isSpinning = true;
     this.roomService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
       this.listRoom = x;
+      this.isSpinning = false;
     })
   }
 

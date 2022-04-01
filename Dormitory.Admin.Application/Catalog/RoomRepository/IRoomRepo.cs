@@ -12,8 +12,8 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
 {
     public interface IRoomRepo
     {
-        public Task<PageResult<RoomDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(CreateOrUpdateRoomRequest request);
-        public Task<int> Delete(int id);
+        Task<PageResult<RoomDto>> GetList(PageRequestBase request);
+        Task<int> CreateOrUpdate(CreateOrUpdateRoomRequest request);
+        Task<int> Delete(int id);
     }
 }

@@ -11,8 +11,8 @@ namespace Dormitory.Admin.Application.Catalog.CriteriaRepository
 {
     public interface ICriteriaRepo
     {
-        public Task<PageResult<CriteriaDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(CriteriaConfigEntity request);
-        public Task<int> Delete(int id);
+        Task<PageResult<CriteriaDto>> GetList(PageRequestBase request);
+        Task<int> CreateOrUpdate(CriteriaConfigEntity request);
+        Task<int> Delete(int id);
     }
 }

@@ -15,6 +15,7 @@ export class CriteriaComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  isSpinning = false;
 
   constructor(private criteriaService: CriteriaServiceProxy, private fb: FormBuilder) {
     this.validateForm = this.fb.group({
@@ -29,8 +30,10 @@ export class CriteriaComponent implements OnInit {
   }
 
   getListCriteria(keyWord: string, pageIndex: number, pageSize: number) {
+    this.isSpinning = true;
     this.criteriaService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
       this.listCriteria = x;
+      this.isSpinning = false;
     })
   }
 

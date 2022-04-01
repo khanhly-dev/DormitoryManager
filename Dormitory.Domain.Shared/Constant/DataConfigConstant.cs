@@ -14,9 +14,8 @@ namespace Dormitory.Domain.Shared.Constant
         public static int female = 0;
         public static int male = 1;
 
-        public static int adminConfirmStatusFalse = 0;
-        public static int adminConfirmStatusTrue = 1;
-        public static int studetnConfirmStatusTrue = 1;
-        public static int studetnConfirmStatusFalse = 0;
+        public static int contractConfirmStatusPending = 0;
+        public static int contractConfirmStatusReject = 1;
+        public static int contractConfirmStatusApprove = 2;
     }
 }

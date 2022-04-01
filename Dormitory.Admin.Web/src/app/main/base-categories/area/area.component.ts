@@ -15,6 +15,7 @@ export class AreaComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  isSpinning = false;
 
   constructor(private areaService: AreaServiceProxy, private fb: FormBuilder) {
     this.validateForm = this.fb.group({
@@ -29,20 +30,26 @@ export class AreaComponent implements OnInit {
   }
 
   getListArea(keyWord: string, pageIndex: number, pageSize: number) {
+    this.isSpinning = true;
     this.areaService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
       this.listArea = x;
+      this.isSpinning = false
     })
   }
 
   deleteArea(id: number) {
+    this.isSpinning = true;
     this.areaService.delete(id).subscribe(() => {
       this.getListArea("", this.pageIndex, 10)
+      this.isSpinning = false
     })
   }
 
   createOrUpdateArea(data: any) {
+    this.isSpinning = true
     this.areaService.createOrUpdate(data).subscribe(x => {
       this.getListArea("", this.pageIndex, 10)
+      this.isSpinning = false
     })
   }
 

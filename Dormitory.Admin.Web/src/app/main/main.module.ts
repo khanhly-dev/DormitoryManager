@@ -13,6 +13,7 @@ import { FacilityComponent } from './base-categories/facility/facility.component
 import { CriteriaComponent } from './base-categories/criteria/criteria.component';
 import { ContractTimeConfigComponent } from './base-categories/contract-time-config/contract-time-config.component';
 import { ServiceComponent } from './base-categories/service/service.component';
+import { ContractPendingComponent } from './manage/contract-pending/contract-pending.component';
 
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -30,7 +31,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { ContractPendingComponent } from './manage/contract-pending/contract-pending.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ContractPendingComponent } from './manage/contract-pending/contract-pen
     CriteriaComponent,
     ContractTimeConfigComponent,
     ServiceComponent,
-    ContractPendingComponent
+    ContractPendingComponent,
+    WaitingRoomComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +66,8 @@ import { ContractPendingComponent } from './manage/contract-pending/contract-pen
     NzInputModule,
     NzSelectModule,
     NzGridModule,
-    NzAvatarModule
+    NzAvatarModule,
+    NzSpinModule
   ]
 })
 export class MainModule { }

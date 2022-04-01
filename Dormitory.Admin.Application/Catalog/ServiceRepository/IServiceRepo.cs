@@ -11,8 +11,8 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
 {
     public interface IServiceRepo
     {
-        public Task<PageResult<ServiceDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(ServiceEntity request);
-        public Task<int> Delete(int id);
+        Task<PageResult<ServiceDto>> GetList(PageRequestBase request);
+        Task<int> CreateOrUpdate(ServiceEntity request);
+        Task<int> Delete(int id);
     }
 }

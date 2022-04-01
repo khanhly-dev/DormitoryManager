@@ -59,5 +59,35 @@ namespace Dormitory.Admin.Api.Controllers
             }
             return Ok(new { responseStatus });
         }
+        [HttpPost("admin-confirm")]
+        public async Task<IActionResult> AdminConfirmContract([FromForm]int contractId, [FromForm]int confirmStatus)
+        {
+            var responseStatus = "";
+            var result = await _contractRepo.AdminConfirmContract(contractId, confirmStatus);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+        [HttpPost("admin-all-confirm")]
+        public async Task<IActionResult> AdminConfirmAllContract([FromForm] int minPoint, [FromForm] int maxPoint, [FromForm] int confirmStatus)
+        {
+            var responseStatus = "";
+            var result = await _contractRepo.AdminConfirmAllContract(minPoint, maxPoint, confirmStatus);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
     }
 }

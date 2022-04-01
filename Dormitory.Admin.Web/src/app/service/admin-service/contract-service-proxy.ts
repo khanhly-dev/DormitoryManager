@@ -5,35 +5,35 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { ContractConfig, ContractDto, ContractPendingDto } from 'src/app/dto/output-dto';
 
-const headers = new HttpHeaders({
-    "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
-})
-
 @Injectable({ providedIn: 'root' })
 export class ContracServiceProxy {
     private baseUrl: string;
+    private headers!: HttpHeaders
 
     constructor(private http: HttpClient) {
         this.baseUrl = "https://localhost:44332";
+        this.headers = new HttpHeaders({
+            "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
+        })
     }
 
     getList(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<ContractDto>> {
         let url = this.baseUrl + `/api/contract/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
-        return this.http.get<PageResultBase<ContractDto>>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.get<PageResultBase<ContractDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     getListContractPending(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<ContractPendingDto>> {
         let url = this.baseUrl + `/api/contract/get-list-contract-pending?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
-        return this.http.get<PageResultBase<ContractPendingDto>>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.get<PageResultBase<ContractPendingDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/contract/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
 
-        return this.http.delete<any>(url, { headers: headers, observe: 'body', responseType: 'json' });
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     createOrUpdate(data: any): Observable<any> {
@@ -58,6 +58,34 @@ export class ContracServiceProxy {
         if (data.studentConfirmStatus !== null || data.studentConfirmStatus !== undefined)
             content.append("studentConfirmStatus", data.studentConfirmStatus);
 
-        return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
+
+    adminConfirmContract(contractId: any, confirmStatus: any): Observable<any> {
+        let url = this.baseUrl + "/api/contract/admin-confirm";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (contractId !== null && contractId !== undefined)
+            content.append("contractId", contractId);
+        if (confirmStatus !== null && confirmStatus !== undefined)
+            content.append("confirmStatus", confirmStatus);
+
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
+
+    adminConfirmAllContract(data: any,): Observable<any> {
+        let url = this.baseUrl + "/api/contract/admin-all-confirm";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (data.minPoint !== null && data.minPoint !== undefined)
+            content.append("minPoint", data.minPoint);
+        if (data.maxPoint !== null && data.maxPoint !== undefined)
+            content.append("maxPoint", data.maxPoint);
+        if (data.confirmStatus !== null && data.confirmStatus !== undefined)
+            content.append("confirmStatus", data.confirmStatus);
+
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 }

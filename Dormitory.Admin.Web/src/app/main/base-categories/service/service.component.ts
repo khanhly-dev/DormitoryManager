@@ -15,6 +15,7 @@ export class ServiceComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  isSpinning = false;
 
   constructor(private serviceService: ServiceServiceProxy, private fb: FormBuilder) {
     this.validateForm = this.fb.group({
@@ -29,8 +30,10 @@ export class ServiceComponent implements OnInit {
   }
 
   getListService(keyWord: string, pageIndex: number, pageSize: number) {
+    this.isSpinning = true;
     this.serviceService.getList(keyWord, pageIndex, pageSize).subscribe(x => {
       this.listService = x;
+      this.isSpinning = false;
     })
   }
 

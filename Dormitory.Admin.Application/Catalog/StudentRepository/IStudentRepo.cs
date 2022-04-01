@@ -11,8 +11,8 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
 {
     public interface IStudentRepo
     {
-        public Task<PageResult<StudentDto>> GetList(PageRequestBase request);
-        public Task<int> CreateOrUpdate(StudentEntity request);
-        public Task<int> Delete(int id);
+        Task<PageResult<StudentDto>> GetList(PageRequestBase request);
+        Task<int> CreateOrUpdate(StudentEntity request);
+        Task<int> Delete(int id);
     }
 }

@@ -1,70 +1,77 @@
-<div nz-row>
-    <div nz-col nzSpan="12">
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-            <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch/>
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-            <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search" (click)="getListFacility(inputSearch.value, 1, 10)"></i></button>
-        </ng-template>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListFacility(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+        <div nz-col nzSpan="12">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+                <span>Thêm mới</span>
+            </button>
+        </div>
     </div>
-    <div nz-col nzSpan="12">
-        <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
-            <span>Thêm mới</span>
-        </button>
-    </div>
-</div>
-<br>
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-    <ng-container *nzModalContent>
-        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <br>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Tên cơ sở vật chất</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên cơ sở vật chất">
-                    <input nz-input formControlName="name"/>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Tên cơ sở vật chất</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên cơ sở vật chất">
+                        <input nz-input formControlName="name" />
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Tổng số lượng</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tổng số lượng">
-                    <nz-input-number formControlName="totalCount" [nzStep]="1" style="width: 100%"></nz-input-number>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Tổng số lượng</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tổng số lượng">
+                        <nz-input-number formControlName="totalCount" [nzStep]="1" style="width: 100%">
+                        </nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-label [nzSpan]="7" nzRequired>Trạng thái</nz-form-label>
-                <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập trạng thái">
-                    <input nz-input formControlName="status"/>
-                </nz-form-control>
-            </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Trạng thái</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập trạng thái">
+                        <input nz-input formControlName="status" />
+                    </nz-form-control>
+                </nz-form-item>
 
-        </form>
-    </ng-container>
-</nz-modal>
+            </form>
+        </ng-container>
+    </nz-modal>
 
-<nz-table #basicTable [nzData]="listFacility.items" *ngIf="listFacility != undefined" [nzFrontPagination]="false">
-    <thead>
-        <tr>
-            <th>STT</th>
-            <th>Tên cơ sở vật chất</th>
-            <th>Tổng số lượng</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let data of basicTable.data">
-            <td>{{ listFacility.items.indexOf(data) + 1}}</td>
-            <td>{{ data.name }}</td>
-            <td>{{ data.totalCount }}</td>
-            <td>{{ data.status }}</td>
-            <td>
-                <button nz-button nzSize="small" nzType="primary" (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
-                <button nz-button nzSize="small" nzDanger nzType="primary" (click)="deleteFacility(data.id)">Xoá</button>
-            </td>
-        </tr>
-    </tbody>
-</nz-table>
-<nz-pagination *ngIf="listFacility != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listFacility.totalRecords" [nzPageSize]="10" 
-(nzPageIndexChange)="getListFacility('', pageIndex, 10)"></nz-pagination>
+    <nz-table #basicTable [nzData]="listFacility.items" *ngIf="listFacility != undefined" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên cơ sở vật chất</th>
+                <th>Tổng số lượng</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ listFacility.items.indexOf(data) + 1}}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.totalCount }}</td>
+                <td>{{ data.status }}</td>
+                <td>
+                    <button nz-button nzSize="small" nzType="primary"
+                        (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
+                    <button nz-button nzSize="small" nzDanger nzType="primary"
+                        (click)="deleteFacility(data.id)">Xoá</button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listFacility != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listFacility.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListFacility('', pageIndex, 10)"></nz-pagination>
+
+</nz-spin>

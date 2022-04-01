@@ -13,6 +13,9 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public DateTime DateCreated { get; set; }
         public float? DesiredPrice { get; set; }
         public int StudentId { get; set; }
+        public int? RoomId { get; set; }
+        public string RoomName { get; set; }
+        public string AreaName { get; set; }
         public string StudentName { get; set; }
         public int Gender { get; set; }
         public string StudentPhone { get; set; }
@@ -20,5 +23,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public string Adress { get; set; }
         public int? Point { get; set; }
         public int? AdminConfirmStatus { get; set; }
+        public int? StudentConfirmStatus { get; set; }
+        public string AcademicYear { get; set; }
     }
 }
