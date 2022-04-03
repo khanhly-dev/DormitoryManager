@@ -47,7 +47,7 @@ export class RoomServiceProxy {
         if (data.minSlot !== null || data.minSlot !== undefined)
             content.append("price", data.minSlot);
         if (data.filledSlot !== null || data.filledSlot !== undefined)
-            content.append("price", data.filledSlot);
+            content.append("filledSlot", data.filledSlot);
         if (data.avaiableSlot !== null || data.avaiableSlot !== undefined)
             content.append("avaiableSlot", data.avaiableSlot);
 
