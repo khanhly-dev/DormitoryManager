@@ -20,8 +20,8 @@ export class ContractPendingComponent implements OnInit {
 
   constructor(private contractService: ContracServiceProxy, private fb: FormBuilder) {
     this.validateForm = this.fb.group({
-      minPoint: [[Validators.required]],
-      maxPoint: [[Validators.required]],
+      minPoint: [0,[Validators.required]],
+      maxPoint: [0,[Validators.required]],
       confirmStatus: [[Validators.required]],
     });
   }

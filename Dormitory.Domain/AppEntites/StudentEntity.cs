@@ -19,7 +19,7 @@ namespace Dormitory.Domain.AppEntities
         public string Email { get; set; }
         public string Major { get; set; }
         public int Gender { get; set; }
-        public string AcademicYear { get; set; }
+        public int AcademicYear { get; set; }
         public string RelativeName { get; set; }
         public string RelativePhone { get; set; }
         public string Ethnic { get; set; }

@@ -15,5 +15,6 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository.Requests
         public int MaxSlot { get; set; }
         public int? MinSlot { get; set; }
         public int? FilledSlot { get; set; }
+        public int? AvaiableSlot { get; set; }
     }
 }

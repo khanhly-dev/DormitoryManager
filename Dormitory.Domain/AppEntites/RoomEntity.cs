@@ -16,5 +16,8 @@ namespace Dormitory.Domain.AppEntities
         public int? MinSlot { get; set; }
         public int? EmptySlot { get; set; }
         public int? FilledSlot { get; set; }
+        public int? AvaiableSlot { get; set; }
+        public int? RoomGender { get; set; }
+        public int? RoomAcedemic { get; set; }
     }
 }

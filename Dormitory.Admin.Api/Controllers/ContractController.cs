@@ -4,6 +4,8 @@ using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api.Controllers
@@ -27,6 +29,12 @@ namespace Dormitory.Admin.Api.Controllers
         public async Task<IActionResult> GetListContractPeding([FromQuery] PageRequestBase request)
         {
             var list = await _contractRepo.GetListContractPending(request);
+            return Ok(list);
+        }
+        [HttpGet("get-list-admin-confirm-contract-pending")]
+        public async Task<IActionResult> GetListAdminConfirmContractPeding([FromQuery] PageRequestBase request)
+        {
+            var list = await _contractRepo.GetListAdminConfirmContractPending(request);
             return Ok(list);
         }
         [HttpPost("create")]
@@ -79,6 +87,41 @@ namespace Dormitory.Admin.Api.Controllers
         {
             var responseStatus = "";
             var result = await _contractRepo.AdminConfirmAllContract(minPoint, maxPoint, confirmStatus);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+        [HttpPut("schedule-room")]
+        public async Task<IActionResult> ScheduleRoom([FromForm] int contractId)
+        {
+            var responseStatus = "";
+            var result = await _contractRepo.ScheduleRoom(contractId);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+        [HttpPut("auto-schedule-room")]
+        public async Task<IActionResult> AutoScheduleRoom([FromForm] string listContractId)
+        {
+            var responseStatus = "";
+            var listIdResult = listContractId.Split(',').Select(x => Int32.Parse(x)).ToList();
+            var result = 0;
+            foreach (var item in listIdResult)
+            {
+                result = await _contractRepo.ScheduleRoom(item);
+            }
             if (result > 0)
             {
                 responseStatus = "success";

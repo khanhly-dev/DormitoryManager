@@ -10,6 +10,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int MonthConfig { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
     }
 }

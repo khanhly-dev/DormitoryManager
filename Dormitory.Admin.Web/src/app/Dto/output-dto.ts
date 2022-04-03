@@ -20,6 +20,7 @@ export interface RoomDto {
     minSlot: number;
     emptySlot: number;
     filledSlot: number;
+    avaiableSlot: number;
 }
 
 export interface FacilityDto {
@@ -44,7 +45,8 @@ export interface CriteriaDto {
 export interface ContractConfig {
     id: number;
     name: string
-    monthConfig: number;
+    fromDate : Date;
+    toDate: Date
 }
 
 export interface ContractDto {

@@ -19,7 +19,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         Task<int> Delete(int id);
         Task<int> AdminConfirmContract(int contractId, int confirmStatus);
         Task<int> AdminConfirmAllContract(int minPoint, int maxPoint, int confirmStatus);
-
-
+        Task<PageResult<ContractPendingDto>> GetListAdminConfirmContractPending(PageRequestBase request);
+        Task<int> ScheduleRoom(int contractId);
     }
 }

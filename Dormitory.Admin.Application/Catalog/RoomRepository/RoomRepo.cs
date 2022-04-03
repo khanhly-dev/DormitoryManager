@@ -31,6 +31,7 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                 MinSlot = request.MinSlot,
                 FilledSlot = request.FilledSlot.HasValue ? request.FilledSlot.Value : 0,
                 EmptySlot = request.FilledSlot.HasValue ? request.MaxSlot - request.FilledSlot.Value : request.MaxSlot,
+                AvaiableSlot = request.AvaiableSlot.HasValue ? request.AvaiableSlot.Value : 0
             };
             if (room.Id == 0)
             {
@@ -84,6 +85,7 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                     MaxSlot = x.r.MaxSlot,
                     FilledSlot = x.r.FilledSlot.Value,
                     MinSlot = x.r.MinSlot ?? 0,
+                    AvaiableSlot = x.r.AvaiableSlot.Value,
                 }).ToListAsync();
 
             var pageResult = new PageResult<RoomDto>()

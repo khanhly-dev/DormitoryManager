@@ -39,8 +39,10 @@ export class ContracConfigServiceProxy {
             content.append("id", data.id);
         if (data.name !== null && data.name !== undefined)
             content.append("name", data.name.toString());
-        if (data.monthConfig !== null || data.monthConfig !== undefined)
-            content.append("monthConfig", data.monthConfig);
+        if (data.fromDate !== null || data.fromDate !== undefined)
+            content.append("fromDate", data.fromDate);
+        if (data.toDate !== null || data.toDate !== undefined)
+            content.append("toDate", data.toDate);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

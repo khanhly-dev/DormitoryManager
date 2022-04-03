@@ -29,6 +29,12 @@ export class ContracServiceProxy {
         return this.http.get<PageResultBase<ContractPendingDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
+    getListAdminConfirmContractPending(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<ContractPendingDto>> {
+        let url = this.baseUrl + `/api/contract/get-list-admin-confirm-contract-pending?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<PageResultBase<ContractPendingDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/contract/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
@@ -87,5 +93,27 @@ export class ContracServiceProxy {
             content.append("confirmStatus", data.confirmStatus);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
+
+    scheduleRoom(contractId: any): Observable<any> {
+        let url = this.baseUrl + "/api/contract/schedule-room";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (contractId !== null && contractId !== undefined)
+            content.append("contractId", contractId);
+
+        return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
+
+    autoScheduleRoom(listContractId: any): Observable<any> {
+        let url = this.baseUrl + "/api/contract/auto-schedule-room";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (listContractId !== null && listContractId !== undefined)
+            content.append("listContractId", listContractId.toString());
+
+        return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 }

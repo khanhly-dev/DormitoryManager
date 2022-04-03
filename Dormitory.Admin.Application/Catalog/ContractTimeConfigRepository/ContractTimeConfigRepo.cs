@@ -24,7 +24,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository
             {
                 Id = request.Id,
                 Name = request.Name,
-                MonthConfig = request.MonthConfig,
+                FromDate = request.FromDate,
+                ToDate = request.ToDate,
             };
             if (config.Id == 0)
             {
@@ -71,7 +72,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    MonthConfig = x.MonthConfig,
+                    FromDate = x.FromDate,
+                    ToDate = x.ToDate
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractTimeConfigDto>()

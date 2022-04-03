@@ -26,11 +26,14 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MonthConfig")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -167,6 +170,9 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AvaiableSlot")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EmptySlot")
                         .HasColumnType("int");
 
@@ -184,6 +190,12 @@ namespace Dormitory.EntityFrameworkCore.Migrations
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<int?>("RoomAcedemic")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoomGender")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -260,8 +272,8 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AcademicYear")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("int");
 
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");

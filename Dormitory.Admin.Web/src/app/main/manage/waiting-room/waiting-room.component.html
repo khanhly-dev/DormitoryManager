@@ -10,8 +10,8 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" style="float: right;" (click)="showModal('Cấu hình duyệt tự động')">
-                <span>Duyệt tự động</span>
+            <button nz-button [nzType]="'primary'" style="float: right;" (click)="autoScheduleRoom()">
+                <span>Xếp phòng tự động</span>
             </button>
         </div>
     </div>
@@ -60,9 +60,7 @@
                     </a>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item (click)="adminConfirm(data.id, 2)">Chấp nhận</li>
-                            <li nz-menu-item (click)="adminConfirm(data.id, 1)">Từ chối</li>
-                            <li nz-menu-item nzDanger (click)="deleteContract(data.id)">Xoá</li>
+                            <li nz-menu-item (click)="scheduleRoom(data.id)">Xếp phòng</li>
                         </ul>
                     </nz-dropdown-menu>
                 </td>

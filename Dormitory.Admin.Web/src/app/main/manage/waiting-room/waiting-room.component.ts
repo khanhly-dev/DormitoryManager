@@ -26,7 +26,7 @@ export class WaitingRoomComponent implements OnInit {
 
   getListContractPending(keyWord: string, pageIndex: number, pageSize: number) {
     this.isSpinning = true
-    this.contractService.getListContractPending(keyWord, pageIndex, pageSize).subscribe(x => {
+    this.contractService.getListAdminConfirmContractPending(keyWord, pageIndex, pageSize).subscribe(x => {
       this.listContractPending = x;
       this.isSpinning = false
     })
@@ -39,7 +39,7 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   showModal(modalTitle: string, data?: ContractDto): void {
-    
+
   }
 
   handleOk(): void {
@@ -50,13 +50,15 @@ export class WaitingRoomComponent implements OnInit {
     this.isVisible = false;
   }
 
-  adminConfirm(contractId: number, confirmStatus: number) {
-    this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
+  scheduleRoom(contractId: number) {
+    this.contractService.scheduleRoom(contractId).subscribe(x => {
       this.getListContractPending("", 1, 10);
     })
   }
-  adminConfirmAll(data: any) {
-    this.contractService.adminConfirmAllContract(data).subscribe(x => {
+
+  autoScheduleRoom() {
+    let listContractId = this.listContractPending.items.filter(x => !x.roomId).map(x => x.id)
+    this.contractService.autoScheduleRoom(listContractId).subscribe(x => {
       this.getListContractPending("", 1, 10);
     })
   }

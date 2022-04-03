@@ -31,6 +31,7 @@ export class RoomComponent implements OnInit {
       maxSlot: ['', [Validators.required]],
       minSlot: ['', [Validators.required]],
       filledSlot: ['', [Validators.required]],
+      avaiableSlot: ['', [Validators.required]],
     });
   }
 

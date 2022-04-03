@@ -66,6 +66,15 @@
                     </nz-form-control>
                 </nz-form-item>
 
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Chỗ trống sẵn có</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <nz-input-number formControlName="avaiableSlot" [nzStep]="1" style="width: 100%">
+                        </nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+
+
 
             </form>
         </ng-container>
@@ -82,6 +91,7 @@
                 <th nzWidth="120px">Sức chứa tối thiểu</th>
                 <th nzWidth="120px">Còn trống</th>
                 <th nzWidth="120px">Đã có người ở</th>
+                <th nzWidth="120px">Chỗ trống có sẵn</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -95,6 +105,7 @@
                 <td>{{ data.minSlot }}</td>
                 <td>{{ data.emptySlot }}</td>
                 <td>{{ data.filledSlot }}</td>
+                <td>{{ data.avaiableSlot }}</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary"
                         (click)="showModal('Sửa thông tin phòng', data)">Sửa</button>&nbsp;

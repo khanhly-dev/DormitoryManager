@@ -21,7 +21,8 @@ export class ContractTimeConfigComponent implements OnInit {
     this.validateForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
-      monthConfig: ['', [Validators.required]],
+      fromDate: ['', [Validators.required]],
+      toDate: ['', [Validators.required]],
     });
   }
 

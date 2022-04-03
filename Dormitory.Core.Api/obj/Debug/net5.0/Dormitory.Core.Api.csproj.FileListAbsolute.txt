@@ -66,3 +66,4 @@ D:\Project\DormitoryManager\Dormitory.Core.Api\bin\Debug\net5.0\Dormitory.Core.A
 D:\Project\DormitoryManager\Dormitory.Core.Api\bin\Debug\net5.0\Dormitory.Domain.pdb
 D:\Project\DormitoryManager\Dormitory.Core.Api\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.dll
 D:\Project\DormitoryManager\Dormitory.Core.Api\bin\Debug\net5.0\Dormitory.EntityFrameworkCore.pdb
+D:\Project\DormitoryManager\Dormitory.Core.Api\bin\Debug\net5.0\libman.json

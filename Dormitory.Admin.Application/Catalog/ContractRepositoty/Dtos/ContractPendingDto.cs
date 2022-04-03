@@ -24,6 +24,6 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public int? Point { get; set; }
         public int? AdminConfirmStatus { get; set; }
         public int? StudentConfirmStatus { get; set; }
-        public string AcademicYear { get; set; }
+        public int? AcademicYear { get; set; }
     }
 }
