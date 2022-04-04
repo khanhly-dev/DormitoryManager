@@ -86,6 +86,7 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                     FilledSlot = x.r.FilledSlot.Value,
                     MinSlot = x.r.MinSlot ?? 0,
                     AvaiableSlot = x.r.AvaiableSlot.Value,
+                    EmptySlot = x.r.EmptySlot.Value,
                 }).ToListAsync();
 
             var pageResult = new PageResult<RoomDto>()

@@ -1,4 +1,5 @@
 ﻿using Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos;
+using Dormitory.Student.Application.CommonDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
     {
         Task<StudentInfoDto> GetStudentByUserId(int userId);
         Task<List<float>> GetRecomendRoomPrice();
+        Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request);
+
     }
 }

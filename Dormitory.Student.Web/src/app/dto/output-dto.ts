@@ -26,3 +26,24 @@ export interface CriteriaDto {
     checked: boolean;
 }
 
+export interface ContractPendingDto {
+    id: number;
+    contractCode: string;
+    dateCreated: Date;
+    desiredPrice: number;
+    studentId: number;
+    studentName: string;
+    studentCode: string;
+    studentPhone: string;
+    adress: string;
+    gender: number;
+    point: number;
+    adminConfirmStatus: number;
+    studentConfirmStatus: number;
+    roomId: number;
+    roomName: number;
+    areaName: number;
+    academicYear: string
+    toDate: Date;
+    fromDate: Date;
+}

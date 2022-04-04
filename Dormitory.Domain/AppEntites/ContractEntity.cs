@@ -19,5 +19,6 @@ namespace Dormitory.Domain.AppEntities
         public int? ServiceId { get; set; }
         public int? AdminConfirmStatus { get; set; }
         public int? StudentConfirmStatus { get; set; }
+        public int? ContractCompletedStatus { get; set; }
     }
 }

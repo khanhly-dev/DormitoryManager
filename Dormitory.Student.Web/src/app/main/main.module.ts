@@ -26,11 +26,15 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { StudentConfirmComponent } from './student-confirm/student-confirm.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+
 
 @NgModule({
   declarations: [
     LayoutComponent,
     SignUpComponent,
+    StudentConfirmComponent,
   ],
   imports: [
     CommonModule,
@@ -54,7 +58,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     NzGridModule,
     NzAvatarModule,
     NzCardModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzSpinModule
   ]
 })
 export class MainModule { }

@@ -47,4 +47,17 @@ export class SignUpServiceProxy {
 
         return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
     }
+
+    studentConfirm(contractId : any, confirmStatus: any): Observable<any> {
+        let url = this.baseUrl + "/api/contract/student-confirm";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (contractId !== null && contractId !== undefined)
+            content.append("contractId", contractId.toString());
+        if (confirmStatus !== null && confirmStatus !== undefined)
+            content.append("confirmStatus", confirmStatus);
+
+        return this.http.put<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
+    }
 }

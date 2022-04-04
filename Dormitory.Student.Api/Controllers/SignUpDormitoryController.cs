@@ -57,5 +57,20 @@ namespace Dormitory.Student.Api.Controllers
             var listCriteria = await _signUpDormitoryRepo.GetListCriteria();
             return Ok(listCriteria);
         }
+        [HttpPut("student-confirm")]
+        public async Task<IActionResult> StudentConfirm([FromForm] int contractId, [FromForm] int confirmStatus)
+        {
+            var responseStatus = "";
+            var result = await _signUpDormitoryRepo.StudentConfirmContract(contractId, confirmStatus);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
     }
 }

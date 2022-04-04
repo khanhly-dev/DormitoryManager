@@ -10,10 +10,12 @@ import { LoginServiceProxy } from 'src/app/service/core-service/core-service-pro
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
+  isSpinning = false;
 
   submitForm(): void {
     if (this.validateForm.valid) {
       let formValue = this.validateForm.value;
+      this.isSpinning = true
       this.loginService.login(formValue.userName, formValue.password, 0)
         .subscribe((x) => {
           console.log(x)
@@ -21,14 +23,11 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("access_token", x.access_token);
             localStorage.setItem("user", x.userName);
             localStorage.setItem("userId", x.userId.toString());
-            setTimeout(() => {
-              alert("Phiên đăng nhập đã hết hạn")
-              localStorage.clear();
-              this.router.navigate(["/login"]);
-            }, 3600000);
+            this.isSpinning = false
             this.router.navigate(["/main"]);
           }
           else {
+            this.isSpinning = false
             this.router.navigate(["/login"]);
             alert('Tài khoản hoặc mật khẩu không chính xác! Vui lòng đăng nhập lại!')
           }

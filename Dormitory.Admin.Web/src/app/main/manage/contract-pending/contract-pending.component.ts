@@ -20,8 +20,8 @@ export class ContractPendingComponent implements OnInit {
 
   constructor(private contractService: ContracServiceProxy, private fb: FormBuilder) {
     this.validateForm = this.fb.group({
-      minPoint: [0,[Validators.required]],
-      maxPoint: [0,[Validators.required]],
+      minPoint: [0, [Validators.required]],
+      maxPoint: [0, [Validators.required]],
       confirmStatus: [[Validators.required]],
     });
   }
@@ -63,9 +63,25 @@ export class ContractPendingComponent implements OnInit {
   }
 
   adminConfirm(contractId: number, confirmStatus: number) {
-    this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
-      this.getListContractPending("", 1, 10);
-    })
+    if (confirmStatus == 1) {
+      let item = this.listContractPending.items.find(x => x.id == contractId);
+      if (item) {
+        if (item.roomId) {
+          alert("Đã xếp phòng cho sinh viên này, không thể từ chối")
+        }
+      }
+      else {
+        this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
+          this.getListContractPending("", 1, 10);
+        })
+      }
+    }
+    else
+    {
+      this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
+        this.getListContractPending("", 1, 10);
+      })
+    }
   }
   adminConfirmAll(data: any) {
     this.contractService.adminConfirmAllContract(data).subscribe(x => {

@@ -6,22 +6,11 @@
             </nz-input-group>
             <ng-template #suffixIconButton>
                 <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
-                        (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
+                        (click)="getListContractPending(inputSearch.value, student.id, 1, 10)"></i></button>
             </ng-template>
-        </div>
-        <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" style="float: right;" (click)="autoScheduleRoom()">
-                <span>Xếp phòng tự động</span>
-            </button>
         </div>
     </div>
     <br>
-    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-        <ng-container *nzModalContent>
-            
-        </ng-container>
-    </nz-modal>
-
     <nz-table #basicTable [nzData]="listContractPending.items" *ngIf="listContractPending != undefined"
         [nzFrontPagination]="false">
         <thead>
@@ -32,7 +21,8 @@
                 <th>Tên sinh viên</th>
                 <th>Giới tính</th>
                 <th>Số điện thoại</th>
-                <th>Giá phòng mong muốn</th>
+                <th>Ngày bắt đầu hợp đồng</th>
+                <th>Hạn hợp đồng</th>
                 <th>Khu ở</th>
                 <th>Phòng ở</th>
                 <th>Trạng thái SV xác nhận</th>
@@ -48,7 +38,8 @@
                 <td *ngIf="data.gender == 1">Nam</td>
                 <td *ngIf="data.gender == 0">Nữ</td>
                 <td>{{ data.studentPhone }}</td>
-                <td>{{ data.desiredPrice | currency : "VND"}}</td>
+                <td>{{ data.fromDate | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data.toDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data.areaName }}</td>
                 <td>{{ data.roomName }}</td>
                 <td *ngIf="data.studentConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
@@ -60,7 +51,8 @@
                     </a>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item (click)="scheduleRoom(data.id)">Xếp phòng</li>
+                            <li nz-menu-item (click)="studentConfirm(data.id, 2)">Chấp nhận</li>
+                            <li nz-menu-item (click)="studentConfirm(data.id, 1)">Từ chối</li>
                         </ul>
                     </nz-dropdown-menu>
                 </td>
@@ -69,6 +61,7 @@
     </nz-table>
     <nz-pagination *ngIf="listContractPending != undefined" [(nzPageIndex)]="pageIndex"
         [nzTotal]="listContractPending.totalRecords" [nzPageSize]="10"
-        (nzPageIndexChange)="getListContractPending('', pageIndex, 10)">
+        (nzPageIndexChange)="getListContractPending('', student.id, pageIndex, 10)">
     </nz-pagination>
+    <b style="float: right;"><i>*Chú ý: ngày bắt đầu hợp đồng là ngày mà sinh viên xác nhận hợp đồng, nhưng hợp đồng nào quá 5 ngày mà không xác nhận sẽ tự động huỷ bỏ</i></b>
 </nz-spin>

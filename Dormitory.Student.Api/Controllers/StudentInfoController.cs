@@ -1,4 +1,5 @@
 ﻿using Dormitory.Student.Application.Catalog.StudentInfoRepository;
+using Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -23,6 +24,12 @@ namespace Dormitory.Student.Api.Controllers
         public async Task<IActionResult> GetRoomPriceRange()
         {
             var listRoomPrice = await _studentInfoRepo.GetRecomendRoomPrice();
+            return Ok(listRoomPrice);
+        }
+        [HttpGet("get-list-student-confirm-contract")]
+        public async Task<IActionResult> GetListStudentConfirmContract([FromQuery] GetListContractByStudentIdRepuest request)
+        {
+            var listRoomPrice = await _studentInfoRepo.GetListStudentConfirmContractPending(request);
             return Ok(listRoomPrice);
         }
     }

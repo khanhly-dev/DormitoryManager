@@ -85,9 +85,9 @@
                 <td>{{ data.adress }}</td>
                 <td>{{ data.desiredPrice | currency : "VND"}}</td>
                 <td>{{ data.point }}</td>
-                <td *ngIf="data.adminConfirmStatus == 0">Chờ duyệt</td>
-                <td *ngIf="data.adminConfirmStatus == 1">Từ chối</td>
-                <td *ngIf="data.adminConfirmStatus == 2">Chấp nhận</td>
+                <td *ngIf="data.adminConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
+                <td *ngIf="data.adminConfirmStatus == 1" style="color: #f40404;">Từ chối</td>
+                <td *ngIf="data.adminConfirmStatus == 2" style="color: #25da91;">Chấp nhận</td>
                 <td>
                     <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
                         <i nz-icon nzType="bars" nzTheme="outline"></i>

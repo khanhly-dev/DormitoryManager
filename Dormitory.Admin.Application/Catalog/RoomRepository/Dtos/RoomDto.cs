@@ -15,13 +15,7 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository.Dtos
         public string AreaName { get; set; }
         public int MaxSlot { get; set; }
         public int MinSlot { get; set; }
-        public int EmptySlot 
-        {
-            get
-            {
-                return (int)(MaxSlot - FilledSlot);
-            }
-        }
+        public int EmptySlot { get; set; }
         public int? FilledSlot { get; set; }
         public int? AvaiableSlot { get; set; }
     }

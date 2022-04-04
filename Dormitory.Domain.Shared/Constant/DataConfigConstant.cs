@@ -17,5 +17,8 @@ namespace Dormitory.Domain.Shared.Constant
         public static int contractConfirmStatusPending = 0;
         public static int contractConfirmStatusReject = 1;
         public static int contractConfirmStatusApprove = 2;
+
+        public static int contractCompletedStatusCancel = 0;
+        public static int contractCompletedStatusOk = 1;
     }
 }
