@@ -11,6 +11,8 @@
 /Dormitory.Core.Application/obj
 /Dormitory.Domain/bin
 /Dormitory.Domain/obj
+/Dormitory.Domain.Shared/bin
+/Dormitory.Domain.Shared/obj
 /Dormitory.EntityFrameworkCore/bin
 /Dormitory.EntityFrameworkCore/obj
 /Dormitory.Student.Api/bin
