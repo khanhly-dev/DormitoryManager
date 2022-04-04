@@ -11,13 +11,14 @@
 /Dormitory.Core.Application/obj
 /Dormitory.Domain/bin
 /Dormitory.Domain/obj
-/Dormitory.EntityFramework/bin
-/Dormitory.EntityFramework/obj
+/Dormitory.EntityFrameworkCore/bin
+/Dormitory.EntityFrameworkCore/obj
 /Dormitory.Student.Api/bin
 /Dormitory.Student.Api/obj
 /Dormitory.Student.Api/Properties
 /Dormitory.Student.Application/bin
 /Dormitory.Student.Application/obj
+*.user
 
 
 
