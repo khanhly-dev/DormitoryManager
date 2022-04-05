@@ -1,0 +1,76 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListContract(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+    </div>
+    <br>
+
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Xác nhận xoá" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+          <h4>Bạn có chắc chắn muốn xoá hợp đồng này?</h4>
+        </ng-container>
+      </nz-modal>
+
+    <nz-table #basicTable [nzData]="listContract.items" *ngIf="listContract != undefined"
+        [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Ngày tạo hợp đồng</th>
+                <th>Mã hợp đồng</th>
+                <th>Tên sinh viên</th>
+                <th>Mã sinh viên</th>
+                <th>Giới tính</th>
+                <th>Số điện thoại</th>
+                <th>Khu ở</th>
+                <th>Phòng ở</th>
+                <th>Giá phòng</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ listContract.items.indexOf(data) + 1 }}</td>
+                <td>{{ data.dateCreated | date : "dd-MM-yyyy" }}</td>
+                <td>{{ data.contractCode }}</td>
+                <td>{{ data.studentName }}</td>
+                <td>{{ data.studentCode }}</td>
+                <td *ngIf="data.gender == 1">Nam</td>
+                <td *ngIf="data.gender == 0">Nữ</td>
+                <td>{{ data.studentPhone }}</td>
+                <td>{{ data.areaName }}</td>
+                <td>{{ data.roomName }}</td>
+                <td>{{ data.roomPrice | currency : "VND"}}</td>
+                <td>{{ data.fromDate | date : "dd-MM-yyyy" }}</td>
+                <td>{{ data.toDate | date : "dd-MM-yyyy" }}</td>
+                <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
+                <td *ngIf="compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>
+                <td>
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                        <i nz-icon nzType="bars" nzTheme="outline"></i>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item >Sửa</li>
+                            <li nz-menu-item nzDanger (click)="showModal()">Xoá</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listContract != undefined" [(nzPageIndex)]="pageIndex"
+        [nzTotal]="listContract.totalRecords" [nzPageSize]="10"
+        (nzPageIndexChange)="getListContract('', pageIndex, 10)">
+    </nz-pagination>
+</nz-spin>

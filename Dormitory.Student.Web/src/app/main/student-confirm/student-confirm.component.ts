@@ -21,7 +21,7 @@ export class StudentConfirmComponent implements OnInit {
 
   constructor(
     private studentService: StudentServiceProxy,
-    private signUpService : SignUpServiceProxy) {
+    private signUpService: SignUpServiceProxy) {
 
   }
 
@@ -45,11 +45,27 @@ export class StudentConfirmComponent implements OnInit {
       this.getListContractPending("", this.student.id, this.pageIndex, 10)
     })
   }
-  studentConfirm(contractId: number, confirmStatus: number)
-  {
+  studentConfirm(contractId: number, confirmStatus: number) {
     this.signUpService.studentConfirm(contractId, confirmStatus).subscribe(x => {
       this.getListContractPending("", this.student.id, this.pageIndex, 10)
-      alert("Xác nhận hợp đồng thành công");
+      if (x.responseStatus == 'success') {
+        alert("Xác nhận hợp đồng thành công");
+      }
+      else {
+        alert("Xác nhận hợp đồng không thành công");
+      }
+
+    })
+  }
+  deleteSignUpForm(contractId: number) {
+    this.signUpService.delete(contractId).subscribe(x => {
+      this.getListContractPending("", this.student.id, this.pageIndex, 10)
+      if (x.responseStatus == 'success') {
+        alert("Xoá thành công")
+      }
+      else {
+        alert("Xoá không thành công")
+      }
     })
   }
 }

@@ -8,8 +8,9 @@ import { StudentConfirmComponent } from './student-confirm/student-confirm.compo
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, canActivate: [AuthGuardService], children: [
-      {path: 'sign-up', component: SignUpComponent, canActivate: [AuthGuardService]},
-      {path: 'student-confirm', component: StudentConfirmComponent, canActivate: [AuthGuardService]}
+      { path: '', redirectTo: "student-confirm" },
+      { path: 'sign-up', component: SignUpComponent, canActivate: [AuthGuardService] },
+      { path: 'student-confirm', component: StudentConfirmComponent, canActivate: [AuthGuardService] }
     ]
   },
 ];

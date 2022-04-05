@@ -18,7 +18,7 @@ export class ContracServiceProxy {
     }
 
     getList(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<ContractDto>> {
-        let url = this.baseUrl + `/api/contract/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
+        let url = this.baseUrl + `/api/contract/get-list-completed-contract?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<PageResultBase<ContractDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }

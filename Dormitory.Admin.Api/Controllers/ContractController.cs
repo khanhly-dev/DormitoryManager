@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/contract")]
-    //[Authorize]
+    [Authorize]
     public class ContractController : Controller
     {
         private readonly IContractRepo _contractRepo;
@@ -19,10 +19,10 @@ namespace Dormitory.Admin.Api.Controllers
         {
             _contractRepo = contractRepo;
         }
-        [HttpGet("get-list")]
-        public async Task<IActionResult> GetListContract([FromQuery] PageRequestBase request)
+        [HttpGet("get-list-completed-contract")]
+        public async Task<IActionResult> GetListCompletedContract([FromQuery] PageRequestBase request)
         {
-            var list = await _contractRepo.GetList(request);
+            var list = await _contractRepo.GetListCompletedContract(request);
             return Ok(list);
         }
         [HttpGet("get-list-contract-pending")]

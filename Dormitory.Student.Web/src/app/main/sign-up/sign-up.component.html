@@ -89,10 +89,11 @@
                                 quy định trong văn bản và
                                 nội quy, quy định của Học viện Ngân hàng</p>
                             <br>
-                            <button nz-button nzType="primary" style="width: 100%; height: 50px;"
+                            <button nz-button nzType="primary" style="width: 100%; height: 50px;" [disabled]="canSignUp != undefined && canSignUp == false"
                                 (click)="submitContractPending()">
                                 Xác nhận đăng ký
                             </button>
+                            <b><i>*Chú ý: Không thể đăng kí nếu hợp đồng vẫn còn hạn, nếu muốn gia hạn hợp đồng, hãy sử dụng chức năng gia hạn</i></b>
                         </div>
                     </div>
                 </div>

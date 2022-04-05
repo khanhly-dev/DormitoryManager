@@ -33,6 +33,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.component';
+import { CompletedContractComponent } from './manage/completed-contract/completed-contract.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.compone
     ContractTimeConfigComponent,
     ServiceComponent,
     ContractPendingComponent,
-    WaitingRoomComponent
+    WaitingRoomComponent,
+    CompletedContractComponent,
   ],
   imports: [
     CommonModule,
@@ -67,7 +70,8 @@ import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.compone
     NzSelectModule,
     NzGridModule,
     NzAvatarModule,
-    NzSpinModule
+    NzSpinModule,
+    NzPopconfirmModule
   ]
 })
 export class MainModule { }

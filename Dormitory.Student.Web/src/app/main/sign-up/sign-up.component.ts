@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CriteriaDto, StudentInfoDto } from 'src/app/dto/output-dto';
 import { SignUpServiceProxy } from 'src/app/service/student-service/sign-up-service-proxy';
 import { StudentServiceProxy } from 'src/app/service/student-service/student-service-proxy';
@@ -10,19 +11,22 @@ import { StudentServiceProxy } from 'src/app/service/student-service/student-ser
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  listCriteria : CriteriaDto[] = [];
+  listCriteria: CriteriaDto[] = [];
   student!: StudentInfoDto;
-  userId : number = 0;
-  DesiredPrice : number = 0;
-  listCriteriaIdSelected : number[] = [];
-  listPrice : number [] = [];
-  desiredPrice! : number;
+  userId: number = 0;
+  DesiredPrice: number = 0;
+  listCriteriaIdSelected: number[] = [];
+  listPrice: number[] = [];
+  desiredPrice!: number;
+  canSignUp!: boolean;
 
-  constructor(private studentService: StudentServiceProxy, private signUpService: SignUpServiceProxy) {}
+  constructor(
+    private studentService: StudentServiceProxy,
+    private signUpService: SignUpServiceProxy,
+    private router: Router,) { }
 
   ngOnInit(): void {
-    if(localStorage.getItem("userId") != null || localStorage.getItem("userId") != undefined)
-    {
+    if (localStorage.getItem("userId") != null || localStorage.getItem("userId") != undefined) {
       this.userId = Number(localStorage.getItem("userId"));
     }
     this.getStudentByUserId(this.userId);
@@ -30,39 +34,41 @@ export class SignUpComponent implements OnInit {
     this.getRecomendPrice();
   }
 
-  getStudentByUserId(userId : number)
-  {
-    this.studentService.getStudentByUserId(userId).subscribe(x => {
-      this.student = x;
+  checkCanSignUp()
+  { 
+    this.studentService.checkSignUpStatus(this.student.id).subscribe(x => {
+      this.canSignUp = x
     })
   }
-  getListCriteria()
-  {
+
+  getStudentByUserId(userId: number) {
+    this.studentService.getStudentByUserId(userId).subscribe(x => {
+      this.student = x;
+      this.checkCanSignUp();
+    })
+  }
+  getListCriteria() {
     this.signUpService.getListCriteria().subscribe(x => {
       this.listCriteria = x;
     })
   }
 
-  getRecomendPrice()
-  {
+  getRecomendPrice() {
     this.studentService.getRecomendPrice().subscribe(x => {
       this.listPrice = x;
     })
   }
-  submitContractPending()
-  {
+  submitContractPending() {
     this.listCriteriaIdSelected = this.listCriteria.filter(x => x.checked == true).map(x => x.value)
-    if(this.listCriteriaIdSelected.length > 0)
-    {
+    if (this.listCriteriaIdSelected.length > 0) {
       this.signUpService.setStudentPoint(this.student.id, this.listCriteriaIdSelected.toString()).subscribe();
     }
     this.signUpService.signUpDormitory(this.student.id, this.desiredPrice).subscribe(x => {
-      if(x.responseStatus == "success")
-      {
+      if (x.responseStatus == "success") {
         alert("Gửi đơn đăng ký thành công")
+        this.router.navigate(["/main/student-confirm"]);
       }
-      else
-      {
+      else {
         alert("Gửi đơn đăng ký thất bại")
       }
     });

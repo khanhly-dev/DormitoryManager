@@ -25,6 +25,7 @@
                 <th>Hạn hợp đồng</th>
                 <th>Khu ở</th>
                 <th>Phòng ở</th>
+                <th>Trạng duyệt đơn đăng kí</th>
                 <th>Trạng thái SV xác nhận</th>
                 <th>Thao tác</th>
             </tr>
@@ -42,6 +43,11 @@
                 <td>{{ data.toDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data.areaName }}</td>
                 <td>{{ data.roomName }}</td>
+
+                <td *ngIf="data.adminConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
+                <td *ngIf="data.adminConfirmStatus == 1" style="color: #f40404;">Từ chối</td>
+                <td *ngIf="data.adminConfirmStatus == 2" style="color: #25da91;">Chấp nhận</td>
+
                 <td *ngIf="data.studentConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
                 <td *ngIf="data.studentConfirmStatus == 1" style="color: #f40404;">Từ chối</td>
                 <td *ngIf="data.studentConfirmStatus == 2" style="color: #25da91;">Chấp nhận</td>
@@ -51,8 +57,14 @@
                     </a>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item (click)="studentConfirm(data.id, 2)">Chấp nhận</li>
-                            <li nz-menu-item (click)="studentConfirm(data.id, 1)">Từ chối</li>
+                            <li nz-menu-item (click)="studentConfirm(data.id, 2)"
+                                [nzDisabled]="data.contractCompletedStatus != undefined || data.roomId == undefined || data.adminConfirmStatus == 0">
+                                Chấp nhận</li>
+                            <li nz-menu-item (click)="studentConfirm(data.id, 1)"
+                                [nzDisabled]="data.contractCompletedStatus != undefined || data.roomId == undefined || data.adminConfirmStatus == 0">
+                                Từ chối</li>
+                            <li nz-menu-item (click)="deleteSignUpForm(data.id)"
+                                [nzDisabled]="data.adminConfirmStatus != 0">Xoá</li>
                         </ul>
                     </nz-dropdown-menu>
                 </td>
@@ -63,5 +75,6 @@
         [nzTotal]="listContractPending.totalRecords" [nzPageSize]="10"
         (nzPageIndexChange)="getListContractPending('', student.id, pageIndex, 10)">
     </nz-pagination>
-    <b style="float: right;"><i>*Chú ý: ngày bắt đầu hợp đồng là ngày mà sinh viên xác nhận hợp đồng, nhưng hợp đồng nào quá 5 ngày mà không xác nhận sẽ tự động huỷ bỏ</i></b>
+    <b style="float: right;"><i>*Chú ý: ngày bắt đầu hợp đồng là ngày mà sinh viên xác nhận hợp đồng, nhưng hợp đồng nào
+            quá 5 ngày mà không xác nhận sẽ tự động huỷ bỏ</i></b>
 </nz-spin>

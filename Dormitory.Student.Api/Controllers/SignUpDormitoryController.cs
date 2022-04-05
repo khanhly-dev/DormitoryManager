@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Student.Api.Controllers
 {
     [Route("api/contract")]
-    //[Authorize]
+    [Authorize]
     public class SignUpDormitoryController : Controller
     {
         private readonly ISignUpDormitoryRepo _signUpDormitoryRepo;
@@ -62,6 +62,21 @@ namespace Dormitory.Student.Api.Controllers
         {
             var responseStatus = "";
             var result = await _signUpDormitoryRepo.StudentConfirmContract(contractId, confirmStatus);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteContract([FromQuery] int id)
+        {
+            var responseStatus = "";
+            var result = await _signUpDormitoryRepo.Delete(id);
             if (result > 0)
             {
                 responseStatus = "success";

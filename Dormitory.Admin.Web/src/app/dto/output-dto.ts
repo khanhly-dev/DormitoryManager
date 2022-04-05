@@ -51,15 +51,26 @@ export interface ContractConfig {
 
 export interface ContractDto {
     id: number;
-    contractCode: string
-    fromDate: Date;
-    toDate: Date;
-    roomId: number;
-    desiredRoomId: number;
+    contractCode: string;
+    dateCreated: Date;
+    desiredPrice: number;
     studentId: number;
-    serviceId: number;
+    studentName: string;
+    studentCode: string;
+    studentPhone: string;
+    adress: string;
+    gender: number;
+    point: number;
     adminConfirmStatus: number;
     studentConfirmStatus: number;
+    roomId: number;
+    roomName: number;
+    areaName: number;
+    academicYear: string;
+    fromDate: Date;
+    toDate: Date;
+    contractCompletedStatus: number;
+    roomPrice: number;
 }
 
 export interface ContractPendingDto {

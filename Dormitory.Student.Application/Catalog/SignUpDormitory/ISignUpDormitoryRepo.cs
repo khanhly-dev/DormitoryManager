@@ -14,5 +14,6 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
         Task<int> SetStudentPoint(SetStudentPointRepuest request);
         Task<List<CriteriaDto>> GetListCriteria();
         Task<int> StudentConfirmContract(int contractId, int confirmStatus);
+        Task<int> Delete(int id);
     }
 }

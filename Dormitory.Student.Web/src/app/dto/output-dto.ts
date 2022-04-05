@@ -46,4 +46,5 @@ export interface ContractPendingDto {
     academicYear: string
     toDate: Date;
     fromDate: Date;
+    contractCompletedStatus: number;
 }

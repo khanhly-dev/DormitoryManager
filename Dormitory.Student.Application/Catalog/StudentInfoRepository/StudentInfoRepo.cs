@@ -19,10 +19,31 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
             _adminSolutionDbContext = adminSolutionDbContext;
         }
 
+        public async Task<bool> CheckCanSignUp(int studenId)
+        {
+            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studenId).AsNoTracking().ToListAsync();
+            if (contract == null || contract.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                var check = contract.Select(x => x.ToDate > DateTime.Now).ToList().Count;
+                if(check > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         public async Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request)
         {
             var query = from a in _adminSolutionDbContext.ContractEntities
-                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusApprove && a.StudentId == request.StudentId && a.RoomId.HasValue
+                        where a.StudentId == request.StudentId 
                         join s in _adminSolutionDbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _adminSolutionDbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()
@@ -61,6 +82,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     AcademicYear = x.s.AcademicYear,
                     ToDate = x.a.ToDate.Value,
                     FromDate = x.a.FromDate,
+                    ContractCompletedStatus = x.a.ContractCompletedStatus.Value
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
@@ -115,5 +137,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
 
             return data;
         }
+
+      
     }
 }

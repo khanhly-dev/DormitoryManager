@@ -101,14 +101,20 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<PageResult<ContractDto>> GetList(PageRequestBase request)
+        public async Task<PageResult<ContractDto>> GetListCompletedContract(PageRequestBase request)
         {
             var query = from a in _dbContext.ContractEntities
-                        select a;
+                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
+                        join s in _dbContext.StudentEntities on a.StudentId equals s.Id
+                        join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
+                        from r in ra.DefaultIfEmpty()
+                        join e in _dbContext.AreaEntities on r.AreaId equals e.Id into re
+                        from e in re.DefaultIfEmpty()
+                        select new { a, s, r, e };
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
-                query = query.Where(x => x.ContractCode.Contains(request.Keyword));
+                query = query.Where(x => x.a.ContractCode.Contains(request.Keyword));
             }
 
             int totalRow = await query.CountAsync();
@@ -118,16 +124,27 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 .Take(request.PageSize)
                 .Select(x => new ContractDto()
                 {
-                    Id = x.Id,
-                    ContractCode = x.ContractCode,
-                    FromDate = x.FromDate,
-                    ToDate = x.ToDate,
-                    RoomId = x.RoomId,
-                    DesiredPrice = x.DesiredPrice,
-                    StudentId = x.StudentId,
-                    ServiceId = x.ServiceId,
-                    AdminConfirmStatus = x.AdminConfirmStatus,
-                    StudentConfirmStatus = x.StudentConfirmStatus,
+                    Id = x.a.Id,
+                    ContractCode = x.a.ContractCode,
+                    DateCreated = x.a.DateCreated,
+                    DesiredPrice = x.a.DesiredPrice,
+                    StudentId = x.a.StudentId,
+                    StudentName = x.s.Name,
+                    StudentCode = x.s.StudentCode,
+                    StudentPhone = x.s.Phone,
+                    Gender = x.s.Gender,
+                    Adress = x.s.Adress,
+                    AdminConfirmStatus = x.a.AdminConfirmStatus,
+                    StudentConfirmStatus = x.a.StudentConfirmStatus,
+                    RoomId = x.a.RoomId,
+                    RoomName = x.r != null ? x.r.Name : null,
+                    AreaName = x.e != null ? x.e.Name : null,
+                    Point = x.s.Point,
+                    AcademicYear = x.s.AcademicYear,
+                    ContractCompletedStatus = x.a.ContractCompletedStatus,
+                    FromDate = x.a.FromDate.Value,
+                    ToDate = x.a.ToDate.Value,
+                    RoomPrice = x.r.Price
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractDto>()
@@ -178,8 +195,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     RoomName = x.r != null ? x.r.Name : null,
                     AreaName = x.e != null ? x.e.Name : null,
                     Point = x.s.Point,
-                    AcademicYear = x.s.AcademicYear
-                    
+                    AcademicYear = x.s.AcademicYear,
+                    ContractCompletedStatus = x.a.ContractCompletedStatus,
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
@@ -230,8 +247,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     RoomName = x.r != null ? x.r.Name : null,
                     AreaName = x.e != null ? x.e.Name : null,
                     Point = x.s.Point,
-                    AcademicYear = x.s.AcademicYear
-
+                    AcademicYear = x.s.AcademicYear,
+                    ContractCompletedStatus = x.a.ContractCompletedStatus
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()

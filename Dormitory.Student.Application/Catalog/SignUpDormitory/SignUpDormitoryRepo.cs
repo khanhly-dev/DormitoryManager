@@ -96,6 +96,16 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
             return data;
         }
 
+        public async Task<int> Delete(int id)
+        {
+            var contract = await _dbContext.ContractEntities.FindAsync(id);
+            if (contract != null)
+            {
+                _dbContext.ContractEntities.Remove(contract);
+            }
+            return await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<int> StudentConfirmContract(int contractId, int confirmStatus)
         {
             var contract = await _dbContext.ContractEntities.FindAsync(contractId);
@@ -106,6 +116,11 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 if(confirmStatus == DataConfigConstant.contractConfirmStatusReject)
                 {
                     contract.ContractCompletedStatus = DataConfigConstant.contractCompletedStatusCancel;
+                    var room = await _dbContext.RoomEntities.FindAsync(contract.RoomId);
+                    if (room != null)
+                    {
+                        room.AvaiableSlot += 1;
+                    }
                 }
                 //neu sv dong y thi cap nhat trang thai phong + cap nhat ngay gia han hop dong + cap nhat trang thai hop dong
                 if (confirmStatus == DataConfigConstant.contractConfirmStatusApprove)

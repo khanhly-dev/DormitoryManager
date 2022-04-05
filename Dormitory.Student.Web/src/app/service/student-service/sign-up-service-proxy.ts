@@ -22,6 +22,13 @@ export class SignUpServiceProxy {
         return this.http.get<CriteriaDto[]>(url, { headers: headers, observe: 'body', responseType: 'json' });
     }
 
+    delete(id: number): Observable<any> {
+        let url = this.baseUrl + `/api/contract/delete?id=${id}`;
+        url = url.replace(/[?&]$/, "");
+
+        return this.http.delete<any>(url, { headers: headers, observe: 'body', responseType: 'json' });
+    }
+
     setStudentPoint(studentId : number, listCriteriaId : string): Observable<any> {
         let url = this.baseUrl + "/api/contract/set-student-point";
         url = url.replace(/[?&]$/, "");

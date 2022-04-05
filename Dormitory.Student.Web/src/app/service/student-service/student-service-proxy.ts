@@ -22,6 +22,11 @@ export class StudentServiceProxy {
         url = url.replace(/[?&]$/, "");
         return this.http.get<StudentInfoDto>(url, { headers: headers, observe: 'body', responseType: 'json' });
     }
+    checkSignUpStatus(studentId: number): Observable<boolean> {
+        let url = this.baseUrl + `/api/student/check-sign-up-status?studentId=${studentId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<boolean>(url, { headers: headers, observe: 'body', responseType: 'json' });
+    }
     getRecomendPrice(): Observable<number[]> {
         let url = this.baseUrl + `/api/student/get-room-price-range`;
         url = url.replace(/[?&]$/, "");

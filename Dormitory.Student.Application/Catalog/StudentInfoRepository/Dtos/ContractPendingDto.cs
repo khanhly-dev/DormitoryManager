@@ -27,5 +27,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos
         public int? AcademicYear { get; set; }
         public DateTime? ToDate { get; set; }
         public DateTime? FromDate { get; set; }
+        public int? ContractCompletedStatus { get; set; }
+
     }
 }
