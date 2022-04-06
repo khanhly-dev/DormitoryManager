@@ -23,6 +23,12 @@ namespace Dormitory.Admin.Api.Controllers
             var list = await _roomRepo.GetList(request);
             return Ok(list);
         }
+        [HttpGet("get-list-empty-room")]
+        public async Task<IActionResult> GetListEmptyRoom()
+        {
+            var list = await _roomRepo.GetListEmptyRoom();
+            return Ok(list);
+        }
         [HttpPost("create-or-update")]
         public async Task<IActionResult> CreateOrUpdateRoom([FromForm] CreateOrUpdateRoomRequest request)
         {

@@ -101,7 +101,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
             var contract = await _dbContext.ContractEntities.FindAsync(id);
             if (contract != null)
             {
-                _dbContext.ContractEntities.Remove(contract);
+                contract.IsDeleted = false;
             }
             return await _dbContext.SaveChangesAsync();
         }
@@ -109,6 +109,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
         public async Task<int> StudentConfirmContract(int contractId, int confirmStatus)
         {
             var contract = await _dbContext.ContractEntities.FindAsync(contractId);
+            var student = await _dbContext.StudentEntities.FindAsync(contract.StudentId);
             if(contract != null)
             {
                 contract.StudentConfirmStatus = confirmStatus;
@@ -120,6 +121,11 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                     if (room != null)
                     {
                         room.AvaiableSlot += 1;
+                        if(room.FilledSlot == 0)
+                        {
+                            room.RoomGender = null;
+                            room.RoomAcedemic = null;
+                        }
                     }
                 }
                 //neu sv dong y thi cap nhat trang thai phong + cap nhat ngay gia han hop dong + cap nhat trang thai hop dong
@@ -132,6 +138,11 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                     {
                         room.EmptySlot -= 1;
                         room.FilledSlot += 1;
+                        if(room.FilledSlot == 1)
+                        {
+                            room.RoomGender = student.Gender;
+                            room.RoomAcedemic = student.AcademicYear;
+                        }
                     }
                 }
             }

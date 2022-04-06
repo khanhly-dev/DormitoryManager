@@ -132,5 +132,20 @@ namespace Dormitory.Admin.Api.Controllers
             }
             return Ok(new { responseStatus });
         }
+        [HttpPut("change-room")]
+        public async Task<IActionResult> ChangeRoom([FromForm] int contractId, [FromForm] int roomId)
+        {
+            var responseStatus = "";
+            var result = await _contractRepo.ChangeRoom(contractId, roomId);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
     }
 }

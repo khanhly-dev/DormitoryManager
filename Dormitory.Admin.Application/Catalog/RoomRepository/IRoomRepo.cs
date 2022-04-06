@@ -15,5 +15,6 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
         Task<PageResult<RoomDto>> GetList(PageRequestBase request);
         Task<int> CreateOrUpdate(CreateOrUpdateRoomRequest request);
         Task<int> Delete(int id);
+        Task<List<RoomSelectDto>> GetListEmptyRoom();
     }
 }

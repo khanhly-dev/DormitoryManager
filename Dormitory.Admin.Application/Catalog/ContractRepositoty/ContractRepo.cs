@@ -25,7 +25,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         {
             var query = from a in _dbContext.ContractEntities
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
-                        where s.Point >= minPoint && s.Point < maxPoint
+                        where s.Point >= minPoint && s.Point < maxPoint && a.IsDeleted == false
                         select new { a, s };
 
             query.Select(x => x.s.Point);
@@ -96,7 +96,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             var contract = await _dbContext.ContractEntities.FindAsync(id);
             if (contract != null)
             {
-                _dbContext.ContractEntities.Remove(contract);
+                contract.IsDeleted = true;
+                await UpdateRoomStatus(contract.Id);
             }
             return await _dbContext.SaveChangesAsync();
         }
@@ -104,7 +105,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         public async Task<PageResult<ContractDto>> GetListCompletedContract(PageRequestBase request)
         {
             var query = from a in _dbContext.ContractEntities
-                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
+                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && a.IsDeleted == false
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()
@@ -159,7 +160,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
 
         public async Task<PageResult<ContractPendingDto>> GetListContractPending(PageRequestBase request)
         {
-            var query = from a in _dbContext.ContractEntities
+            var query = from a in _dbContext.ContractEntities 
+                        where a.IsDeleted == false
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in  ra.DefaultIfEmpty()
@@ -211,7 +213,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         public async Task<PageResult<ContractPendingDto>> GetListAdminConfirmContractPending(PageRequestBase request)
         {
             var query = from a in _dbContext.ContractEntities
-                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusApprove
+                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusApprove && a.IsDeleted == false
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()
@@ -329,9 +331,68 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             }
             contract.RoomId = emptyRoom.Id;
 
-            emptyRoom.RoomGender = student.Gender;
-            emptyRoom.RoomAcedemic = student.AcademicYear;
+            //emptyRoom.RoomGender = student.Gender;
+            //emptyRoom.RoomAcedemic = student.AcademicYear;
             
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> ChangeRoom(int contractId, int roomId)
+        {
+            var contract = await _dbContext.ContractEntities.FindAsync(contractId);
+            if(contract.RoomId == roomId)
+            {
+                return 0;
+            }
+            var student = await _dbContext.StudentEntities.FirstOrDefaultAsync(x => x.Id == contract.StudentId);
+            var oldRoom = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == contract.RoomId);
+            var newRoom = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == roomId);
+            if(contract != null)
+            {
+                oldRoom.EmptySlot += 1;
+                oldRoom.FilledSlot -= 1;
+                oldRoom.AvaiableSlot += 1;
+                newRoom.EmptySlot -= 1;
+                newRoom.FilledSlot += 1;
+                newRoom.AvaiableSlot -= 1;
+                if(oldRoom.FilledSlot == 0)
+                {
+                    oldRoom.RoomAcedemic = null;
+                    oldRoom.RoomGender = null;
+                }
+                if(newRoom.FilledSlot == 1)
+                {
+                    newRoom.RoomAcedemic = student.AcademicYear;
+                    newRoom.RoomGender = student.Gender;
+                }
+                contract.RoomId = roomId;
+                return await _dbContext.SaveChangesAsync();
+            }
+            return 0;
+        }
+
+        public async Task<int> UpdateRoomStatus(int contractId)
+        {
+            var contract = await _dbContext.ContractEntities.FirstOrDefaultAsync(x => x.Id == contractId);
+            if(contract.RoomId.HasValue)
+            {
+                var room = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == contract.RoomId);
+                //hop dong het han
+                if((contract.IsDeleted == false && contract.ToDate < DateTime.Now) || contract.IsDeleted == true)
+                {
+                    if(contract.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk)
+                    {
+                        room.FilledSlot -= 1;
+                        room.EmptySlot += 1;
+                    }
+                    room.AvaiableSlot += 1;
+                    if(room.FilledSlot == 0)
+                    {
+                        room.RoomAcedemic = null;
+                        room.RoomGender = null;
+                    }
+                }
+            }
             return await _dbContext.SaveChangesAsync();
         }
     }

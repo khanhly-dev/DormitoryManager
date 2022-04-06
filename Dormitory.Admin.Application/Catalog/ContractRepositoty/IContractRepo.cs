@@ -21,5 +21,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         Task<int> AdminConfirmAllContract(int minPoint, int maxPoint, int confirmStatus);
         Task<PageResult<ContractPendingDto>> GetListAdminConfirmContractPending(PageRequestBase request);
         Task<int> ScheduleRoom(int contractId);
+        Task<int> ChangeRoom(int contractId, int roomId);
+        Task<int> UpdateRoomStatus(int contractId);
     }
 }

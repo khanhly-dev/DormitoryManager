@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ContractDto } from 'src/app/dto/output-dto';
+import { ContractDto, RoomSelectDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { ContracServiceProxy } from 'src/app/service/admin-service/contract-service-proxy';
+import { RoomServiceProxy } from 'src/app/service/admin-service/room-service-proxy';
 
 @Component({
   selector: 'app-completed-contract',
@@ -11,13 +12,16 @@ import { ContracServiceProxy } from 'src/app/service/admin-service/contract-serv
 export class CompletedContractComponent implements OnInit {
   modalTitle: string = "";
   listContract!: PageResultBase<ContractDto>;
+  emptyRoom!: RoomSelectDto[];
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
   isSpinning = false;
   now = new Date();
+  selectedRoom: any;
+  selectedContract: number = 0;
 
-  constructor(private contractService: ContracServiceProxy) {
+  constructor(private contractService: ContracServiceProxy, private roomService: RoomServiceProxy) {
   }
 
   ngOnInit(): void {
@@ -32,9 +36,21 @@ export class CompletedContractComponent implements OnInit {
     })
   }
 
+  getListEmptyRoom(gender: number) {
+    this.roomService.getListEmptyRoom().subscribe(x => {
+      this.emptyRoom = x.filter(x => x.genderRoom == gender || !x.genderRoom);
+    })
+  }
+
   deleteContract(id: number) {
-    this.contractService.delete(id).subscribe(() => {
+    this.contractService.delete(id).subscribe((x) => {
       this.getListContract("", this.pageIndex, 10)
+      if (x.responseStatus = 'success') {
+        alert("Xoá thành công")
+      }
+      else {
+        alert("Xoá không thành công")
+      }
     })
   }
 
@@ -48,12 +64,27 @@ export class CompletedContractComponent implements OnInit {
       return false
     }
   }
-  showModal(): void {
+
+  changeRoom(contractId: number) {
+    this.contractService.changeRoom(contractId, this.selectedRoom).subscribe(x => {
+      this.getListContract("", this.pageIndex, 10);
+      if (x.responseStatus = 'success') {
+        alert("Đổi phòng thành công")
+      }
+      else {
+        alert("Đổi phòng không thành công")
+      }
+    })
+  }
+
+  showModal(data: ContractDto): void {
+    this.getListEmptyRoom(data.gender)
+    this.selectedContract = data.id;
     this.isVisible = true;
   }
 
   handleOk(): void {
-    console.log('Button ok clicked!');
+    this.changeRoom(this.selectedContract)
     this.isVisible = false;
   }
 

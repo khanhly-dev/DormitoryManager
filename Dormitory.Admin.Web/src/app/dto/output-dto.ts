@@ -92,3 +92,11 @@ export interface ContractPendingDto {
     areaName: number;
     academicYear: string
 }
+
+
+export interface RoomSelectDto {
+    id: number;
+    name: string;
+    avaiableSlot: number;
+    genderRoom: number;
+}

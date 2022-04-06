@@ -98,5 +98,18 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
             };
             return pageResult;
         }
+
+        public async Task<List<RoomSelectDto>> GetListEmptyRoom()
+        {
+            var listEmptyRoom = await _dbContext.RoomEntities.Where(x => x.AvaiableSlot > 0).Select(x => new RoomSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                GenderRoom = x.RoomGender,
+                AvaiableSlot = x.AvaiableSlot.Value
+            }).ToListAsync();
+
+            return listEmptyRoom;
+        }
     }
 }

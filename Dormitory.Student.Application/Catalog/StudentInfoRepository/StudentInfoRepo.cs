@@ -43,7 +43,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
         public async Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request)
         {
             var query = from a in _adminSolutionDbContext.ContractEntities
-                        where a.StudentId == request.StudentId 
+                        where a.StudentId == request.StudentId && a.IsDeleted == false
                         join s in _adminSolutionDbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _adminSolutionDbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()

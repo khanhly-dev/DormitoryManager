@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { RoomDto } from 'src/app/dto/output-dto';
+import { RoomDto, RoomSelectDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class RoomServiceProxy {
@@ -20,6 +20,12 @@ export class RoomServiceProxy {
         let url = this.baseUrl + `/api/room/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<PageResultBase<RoomDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getListEmptyRoom(): Observable<RoomSelectDto[]> {
+        let url = this.baseUrl + `/api/room/get-list-empty-room`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<RoomSelectDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     delete(id: number): Observable<any> {

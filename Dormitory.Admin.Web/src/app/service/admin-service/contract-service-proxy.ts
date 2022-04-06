@@ -116,4 +116,17 @@ export class ContracServiceProxy {
 
         return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
+
+    changeRoom(contractId: any, roomId: any): Observable<any> {
+        let url = this.baseUrl + "/api/contract/change-room";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (contractId !== null && contractId !== undefined)
+            content.append("contractId", contractId.toString());
+        if (roomId !== null && roomId !== undefined)
+            content.append("roomId", roomId.toString());
+
+        return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
 }

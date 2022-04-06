@@ -12,14 +12,16 @@
     </div>
     <br>
 
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Xác nhận xoá" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Thay đổi phòng" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
         <ng-container *nzModalContent>
-          <h4>Bạn có chắc chắn muốn xoá hợp đồng này?</h4>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn phòng muốn đổi" [(ngModel)]="selectedRoom"
+                style="width: 100%;">
+                <nz-option *ngFor="let option of emptyRoom" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
         </ng-container>
-      </nz-modal>
+    </nz-modal>
 
-    <nz-table #basicTable [nzData]="listContract.items" *ngIf="listContract != undefined"
-        [nzFrontPagination]="false">
+    <nz-table #basicTable [nzData]="listContract.items" *ngIf="listContract != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
                 <th>STT</th>
@@ -61,16 +63,15 @@
                     </a>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item >Sửa</li>
-                            <li nz-menu-item nzDanger (click)="showModal()">Xoá</li>
+                            <li nz-menu-item (click)="showModal(data)">Sửa</li>
+                            <li nz-menu-item nzDanger (click)="deleteContract(data.id)">Xoá</li>
                         </ul>
                     </nz-dropdown-menu>
                 </td>
             </tr>
         </tbody>
     </nz-table>
-    <nz-pagination *ngIf="listContract != undefined" [(nzPageIndex)]="pageIndex"
-        [nzTotal]="listContract.totalRecords" [nzPageSize]="10"
-        (nzPageIndexChange)="getListContract('', pageIndex, 10)">
+    <nz-pagination *ngIf="listContract != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listContract.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListContract('', pageIndex, 10)">
     </nz-pagination>
 </nz-spin>
