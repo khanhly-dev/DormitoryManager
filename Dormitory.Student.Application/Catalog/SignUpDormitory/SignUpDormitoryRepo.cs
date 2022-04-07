@@ -39,6 +39,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 StudentId = request.StudentId,
                 AdminConfirmStatus = DataConfigConstant.contractConfirmStatusPending,
                 StudentConfirmStatus = DataConfigConstant.contractConfirmStatusPending,
+                IsDeleted = false
             };
 
             _dbContext.ContractEntities.Add(criterial);
@@ -146,6 +147,46 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                     }
                 }
             }
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> CreateExtendContract(int studentId)
+        {
+            var contract = await _dbContext.ContractEntities.Where(x => x.StudentId == studentId && x.ToDate > DateTime.Now && x.IsDeleted == false).FirstOrDefaultAsync();
+            //neu hop dong het han hoac ko co thi p dki moi
+            if(contract == null)
+            {
+                return 0;
+            }
+
+            //gen contract code
+            var listCode = await _dbContext.ContractEntities.Select(x => x.ContractCode).ToListAsync();
+            var random = new Random();
+            var contractCode = "HD" + random.Next(100000, 999999).ToString();
+            while (listCode.Contains(contractCode))
+            {
+                contractCode = "HD" + random.Next(100000, 999999).ToString();
+            }
+            //tinh ngay ket thuc hop dong
+            var contractTimeConfigToDate = _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= DateTime.Now).Min(x => x.ToDate);
+            var extendContract = new ContractEntity
+            {
+                ContractCode = contractCode,
+                DateCreated = DateTime.Now,
+                FromDate = DateTime.Now,
+                ToDate = contractTimeConfigToDate,
+                RoomId = contract.RoomId,
+                DesiredPrice = contract.DesiredPrice,
+                StudentId = contract.StudentId,
+                ServiceId = contract.ServiceId,
+                AdminConfirmStatus = contract.AdminConfirmStatus,
+                StudentConfirmStatus = contract.StudentConfirmStatus,
+                ContractCompletedStatus = contract.ContractCompletedStatus,
+                IsDeleted = contract.IsDeleted,
+                IsExtendContact = DataConfigConstant.extendContract
+            };
+
+            _dbContext.ContractEntities.Add(extendContract);
             return await _dbContext.SaveChangesAsync();
         }
     }

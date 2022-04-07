@@ -29,6 +29,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public int? ContractCompletedStatus { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+        public bool IsExtendContract { get; set; }
 
     }
 }

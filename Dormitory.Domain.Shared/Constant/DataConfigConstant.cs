@@ -20,5 +20,8 @@ namespace Dormitory.Domain.Shared.Constant
 
         public static int contractCompletedStatusCancel = 0;
         public static int contractCompletedStatusOk = 1;
+
+        public static bool extendContract = true;
+        public static bool nonExtendContract = false;
     }
 }

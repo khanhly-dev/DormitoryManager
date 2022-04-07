@@ -28,6 +28,9 @@ namespace Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore
         public DbSet<ServiceEntity> ServiceEntities { get; set; }
         public DbSet<StudentCriteriaEntity> StudentCriteriaEntities { get; set; }
         public DbSet<StudentEntity> StudentEntities { get; set; }
+        public DbSet<ContractFeeEntity> ContractFeeEntities { get; set; }
+        public DbSet<PositionEntity> PositionEntities { get; set; }
+        public DbSet<StaffEntity> StaffEntities { get; set; }
         public DbSet<ContractTimeConfigEntity> ContractTimeConfigEntities { get; set; }
     }
 }

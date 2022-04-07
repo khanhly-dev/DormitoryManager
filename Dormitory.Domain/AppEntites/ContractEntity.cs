@@ -21,5 +21,6 @@ namespace Dormitory.Domain.AppEntities
         public int? StudentConfirmStatus { get; set; }
         public int? ContractCompletedStatus { get; set; }
         public bool IsDeleted { get; set; }
+        public bool? IsExtendContact { get; set; }
     }
 }

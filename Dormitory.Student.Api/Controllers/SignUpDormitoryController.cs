@@ -32,6 +32,21 @@ namespace Dormitory.Student.Api.Controllers
             }    
             return Ok(new { responseStatus });
         }
+        [HttpPost("extend-contract")]
+        public async Task<IActionResult> CreateExtendContract([FromForm] int studentId)
+        {
+            var responseStatus = "";
+            var result = await _signUpDormitoryRepo.CreateExtendContract(studentId);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
         [HttpPost("set-student-point")]
         public async Task<IActionResult> SetStudentPoint([FromForm] int studentId, [FromForm] string listCriteriaId)
         {

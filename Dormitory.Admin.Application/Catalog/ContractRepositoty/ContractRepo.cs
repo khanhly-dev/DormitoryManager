@@ -85,6 +85,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 ServiceId = request.ServiceId,
                 AdminConfirmStatus = request.AdminConfirmStatus.HasValue ? request.AdminConfirmStatus.Value : DataConfigConstant.contractConfirmStatusPending,
                 StudentConfirmStatus = request.StudentConfirmStatus.HasValue ? request.StudentConfirmStatus : DataConfigConstant.contractConfirmStatusPending,
+                IsDeleted = false
             };
             
             _dbContext.ContractEntities.Add(criterial);
@@ -145,7 +146,9 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     ContractCompletedStatus = x.a.ContractCompletedStatus,
                     FromDate = x.a.FromDate.Value,
                     ToDate = x.a.ToDate.Value,
-                    RoomPrice = x.r.Price
+                    RoomPrice = x.r.Price,
+                    IsExtendContract = x.a.IsExtendContact.Value
+                    
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractDto>()
@@ -199,6 +202,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
                     ContractCompletedStatus = x.a.ContractCompletedStatus,
+                    IsExtendContract = x.a.IsExtendContact.Value
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
@@ -250,7 +254,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     AreaName = x.e != null ? x.e.Name : null,
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
-                    ContractCompletedStatus = x.a.ContractCompletedStatus
+                    ContractCompletedStatus = x.a.ContractCompletedStatus,
+                    IsExtendContract = x.a.IsExtendContact.Value
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
