@@ -82,7 +82,8 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     AcademicYear = x.s.AcademicYear,
                     ToDate = x.a.ToDate.Value,
                     FromDate = x.a.FromDate,
-                    ContractCompletedStatus = x.a.ContractCompletedStatus.Value
+                    ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
+                    IsExtendContract = x.a.IsExtendContact.Value
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
