@@ -47,4 +47,11 @@ export interface ContractPendingDto {
     toDate: Date;
     fromDate: Date;
     contractCompletedStatus: number;
+    isExtendContract: boolean;
+    roomPrice: number;
+}
+
+export interface ExtendContractTime {
+    fromDate: Date;
+    toDate: Date;
 }

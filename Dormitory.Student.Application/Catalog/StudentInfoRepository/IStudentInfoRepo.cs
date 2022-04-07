@@ -14,5 +14,6 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
         Task<List<float>> GetRecomendRoomPrice();
         Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request);
         Task<bool> CheckCanSignUp(int studenId);
+        Task<bool> CheckCanCreateExtendContract(int studentId);
     }
 }

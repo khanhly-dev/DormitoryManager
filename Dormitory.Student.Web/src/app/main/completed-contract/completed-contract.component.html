@@ -10,6 +10,12 @@
             </ng-template>
         </div>
     </div>
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            Bạn có muốn gia hạn hợp đồng thêm từ ngày <span><b>{{extendContractTime.fromDate | date : "dd-MM-yyyy"}}</b></span> 
+            đến ngày <span><b>{{extendContractTime.toDate | date : "dd-MM-yyyy"}}</b></span> 
+        </ng-container>
+      </nz-modal>
     <br>
     <nz-table #basicTable [nzData]="listContractPending.items" *ngIf="listContractPending != undefined"
         [nzFrontPagination]="false">
@@ -25,8 +31,9 @@
                 <th>Hạn hợp đồng</th>
                 <th>Khu ở</th>
                 <th>Phòng ở</th>
-                <th>Trạng duyệt đơn đăng kí</th>
-                <th>Trạng thái SV xác nhận</th>
+                <th>Giá phòng</th>
+                <th>Trạng thái</th>
+                <th>Kiểu hợp đồng</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -43,33 +50,20 @@
                 <td>{{ data.toDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data.areaName }}</td>
                 <td>{{ data.roomName }}</td>
+                <td>{{ data.roomPrice | currency: "VND" }}</td>
+                <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
+                <td *ngIf="compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>
 
-                <td *ngIf="data.adminConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
-                <td *ngIf="data.adminConfirmStatus == 1" style="color: #f40404;">Từ chối</td>
-                <td *ngIf="data.adminConfirmStatus == 2" style="color: #25da91;">Chấp nhận</td>
-
-                <td *ngIf="data.studentConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
-                <td *ngIf="data.studentConfirmStatus == 1" style="color: #f40404;">Từ chối</td>
-                <td *ngIf="data.studentConfirmStatus == 2" style="color: #25da91;">Chấp nhận</td>
+                <td *ngIf="!data.isExtendContract" style="color: #efbf38;">Thường</td>
+                <td *ngIf="data.isExtendContract" style="color: #25da91;">Gia hạn</td>
                 <td>
                     <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
                         <i nz-icon nzType="bars" nzTheme="outline"></i>
                     </a>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item>
-                                <button (click)="studentConfirm(data.id, 2)"
-                                    [disabled]="data.contractCompletedStatus != undefined || data.roomId == undefined || data.adminConfirmStatus == 0"
-                                    nz-button nzType="text">Chấp nhận</button>
-                            </li>
-                            <li nz-menu-item>
-                                <button (click)="studentConfirm(data.id, 1)"
-                                    [disabled]="data.contractCompletedStatus != undefined || data.roomId == undefined || data.adminConfirmStatus == 0"
-                                    nz-button nzType="text">Từ chối</button>
-                            </li>
-                            <li nz-menu-item>
-                                <button (click)="deleteSignUpForm(data.id)" nz-button nzType="text"
-                                    [disabled]="data.adminConfirmStatus != 0">Xoá</button>
+                            <li nz-menu-item >
+                                <button nz-button nzType="text" (click)="showModal()" [disabled]="!CanCreateExtendContract">Gia hạn</button>
                             </li>
                         </ul>
                     </nz-dropdown-menu>

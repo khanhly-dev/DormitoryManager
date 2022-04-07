@@ -19,6 +19,19 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
             _adminSolutionDbContext = adminSolutionDbContext;
         }
 
+        public async Task<bool> CheckCanCreateExtendContract(int studentId)
+        {
+            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studentId).AsNoTracking().ToListAsync();
+            if (contract == null || contract.Count == 0 || contract.Count >= 2)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public async Task<bool> CheckCanSignUp(int studenId)
         {
             var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studenId).AsNoTracking().ToListAsync();
@@ -83,7 +96,8 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     ToDate = x.a.ToDate.Value,
                     FromDate = x.a.FromDate,
                     ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
-                    IsExtendContract = x.a.IsExtendContact.Value
+                    IsExtendContract = x.a.IsExtendContract.Value,
+                    RoomPrice = x.r.Price
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()

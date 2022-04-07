@@ -72,6 +72,12 @@ namespace Dormitory.Student.Api.Controllers
             var listCriteria = await _signUpDormitoryRepo.GetListCriteria();
             return Ok(listCriteria);
         }
+        [HttpGet("get-extend-contract-time")]
+        public async Task<IActionResult> GetExterndContractTime([FromQuery] int studentId)
+        {
+            var extendContractTime = await _signUpDormitoryRepo.GetExtendContractTime(studentId);
+            return Ok(extendContractTime);
+        }
         [HttpPut("student-confirm")]
         public async Task<IActionResult> StudentConfirm([FromForm] int contractId, [FromForm] int confirmStatus)
         {

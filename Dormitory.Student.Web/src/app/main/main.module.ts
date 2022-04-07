@@ -28,6 +28,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { StudentConfirmComponent } from './student-confirm/student-confirm.component';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { CompletedContractComponent } from './completed-contract/completed-contract.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     LayoutComponent,
     SignUpComponent,
     StudentConfirmComponent,
+    CompletedContractComponent,
   ],
   imports: [
     CommonModule,

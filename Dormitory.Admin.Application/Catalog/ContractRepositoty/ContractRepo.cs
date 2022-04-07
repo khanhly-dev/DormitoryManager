@@ -82,7 +82,6 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 RoomId = request.RoomId,
                 DesiredPrice = request.DesiredPrice,
                 StudentId = request.StudentId,
-                ServiceId = request.ServiceId,
                 AdminConfirmStatus = request.AdminConfirmStatus.HasValue ? request.AdminConfirmStatus.Value : DataConfigConstant.contractConfirmStatusPending,
                 StudentConfirmStatus = request.StudentConfirmStatus.HasValue ? request.StudentConfirmStatus : DataConfigConstant.contractConfirmStatusPending,
                 IsDeleted = false
@@ -98,7 +97,10 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             if (contract != null)
             {
                 contract.IsDeleted = true;
-                await UpdateRoomStatus(contract.Id);
+                if(!contract.IsExtendContract.Value)
+                {
+                    await UpdateRoomStatus(contract.Id);
+                }
             }
             return await _dbContext.SaveChangesAsync();
         }
@@ -147,7 +149,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     FromDate = x.a.FromDate.Value,
                     ToDate = x.a.ToDate.Value,
                     RoomPrice = x.r.Price,
-                    IsExtendContract = x.a.IsExtendContact.Value
+                    IsExtendContract = x.a.IsExtendContract.Value
                     
                 }).ToListAsync();
 
@@ -202,7 +204,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
                     ContractCompletedStatus = x.a.ContractCompletedStatus,
-                    IsExtendContract = x.a.IsExtendContact.Value
+                    IsExtendContract = x.a.IsExtendContract.Value
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
@@ -255,7 +257,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
                     ContractCompletedStatus = x.a.ContractCompletedStatus,
-                    IsExtendContract = x.a.IsExtendContact.Value
+                    IsExtendContract = x.a.IsExtendContract.Value
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()

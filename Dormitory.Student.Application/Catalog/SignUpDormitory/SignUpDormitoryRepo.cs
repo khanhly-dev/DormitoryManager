@@ -168,26 +168,43 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 contractCode = "HD" + random.Next(100000, 999999).ToString();
             }
             //tinh ngay ket thuc hop dong
-            var contractTimeConfigToDate = _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= DateTime.Now).Min(x => x.ToDate);
+            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
             var extendContract = new ContractEntity
             {
                 ContractCode = contractCode,
                 DateCreated = DateTime.Now,
-                FromDate = DateTime.Now,
-                ToDate = contractTimeConfigToDate,
+                FromDate = contract.ToDate,
+                ToDate = contractTimeConfigToDate.ToDate,
                 RoomId = contract.RoomId,
                 DesiredPrice = contract.DesiredPrice,
                 StudentId = contract.StudentId,
-                ServiceId = contract.ServiceId,
                 AdminConfirmStatus = contract.AdminConfirmStatus,
                 StudentConfirmStatus = contract.StudentConfirmStatus,
                 ContractCompletedStatus = contract.ContractCompletedStatus,
                 IsDeleted = contract.IsDeleted,
-                IsExtendContact = DataConfigConstant.extendContract
+                IsExtendContract = DataConfigConstant.extendContract
             };
 
             _dbContext.ContractEntities.Add(extendContract);
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ExtendContractTime> GetExtendContractTime(int studentId)
+        {
+            var contract = await _dbContext.ContractEntities.Where(x => x.StudentId == studentId && x.ToDate > DateTime.Now && x.IsDeleted == false).FirstOrDefaultAsync();
+            //neu hop dong het han hoac ko co thi p dki moi
+            if (contract == null)
+            {
+                return null;
+            }
+
+            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
+            var time = new ExtendContractTime
+            {
+                FromDate = contractTimeConfigToDate.FromDate,
+                ToDate = contractTimeConfigToDate.ToDate,
+            };
+            return time;
         }
     }
 }

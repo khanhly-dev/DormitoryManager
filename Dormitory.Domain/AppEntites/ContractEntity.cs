@@ -16,11 +16,10 @@ namespace Dormitory.Domain.AppEntities
         public int? RoomId { get; set; }
         public float? DesiredPrice { get; set; }
         public int StudentId { get; set; }
-        public int? ServiceId { get; set; }
         public int? AdminConfirmStatus { get; set; }
         public int? StudentConfirmStatus { get; set; }
         public int? ContractCompletedStatus { get; set; }
         public bool IsDeleted { get; set; }
-        public bool? IsExtendContact { get; set; }
+        public bool? IsExtendContract { get; set; }
     }
 }

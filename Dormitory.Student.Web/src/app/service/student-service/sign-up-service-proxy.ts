@@ -2,7 +2,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CriteriaDto, StudentInfoDto } from 'src/app/dto/output-dto';
+import { CriteriaDto, ExtendContractTime, StudentInfoDto } from 'src/app/dto/output-dto';
 
 const headers = new HttpHeaders({
     "authorization": "Bearer " + localStorage.getItem('access_token') ?? "",
@@ -20,6 +20,12 @@ export class SignUpServiceProxy {
         let url = this.baseUrl + `/api/contract/get-list-criteria`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<CriteriaDto[]>(url, { headers: headers, observe: 'body', responseType: 'json' });
+    }
+
+    getExtendContractTime(studentId : number): Observable<ExtendContractTime> {
+        let url = this.baseUrl + `/api/contract/get-extend-contract-time?studentId=${studentId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<ExtendContractTime>(url, { headers: headers, observe: 'body', responseType: 'json' });
     }
 
     delete(id: number): Observable<any> {
@@ -51,6 +57,17 @@ export class SignUpServiceProxy {
             content.append("studentId", studentId.toString());
         if (desiredPrice !== null && desiredPrice !== undefined)
             content.append("desiredPrice", desiredPrice);
+
+        return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
+    }
+
+    extendContract(studentId : number): Observable<any> {
+        let url = this.baseUrl + "/api/contract/extend-contract";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (studentId !== null && studentId !== undefined)
+            content.append("studentId", studentId.toString());
 
         return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
     }

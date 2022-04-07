@@ -16,5 +16,6 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
         Task<int> StudentConfirmContract(int contractId, int confirmStatus);
         Task<int> Delete(int id);
         Task<int> CreateExtendContract(int studentId);
+        Task<ExtendContractTime> GetExtendContractTime(int studentId);
     }
 }

@@ -39,5 +39,12 @@ namespace Dormitory.Student.Api.Controllers
             var check = await _studentInfoRepo.CheckCanSignUp(studentId);
             return Ok(check);
         }
+
+        [HttpGet("check-create-extend-contract")]
+        public async Task<IActionResult> CheckCreateExtendContract([FromQuery] int studentId)
+        {
+            var check = await _studentInfoRepo.CheckCanCreateExtendContract(studentId);
+            return Ok(check);
+        }
     }
 }
