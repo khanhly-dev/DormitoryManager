@@ -138,17 +138,17 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     StudentPhone = x.s.Phone,
                     Gender = x.s.Gender,
                     Adress = x.s.Adress,
-                    AdminConfirmStatus = x.a.AdminConfirmStatus,
-                    StudentConfirmStatus = x.a.StudentConfirmStatus,
-                    RoomId = x.a.RoomId,
+                    AdminConfirmStatus = x.a.AdminConfirmStatus.Value,
+                    StudentConfirmStatus = x.a.StudentConfirmStatus.Value,
+                    RoomId = x.a.RoomId.Value,
                     RoomName = x.r != null ? x.r.Name : null,
                     AreaName = x.e != null ? x.e.Name : null,
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
-                    ContractCompletedStatus = x.a.ContractCompletedStatus,
+                    ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
                     FromDate = x.a.FromDate.Value,
                     ToDate = x.a.ToDate.Value,
-                    RoomPrice = x.r.Price,
+                    RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null,
                     IsExtendContract = x.a.IsExtendContract.Value
                     
                 }).ToListAsync();
@@ -196,14 +196,14 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     StudentPhone = x.s.Phone,
                     Gender = x.s.Gender,
                     Adress = x.s.Adress,
-                    AdminConfirmStatus = x.a.AdminConfirmStatus,
-                    StudentConfirmStatus = x.a.StudentConfirmStatus,
-                    RoomId = x.a.RoomId,
+                    AdminConfirmStatus = x.a.AdminConfirmStatus.Value,
+                    StudentConfirmStatus = x.a.StudentConfirmStatus.Value,
+                    RoomId = x.a.RoomId.Value,
                     RoomName = x.r != null ? x.r.Name : null,
                     AreaName = x.e != null ? x.e.Name : null,
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
-                    ContractCompletedStatus = x.a.ContractCompletedStatus,
+                    ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
                     IsExtendContract = x.a.IsExtendContract.Value
                 }).ToListAsync();
 

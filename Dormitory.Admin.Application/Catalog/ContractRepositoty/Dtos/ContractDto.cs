@@ -15,7 +15,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public int StudentId { get; set; }
         public int? RoomId { get; set; }
         public string RoomName { get; set; }
-        public float RoomPrice { get; set; }
+        public float? RoomPrice { get; set; }
         public string AreaName { get; set; }
         public string StudentName { get; set; }
         public int Gender { get; set; }
@@ -29,7 +29,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public int? ContractCompletedStatus { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-        public bool IsExtendContract { get; set; }
+        public bool? IsExtendContract { get; set; }
 
     }
 }

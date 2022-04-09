@@ -86,18 +86,18 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     StudentPhone = x.s.Phone,
                     Gender = x.s.Gender,
                     Adress = x.s.Adress,
-                    AdminConfirmStatus = x.a.AdminConfirmStatus,
-                    StudentConfirmStatus = x.a.StudentConfirmStatus,
-                    RoomId = x.a.RoomId,
+                    AdminConfirmStatus = x.a.AdminConfirmStatus.Value,
+                    StudentConfirmStatus = x.a.StudentConfirmStatus.Value,
+                    RoomId = x.a.RoomId.Value,
                     RoomName = x.r != null ? x.r.Name : null,
                     AreaName = x.e != null ? x.e.Name : null,
-                    Point = x.s.Point,
+                    Point = x.s.Point.Value,
                     AcademicYear = x.s.AcademicYear,
                     ToDate = x.a.ToDate.Value,
-                    FromDate = x.a.FromDate,
+                    FromDate = x.a.FromDate.Value,
                     ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
                     IsExtendContract = x.a.IsExtendContract.Value,
-                    RoomPrice = x.r.Price
+                    RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()

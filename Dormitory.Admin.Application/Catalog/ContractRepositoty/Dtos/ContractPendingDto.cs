@@ -26,6 +26,6 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public int? StudentConfirmStatus { get; set; }
         public int? AcademicYear { get; set; }
         public int? ContractCompletedStatus { get; set; }
-        public bool IsExtendContract { get; set; }
+        public bool? IsExtendContract { get; set; }
     }
 }
