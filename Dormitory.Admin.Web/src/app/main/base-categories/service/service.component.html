@@ -34,6 +34,23 @@
                     </nz-form-control>
                 </nz-form-item>
 
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Đơn vị</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập đơn vị">
+                        <input nz-input formControlName="unit" />
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Kiểu dịch vụ</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập giá dịch vụ">
+                        <nz-radio-group formControlName="serviceType">
+                            <label nz-radio [nzValue]="1">Dịch vụ theo hợp đồng</label>
+                            <label nz-radio [nzValue]="0">Dịch vụ theo phòng</label>
+                          </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item>
+
             </form>
         </ng-container>
     </nz-modal>
@@ -44,6 +61,8 @@
                 <th>STT</th>
                 <th>Tên dịch vụ</th>
                 <th>Giá</th>
+                <th>Đơn vị</th>
+                <th>Kiểu dịch vụ</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -52,6 +71,9 @@
                 <td>{{ listService.items.indexOf(data) + 1}}</td>
                 <td>{{ data.name }}</td>
                 <td>{{ data.price | currency : "VND" }}</td>
+                <td>{{ data.unit }}</td>
+                <td *ngIf="data.serviceType == 1">Dịch vụ theo hợp đồng</td>
+                <td *ngIf="data.serviceType == 0">Dịch vụ theo phòng</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary"
                         (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;

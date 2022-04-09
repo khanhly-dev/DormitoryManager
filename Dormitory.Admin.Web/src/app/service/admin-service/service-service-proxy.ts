@@ -41,6 +41,10 @@ export class ServiceServiceProxy {
             content.append("name", data.name.toString());
         if (data.price !== null || data.price !== undefined)
             content.append("price", data.price);
+        if (data.unit !== null || data.unit !== undefined)
+            content.append("unit", data.unit);
+        if (data.serviceType !== null || data.serviceType !== undefined)
+            content.append("serviceType", data.serviceType);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

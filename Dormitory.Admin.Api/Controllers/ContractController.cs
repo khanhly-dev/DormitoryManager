@@ -25,6 +25,12 @@ namespace Dormitory.Admin.Api.Controllers
             var list = await _contractRepo.GetListCompletedContract(request);
             return Ok(list);
         }
+        [HttpGet("get-list-contract-by-student")]
+        public async Task<IActionResult> GetListContractByStudentId([FromQuery] int studentId)
+        {
+            var list = await _contractRepo.GetListContractByStudentId(studentId);
+            return Ok(list);
+        }
         [HttpGet("get-list-contract-pending")]
         public async Task<IActionResult> GetListContractPeding([FromQuery] PageRequestBase request)
         {

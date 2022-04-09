@@ -1,0 +1,135 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListStudent(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+    </div>
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Số tiền</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên phòng">
+                        <nz-input-number formControlName="moneyPaid" [nzStep]="1" style="width: 100%"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Ngày đóng</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập giá phòng">
+                        <input class="form-control" formControlName="datePaid" type="date" style="width : 100%">
+                    </nz-form-control>
+                </nz-form-item>
+
+            </form>
+        </ng-container>
+    </nz-modal>
+    <br>
+    <nz-table #basicTable [nzData]="listStudent.items" *ngIf="listStudent != undefined" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên sinh viên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Mã sinh viên</th>
+                <th>Khoá</th>
+                <th>Chuyên ngành</th>
+                <th>Lớp</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Trạng thái đóng tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let data of basicTable.data">
+                <tr>
+                    <td>{{ listStudent.items.indexOf(data) + 1 }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.dob }}</td>
+                    <td *ngIf="data.gender == 1">Nam</td>
+                    <td *ngIf="data.gender == 0">Nữ</td>
+                    <td>{{ data.studentCode }}</td>
+                    <td>{{ data.academicYear }}</td>
+                    <td>{{ data.major }}</td>
+                    <td>{{ data.class }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.adress }}</td>
+                    <td *ngIf="!data.paymentStatus" style="color: #f40404;">Chưa đóng</td>
+                    <td *ngIf="data.paymentStatus" style="color: #25da91;">Đã đóng</td>
+                    <td>
+                        <button nz-button nzSize="small" nzType="primary" (click)="getContractByStudentId(data.id)">
+                            Chi tiết
+                        </button>
+                    </td>
+                </tr>
+                <td colspan="13" *ngIf="collapseActive == data.id && collapseStatus">
+                    <div style="background: #ECECEC;padding:30px;">
+                        <nz-card [nzBordered]="false">
+                            <div>
+                                <nz-table #basicTable [nzData]="currentStudentContract" nzBordered>
+                                    <thead>
+                                        <tr>
+                                            <th>Mã hợp đồng</th>
+                                            <th>Ngày đăng ký</th>
+                                            <th>Ngày bắt đầu</th>
+                                            <th>Ngày kết thúc</th>
+                                            <th>Kiểu hợp đồng</th>
+                                            <th>Khu ở</th>
+                                            <th>Phòng ở</th>
+                                            <th>Tiền phòng</th>
+                                            <th>Tiền dịch vụ</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Ngày đóng</th>
+                                            <th>Số tiền đóng</th>
+                                            <th>Trạng thái đóng</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+        <tbody>
+            <tr *ngFor="let data1 of basicTable.data">
+                <td>{{ data1.contractCode }}</td>
+                <td>{{ data1.dateCreated | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data1.fromDate | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data1.toDate | date : "dd-MM-yyyy"}}</td>
+                <td *ngIf="!data1.isExtendContract">Hợp đồng thường</td>
+                <td *ngIf="data1.isExtendContract">Hợp đồng gia hạn</td>
+                <td>{{ data1.areaName }}</td>
+                <td>{{ data1.roomName }}</td>
+                <td>{{ data1.contractPrice | currency : "VND" }}</td>
+                <td>{{ data1.servicePrice | currency : "VND" }}</td>
+                <td>{{ data1.contractPriceValue | currency : "VND"}}</td>
+                <td>{{ data1.paidDate }}</td>
+                <td>{{ data1.moneyPaid | currency : "VND"}}</td>
+                <td *ngIf="!data1.isPaid" style="color: #f40404;">Chưa đóng</td>
+                <td *ngIf="data1.isPaid" style="color: #25da91;">Đã đóng</td>
+                <td>
+                    <button nz-button nzSize="small" nzType="primary" (click)="showModal(data1)">
+                        Cập nhật
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    </div>
+    </nz-card>
+    </div>
+    </td>
+    </ng-container>
+
+    </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listStudent != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listStudent.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListStudent('', pageIndex, 10)">
+    </nz-pagination>
+</nz-spin>

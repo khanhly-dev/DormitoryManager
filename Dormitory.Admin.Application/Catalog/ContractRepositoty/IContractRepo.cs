@@ -23,6 +23,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         Task<int> ScheduleRoom(int contractId);
         Task<int> ChangeRoom(int contractId, int roomId);
         Task<int> UpdateRoomStatus(int contractId);
-        
+        Task<List<ContractFeeStatusDto>> GetListContractByStudentId(int studentId);
+
     }
 }

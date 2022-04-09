@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { ContractConfig, ContractDto, ContractPendingDto } from 'src/app/dto/output-dto';
+import { ContractConfig, ContractDto, ContractFeeStatusDto, ContractPendingDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class ContracServiceProxy {
@@ -21,6 +21,12 @@ export class ContracServiceProxy {
         let url = this.baseUrl + `/api/contract/get-list-completed-contract?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<PageResultBase<ContractDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getListContractByStudentId(studentId : number): Observable<ContractFeeStatusDto[]> {
+        let url = this.baseUrl + `/api/contract/get-list-contract-by-student?studentId=${studentId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<ContractFeeStatusDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     getListContractPending(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<ContractPendingDto>> {

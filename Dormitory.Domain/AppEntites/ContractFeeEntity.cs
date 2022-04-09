@@ -11,7 +11,10 @@ namespace Dormitory.Domain.AppEntites
         public int Id { get; set; }
         public int ContractId { get; set; }
         public float ContractPriceValue { get; set; }
-        public DateTime PaidDate { get; set; }
-        public float MoneyPaid { get; set; }
+        public float RoomPrice { get; set; }
+        public float ServicePrice { get; set; }
+        public DateTime? PaidDate { get; set; }
+        public float? MoneyPaid { get; set; }
+        public bool IsPaid { get; set; }
     }
 }

@@ -97,7 +97,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             if (contract != null)
             {
                 contract.IsDeleted = true;
-                if(!contract.IsExtendContract.Value)
+                if(!contract.IsExtendContract)
                 {
                     await UpdateRoomStatus(contract.Id);
                 }
@@ -149,7 +149,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     FromDate = x.a.FromDate.Value,
                     ToDate = x.a.ToDate.Value,
                     RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null,
-                    IsExtendContract = x.a.IsExtendContract.Value
+                    IsExtendContract = x.a.IsExtendContract
                     
                 }).ToListAsync();
 
@@ -204,7 +204,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
                     ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
-                    IsExtendContract = x.a.IsExtendContract.Value
+                    IsExtendContract = x.a.IsExtendContract
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
@@ -257,7 +257,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,
                     ContractCompletedStatus = x.a.ContractCompletedStatus,
-                    IsExtendContract = x.a.IsExtendContract.Value
+                    IsExtendContract = x.a.IsExtendContract
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()
@@ -401,6 +401,45 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 }
             }
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<ContractFeeStatusDto>> GetListContractByStudentId(int studentId)
+        {
+            var query = from a in _dbContext.ContractEntities
+                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && a.IsDeleted == false && a.StudentId == studentId
+                        join s in _dbContext.StudentEntities on a.StudentId equals s.Id
+                        join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
+                        from r in ra.DefaultIfEmpty()
+                        join e in _dbContext.AreaEntities on r.AreaId equals e.Id into re
+                        from e in re.DefaultIfEmpty()
+                        join f in _dbContext.ContractFeeEntities on a.Id equals f.ContractId
+                        select new { a, s, r, e, f };
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query
+                .Select(x => new ContractFeeStatusDto()
+                {
+                    Id = x.a.Id,
+                    ContractCode = x.a.ContractCode,
+                    DateCreated = x.a.DateCreated,
+                    StudentId = x.a.StudentId,
+                    RoomId = x.a.RoomId.Value,
+                    RoomName = x.r != null ? x.r.Name : null,
+                    AreaName = x.e != null ? x.e.Name : null,
+                    FromDate = x.a.FromDate.Value,
+                    ToDate = x.a.ToDate.Value,
+                    RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null,
+                    IsExtendContract = x.a.IsExtendContract,
+                    ContractPriceValue = x.f.ContractPriceValue,
+                    ServicePrice = x.f.ServicePrice,
+                    PaidDate = x.f.PaidDate.Value,
+                    MoneyPaid = x.f.MoneyPaid.Value,
+                    IsPaid = x.f.IsPaid,
+                    ContractPrice = x.f.RoomPrice
+                }).ToListAsync();
+
+            return data;
         }
     }
 }

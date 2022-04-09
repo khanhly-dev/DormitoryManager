@@ -96,7 +96,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     ToDate = x.a.ToDate.Value,
                     FromDate = x.a.FromDate.Value,
                     ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
-                    IsExtendContract = x.a.IsExtendContract.Value,
+                    IsExtendContract = x.a.IsExtendContract,
                     RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null
                 }).ToListAsync();
 

@@ -4,14 +4,16 @@ using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dormitory.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(AdminSolutionDbContext))]
-    partial class AdminSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220409090558_update service table")]
+    partial class updateservicetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,12 +43,6 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("PaidDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("RoomPrice")
-                        .HasColumnType("real");
-
-                    b.Property<float>("ServicePrice")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
 
                     b.ToTable("ContractFeeEntities");
@@ -73,27 +69,6 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.ToTable("ContractTimeConfigEntities");
                 });
 
-            modelBuilder.Entity("Dormitory.Domain.AppEntites.NotificationEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Confirm")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NotificationEntities");
-                });
-
             modelBuilder.Entity("Dormitory.Domain.AppEntites.PositionEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -107,24 +82,6 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PositionEntities");
-                });
-
-            modelBuilder.Entity("Dormitory.Domain.AppEntites.ServiceContractEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiceContractEntities");
                 });
 
             modelBuilder.Entity("Dormitory.Domain.AppEntites.StaffEntity", b =>

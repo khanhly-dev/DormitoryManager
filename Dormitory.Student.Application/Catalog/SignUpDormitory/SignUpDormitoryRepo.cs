@@ -1,4 +1,5 @@
-﻿using Dormitory.Domain.AppEntities;
+﻿using Dormitory.Domain.AppEntites;
+using Dormitory.Domain.AppEntities;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Dormitory.Student.Application.Catalog.SignUpDormitory.Dtos;
@@ -45,7 +46,6 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
             _dbContext.ContractEntities.Add(criterial);
             return await _dbContext.SaveChangesAsync();
         }
-
 
         public async Task<int> SetStudentPoint(SetStudentPointRepuest request)
         {
@@ -145,11 +145,70 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                             room.RoomAcedemic = student.AcademicYear;
                         }
                     }
+                    await AddContractFee(contractId);
                 }
             }
             return await _dbContext.SaveChangesAsync();
         }
 
+        private async Task<int> AddContractFee(int contractId)
+        {
+            var contract = await _dbContext.ContractEntities.FindAsync(contractId);
+            if(contract == null)
+            {
+                return 0;
+            }
+            //add service into service contract
+            var listService = _dbContext.ServiceEntities.Where(x => x.ServiceType == DataConfigConstant.ContractService);
+            foreach (var item in listService)
+            {
+                var serviceContract = new ServiceContractEntity
+                {
+                    ContractId = contractId,
+                    ServiceId = item.Id
+                };
+                _dbContext.ServiceContractEntities.Add(serviceContract);
+            }
+            await _dbContext.SaveChangesAsync();
+
+            float roomFee = 0;
+            float serviceContractFee = 0;
+            //tinh tien phong
+            var room = _dbContext.RoomEntities.Find(contract.RoomId);
+            if(room != null)
+            {
+                var totalDayContract = (contract.ToDate.Value - contract.FromDate.Value).Days;
+                double totalMonth = (int)totalDayContract / 30;
+                var dayLeft = totalDayContract % 30;
+                if(dayLeft >= 15)
+                {
+                    totalMonth += 1;
+                }
+                if (dayLeft < 15)
+                {
+                    totalMonth += 0.5;
+                }
+                roomFee = (float)(totalMonth * room.Price);
+            }
+            //tinh tien dich vu
+            var listServiceContract = await _dbContext.ServiceContractEntities.Where(x => x.ContractId == contractId).ToListAsync();
+            foreach (var item in listServiceContract)
+            {
+                var service = await _dbContext.ServiceEntities.FirstOrDefaultAsync(x => x.Id == item.ServiceId);
+                serviceContractFee += service.Price;
+            }
+            //add vao bang contractFee
+            var contractFee = new ContractFeeEntity
+            {
+                ContractId = contractId,
+                RoomPrice = roomFee,
+                ServicePrice = serviceContractFee,
+                ContractPriceValue = roomFee + serviceContractFee,
+                IsPaid = false,
+            };
+            _dbContext.ContractFeeEntities.Add(contractFee);
+            return await _dbContext.SaveChangesAsync();
+        }
         public async Task<int> CreateExtendContract(int studentId)
         {
             var contract = await _dbContext.ContractEntities.Where(x => x.StudentId == studentId && x.ToDate > DateTime.Now && x.IsDeleted == false).FirstOrDefaultAsync();

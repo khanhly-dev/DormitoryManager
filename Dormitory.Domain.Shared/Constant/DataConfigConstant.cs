@@ -23,5 +23,8 @@ namespace Dormitory.Domain.Shared.Constant
 
         public static bool extendContract = true;
         public static bool nonExtendContract = false;
+
+        public static int ContractService = 1;
+        public static int RoomService = 0;
     }
 }

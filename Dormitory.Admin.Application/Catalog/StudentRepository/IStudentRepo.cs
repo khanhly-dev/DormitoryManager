@@ -14,5 +14,6 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         Task<PageResult<StudentDto>> GetList(PageRequestBase request);
         Task<int> CreateOrUpdate(StudentEntity request);
         Task<int> Delete(int id);
+        Task<int> UpdateContractFee(int contractId, DateTime datePaid, float moneyPaid);
     }
 }

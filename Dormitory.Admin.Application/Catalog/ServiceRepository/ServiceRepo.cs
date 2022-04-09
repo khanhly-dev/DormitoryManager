@@ -25,6 +25,8 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
                 Id = request.Id,
                 Name = request.Name,
                 Price = request.Price,
+                ServiceType = request.ServiceType,
+                Unit = request.Unit,
             };
             if (service.Id == 0)
             {
@@ -71,7 +73,9 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Price = x.Price
+                    Price = x.Price,
+                    Unit = x.Unit,
+                    ServiceType = x.ServiceType
                 }).ToListAsync();
 
             var pageResult = new PageResult<ServiceDto>()

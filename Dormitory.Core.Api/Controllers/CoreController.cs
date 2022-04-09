@@ -36,7 +36,7 @@ namespace Dormitory.Core.Api.Controllers
             }
             else
             {
-                status = "error";
+                status = "No room was updated";
             }
             return Ok(new { status });
         }
@@ -51,7 +51,7 @@ namespace Dormitory.Core.Api.Controllers
             }
             else
             {
-                status = "error";
+                status = "No contract was updated";
             }
             return Ok(new { status });
         }

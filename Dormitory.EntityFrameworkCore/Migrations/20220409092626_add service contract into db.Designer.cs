@@ -4,14 +4,16 @@ using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dormitory.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(AdminSolutionDbContext))]
-    partial class AdminSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220409092626_add service contract into db")]
+    partial class addservicecontractintodb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

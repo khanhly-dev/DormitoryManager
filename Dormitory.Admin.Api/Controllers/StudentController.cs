@@ -3,6 +3,7 @@ using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api.Controllers
@@ -35,7 +36,22 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(responseStatus);
+            return Ok(new { responseStatus });
+        }
+        [HttpPut("update-contract-fee")]
+        public async Task<IActionResult> UpdateContractFee(int contractId, float moneyPaid, DateTime datePaid)
+        {
+            var responseStatus = "";
+            var result = await _studentRepo.UpdateContractFee(contractId, datePaid, moneyPaid);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
         }
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteStudent(int id)
@@ -50,7 +66,7 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(responseStatus);
+            return Ok(new { responseStatus });
         }
     }
 }

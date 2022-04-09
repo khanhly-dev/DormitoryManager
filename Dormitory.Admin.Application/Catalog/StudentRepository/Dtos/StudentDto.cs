@@ -25,5 +25,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository.Dtos
         public string Ethnic { get; set; }
         public string Religion { get; set; }
         public int? Point { get; set; }
+        public bool PaymentStatus { get; set; }
+        public int totalContract { get; set; }
     }
 }

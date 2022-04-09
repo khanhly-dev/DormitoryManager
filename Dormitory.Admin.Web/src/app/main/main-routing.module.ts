@@ -11,6 +11,8 @@ import { ServiceComponent } from './base-categories/service/service.component';
 import { ContractPendingComponent } from './manage/contract-pending/contract-pending.component';
 import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.component';
 import { CompletedContractComponent } from './manage/completed-contract/completed-contract.component';
+import { ServiceFeeComponent } from './manage/service-fee/service-fee.component';
+import { ContractFeeComponent } from './manage/contract-fee/contract-fee.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,8 @@ const routes: Routes = [
       { path: 'contract-pending', component: ContractPendingComponent, canActivate: [AuthGuardService] },
       { path: 'waiting-room', component: WaitingRoomComponent, canActivate: [AuthGuardService] },
       { path: 'completed-contract', component: CompletedContractComponent, canActivate: [AuthGuardService] },
+      { path: 'contract-fee', component: ContractFeeComponent, canActivate: [AuthGuardService] },
+      { path: 'service-fee', component: ServiceFeeComponent, canActivate: [AuthGuardService] },
     ]
   },
 ];

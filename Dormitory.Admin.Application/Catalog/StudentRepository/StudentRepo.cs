@@ -69,7 +69,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         public async Task<PageResult<StudentDto>> GetList(PageRequestBase request)
         {
             var query = from s in _dbContext.StudentEntities
-                        select s;
+                        select s ;
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -100,7 +100,22 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                     Gender = x.Gender,
                     StudentCode = x.StudentCode,
                     Point = x.Point,
+                    PaymentStatus = true
                 }).ToListAsync();
+
+            foreach (var item in data)
+            {
+                var listContract = await _dbContext.ContractEntities.Where(x => x.StudentId == item.Id).ToArrayAsync();
+                var listFee = await _dbContext.ContractFeeEntities.Where(t => listContract.Select(x => x.Id).Contains(t.ContractId)).ToListAsync();
+                if(listFee.Where(x => x.IsPaid == false).ToList().Count > 0)
+                {
+                    item.PaymentStatus = false;
+                }
+                else
+                {
+                    item.PaymentStatus = true;
+                }
+            }
 
             var pageResult = new PageResult<StudentDto>()
             {
@@ -110,6 +125,26 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 Items = data
             };
             return pageResult;
+        }
+
+        public async Task<int> UpdateContractFee(int contractId, DateTime datePaid, float moneyPaid)
+        {
+            var contractFee = await _dbContext.ContractFeeEntities.FirstOrDefaultAsync(x => x.ContractId == contractId);
+            if (contractFee == null)
+            {
+                return 0;
+            }
+            contractFee.PaidDate = datePaid;
+            contractFee.MoneyPaid = moneyPaid;
+            if(moneyPaid >= contractFee.ContractPriceValue)
+            {
+                contractFee.IsPaid = true;
+            }
+            else
+            {
+                contractFee.IsPaid = false;
+            }
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }
