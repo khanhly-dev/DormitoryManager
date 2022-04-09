@@ -1,4 +1,5 @@
 using Dormitory.Core.Application.Catalog.CoreRepository;
+using Dormitory.Core.Application.Catalog.ProcessRepository;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
@@ -58,6 +59,7 @@ namespace Dormitory.Core.Api
             options.UseSqlServer(Configuration.GetConnectionString("AdminDatabase")));
 
             services.AddTransient<ICoreRepo, CoreRepo>();
+            services.AddTransient<IProcessRepo, ProcessRepo>();
 
             services.AddControllersWithViews();
 
