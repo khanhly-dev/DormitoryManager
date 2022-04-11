@@ -23,6 +23,18 @@ namespace Dormitory.Admin.Api.Controllers
             var list = await _roomRepo.GetList(request);
             return Ok(list);
         }
+        [HttpGet("get-list-bill-by-room")]
+        public async Task<IActionResult> GetBillByRoom([FromQuery] int roomId)
+        {
+            var list = await _roomRepo.GetBillByRoom(roomId);
+            return Ok(list);
+        }
+        [HttpGet("get-list-select")]
+        public async Task<IActionResult> GetListRoomSelect()
+        {
+            var list = await _roomRepo.GetListRoomSelect();
+            return Ok(list);
+        }
         [HttpGet("get-list-empty-room")]
         public async Task<IActionResult> GetListEmptyRoom()
         {

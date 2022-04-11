@@ -30,6 +30,17 @@ export interface FacilityDto {
     status: string;
 }
 
+
+export interface BillServiceDto {
+    id: number;
+    code: string
+    roomId: number;
+    fromDate: Date;
+    toDate: Date;
+    totalPrice: number;
+    isPaid: boolean;
+}
+
 export interface ServiceDto {
     id: number;
     name: string
@@ -157,4 +168,13 @@ export interface RoomServiceDto {
     paidDate: Date;
     moneyPaid: Date;
     isPaid: boolean
+}
+
+export interface AddRoomServiceRequest {
+    roomId: number;
+    serviceId: number;
+    fromDate: Date;
+    toDate: Date;
+    statBegin: number;
+    statEnd: number;
 }

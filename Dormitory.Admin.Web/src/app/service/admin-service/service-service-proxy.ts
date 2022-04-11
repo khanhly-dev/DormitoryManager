@@ -35,6 +35,12 @@ export class ServiceServiceProxy {
         return this.http.get<RoomServiceDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
+    getServiceByBill(billId : any): Observable<RoomServiceDto[]> {
+        let url = this.baseUrl + `/api/service/get-service-in-bill?billId=${billId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<RoomServiceDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/service/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
@@ -83,23 +89,20 @@ export class ServiceServiceProxy {
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 
-    addServiceForRoom(data: any): Observable<any> {
+    addServiceForRoom(data: any, roomId: any, fromDate: any, toDate: any): Observable<any> {
         let url = this.baseUrl + "/api/service/add-service-for-room";
         url = url.replace(/[?&]$/, "");
 
         const content = new FormData();
-        if (data.roomId !== null && data.roomId !== undefined)
-            content.append("roomId", data.roomId);
-        if (data.serviceId !== null && data.serviceId !== undefined)
-            content.append("serviceId", data.serviceId.toString());
-        if (data.fromDate !== null || data.fromDate !== undefined)
-            content.append("fromDate", data.fromDate);
-        if (data.toDate !== null || data.toDate !== undefined)
-            content.append("toDate", data.toDate);
-        if (data.statBegin !== null || data.statBegin !== undefined)
-            content.append("statBegin", data.statBegin);
-        if (data.statEnd !== null || data.statEnd !== undefined)
-            content.append("statEnd", data.statEnd);
+       
+        if (data !== null && data !== undefined)
+            content.append("request", data);
+        if (roomId !== null && roomId !== undefined)
+            content.append("roomId", roomId);
+        if (fromDate !== null && fromDate !== undefined)
+            content.append("fromDate", fromDate);
+        if (toDate !== null && toDate !== undefined)
+            content.append("toDate", toDate);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

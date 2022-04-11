@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { RoomDto, RoomSelectDto } from 'src/app/dto/output-dto';
+import { BillServiceDto, RoomDto, RoomSelectDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class RoomServiceProxy {
@@ -20,6 +20,18 @@ export class RoomServiceProxy {
         let url = this.baseUrl + `/api/room/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<PageResultBase<RoomDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getListBill(roomId : any): Observable<BillServiceDto[]> {
+        let url = this.baseUrl + `/api/room/get-list-bill-by-room?roomId=${roomId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<BillServiceDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getListSelect(): Observable<RoomDto[]> {
+        let url = this.baseUrl + `/api/room/get-list-select`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<RoomDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     getListEmptyRoom(): Observable<RoomSelectDto[]> {

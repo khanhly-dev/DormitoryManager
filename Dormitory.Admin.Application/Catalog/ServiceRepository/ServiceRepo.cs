@@ -22,32 +22,57 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
             _dbContext = dbContext;
         }
 
-        public async Task<int> AddServiceForRoom(AddServiceForRoomRequest request)
+        public async Task<int> AddServiceForRoom(List<AddServiceForRoomRequest> request, int roomId, DateTime fromDate, DateTime toDate)
         {
-            var roomService = new RoomServiceEntity
+            if(request == null || request.Count == 0)
             {
-                Id = 0,
-                RoomId = request.RoomId,
-                ServiceId = request.ServiceId,
-                FromDate = request.FromDate,
-                ToDate = request.ToDate,
-                StatBegin = request.StatBegin,
-                StatEnd = request.StatEnd,
-                Quantity = request.StatEnd - request.StatBegin,
+                return 0;
+            }
+            var listCode = await _dbContext.BillServiceEntities.Select(x => x.Code).ToListAsync();
+            var random = new Random();
+            var contractCode = "DV" + random.Next(100000, 999999).ToString();
+            while (listCode.Contains(contractCode))
+            {
+                contractCode = "DV" + random.Next(100000, 999999).ToString();
+            }
+            var billService = new BillServiceEntity
+            {
+                Code = contractCode,
+                RoomId = roomId,
+                FromDate = fromDate,
+                ToDate = toDate,
             };
-            _dbContext.RoomServiceEntities.Add(roomService);
+            _dbContext.BillServiceEntities.Add(billService);
             await _dbContext.SaveChangesAsync();
 
-            var service = await _dbContext.ServiceEntities.FirstOrDefaultAsync(x => x.Id == request.ServiceId);
-            var serviceRoomPrice = service.Price * roomService.Quantity;
-
-            var serviceRoomFee = new RoomServiceFeeEntity
+            foreach (var item in request)
             {
-                RoomServiceId = roomService.Id,
-                ServicePrice = serviceRoomPrice,
-                IsPaid = false
-            };
-            _dbContext.RoomServiceFeeEntities.Add(serviceRoomFee);
+                var roomService = new RoomServiceEntity
+                {
+                    Id = 0,
+                    RoomId = roomId,
+                    ServiceId = item.ServiceId,
+                    StatBegin = item.StatBegin,
+                    StatEnd = item.StatEnd,
+                    Quantity = item.StatEnd - item.StatBegin,
+                    BillId = billService.Id
+                };
+                _dbContext.RoomServiceEntities.Add(roomService);
+
+                await _dbContext.SaveChangesAsync();
+
+                var service = await _dbContext.ServiceEntities.FirstOrDefaultAsync(x => x.Id == item.ServiceId);
+                var serviceRoomPrice = service.Price * roomService.Quantity;
+
+                var serviceRoomFee = new RoomServiceFeeEntity
+                {
+                    RoomServiceId = roomService.Id,
+                    ServicePrice = serviceRoomPrice,
+                    IsPaid = false
+                };
+                _dbContext.RoomServiceFeeEntities.Add(serviceRoomFee);
+            }
+           
             return await _dbContext.SaveChangesAsync();
         }
 
@@ -147,6 +172,31 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
             return serviceList;
         }
 
+        public async Task<List<RoomServiceDto>> GetServiceByBill(int billId)
+        {
+            var listService = from rs in _dbContext.RoomServiceEntities
+                              join s in _dbContext.ServiceEntities on rs.ServiceId equals s.Id
+                              join rsf in _dbContext.RoomServiceFeeEntities on rs.Id equals rsf.RoomServiceId
+                              where rs.BillId == billId
+                              select new { rs, s, rsf };
+            var data = await listService.Select(x => new RoomServiceDto
+            {
+                Id = x.rs.Id,
+                RoomId = x.rs.RoomId,
+                ServiceId = x.rs.ServiceId,
+                ServiceName = x.s.Name,
+                Quantity = x.rs.Quantity,
+                StatBegin = x.rs.StatBegin,
+                StatEnd = x.rs.StatEnd,
+                TotalServicePrice = x.rsf.ServicePrice,
+                PaidDate = x.rsf.PaidDate,
+                MoneyPaid = x.rsf.MoneyPaid,
+                IsPaid = x.rsf.IsPaid,
+            }).ToListAsync();
+
+            return data;
+        }
+
         public async Task<List<RoomServiceDto>> GetServiceByRoom(int roomId)
         {
             var listService = from rs in _dbContext.RoomServiceEntities
@@ -160,8 +210,6 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
                 RoomId = x.rs.RoomId,
                 ServiceId = x.rs.ServiceId,
                 ServiceName = x.s.Name,
-                ToDate = x.rs.ToDate,
-                FromDate = x.rs.FromDate,
                 Quantity = x.rs.Quantity,
                 StatBegin = x.rs.StatBegin,
                 StatEnd = x.rs.StatEnd,

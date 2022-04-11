@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BaseSelectDto, RoomDto, RoomServiceDto } from 'src/app/dto/output-dto';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AddRoomServiceRequest, BaseSelectDto, BillServiceDto, RoomDto, RoomServiceDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { RoomServiceProxy } from 'src/app/service/admin-service/room-service-proxy';
 import { ServiceServiceProxy } from 'src/app/service/admin-service/service-service-proxy';
@@ -15,39 +15,56 @@ export class ServiceFeeComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  visible = false;
   isVisible1 = false;
   isSpinning = false;
   validateForm!: FormGroup;
   updateForm!: FormGroup;
   serviceSelect: BaseSelectDto[] = [];
+  roomSelect: BaseSelectDto[] = [];
   selectedRoomId : number = 0;
   roomServiceList : RoomServiceDto[] = []
   collapseStatus: boolean = false;
   collapseActive!: number
   selectedRoomService: number = 0;
+  listBill : BillServiceDto[] = [];
+  selectedBillId : number = 0;
+
+  rfDataModal!: FormGroup;
+  selectedRoomBill : any;
+  selectServiceBill: any;
+  fromDate!: Date;
+  toDate!: Date;
+  
 
   constructor(
     private roomService: RoomServiceProxy,
     private fb: FormBuilder,
     private serviceService: ServiceServiceProxy,
   ) {
-    this.validateForm = this.fb.group({
-      roomId: [],
-      serviceId: ['', [Validators.required]],
-      fromDate: ['', [Validators.required]],
-      toDate: ['', [Validators.required]],
-      statBegin: ['', [Validators.required]],
-      statEnd: ['', [Validators.required]],
-    });
-
     this.updateForm = this.fb.group({
       datePaid: ['', [Validators.required]],
       moneyPaid: ['', [Validators.required]],
     });
+
+    this.rfDataModal = this.fb.group({
+      listData: this.fb.array([]),
+    });
+  }
+
+  get datas(): FormArray {
+    return this.rfDataModal.get('listData') as FormArray;
+  }
+
+  test()
+  {
+    console.log(this.datas.value)
   }
 
   ngOnInit(): void {
     this.getListRoom("", this.pageIndex, 10);
+    this.getListRoomSelect();
+    this.getListSelect();
   }
 
   getListRoom(keyWord: string, pageIndex: number, pageSize: number) {
@@ -58,26 +75,56 @@ export class ServiceFeeComponent implements OnInit {
     })
   }
 
+  addServiceIntoBill(service: BaseSelectDto) {
+    console.log(service)
+    this.datas.push(
+      this.fb.group({
+        serviceId: service.id,
+        name: [service.name, Validators.required],
+        statBegin: [0, Validators.required],
+        statEnd: [0, Validators.required],
+      }),
+    );
+  }
+
+  removeServiceFromBill(index: number) {
+    this.datas.removeAt(index);
+  }
+
   getListSelect() {
     this.serviceService.getListSelect().subscribe(x => {
       this.serviceSelect = x;
     })
   }
 
-  getServiceFeeByRoom(roomId: number)
+  getListRoomSelect()
   {
+    this.roomService.getListSelect().subscribe(x => {
+      this.roomSelect = x;
+    })
+  }
+
+  getServiceFeeBillId()
+  {
+    this.serviceService.getServiceByBill(this.selectedBillId).subscribe(x => {
+      this.roomServiceList = x;
+    })
+  }
+
+  getListBill(roomId: number){
     this.collapseStatus = !this.collapseStatus
     this.collapseActive = roomId
-    this.serviceService.getServiceByRoom(roomId).subscribe(x => {
-      this.roomServiceList = x;
+    this.roomService.getListBill(roomId).subscribe(x => {
+      this.listBill = x;
     })
   }
 
   updateRoomServiceFee(roomServiceId : number)
   {
     this.serviceService.updateServicePaid(roomServiceId, this.updateForm.value).subscribe(x => {
+      this.getListBill(this.selectedRoomId);
       this.getListRoom("", this.pageIndex, 10);
-      this.getServiceFeeByRoom(this.selectedRoomId);
+      this.getServiceFeeBillId();
       if (x.responseStatus = 'success') {
         alert("Cập nhật thành công")
       }
@@ -91,7 +138,7 @@ export class ServiceFeeComponent implements OnInit {
   {
     this.serviceService.deleteRoomService(roomServiceId).subscribe(x => {
       this.getListRoom("", this.pageIndex, 10);
-      this.getServiceFeeByRoom(this.selectedRoomId);
+      this.getServiceFeeBillId();
       if (x.responseStatus = 'success') {
         alert("Xoá thành công")
       }
@@ -101,19 +148,47 @@ export class ServiceFeeComponent implements OnInit {
     })
   }
 
-  showModal(roomId : number): void {
-    this.selectedRoomId = roomId;
-    this.getListSelect();
-    this.isVisible = true;
+  addServiceForRoom()
+  {
+    if(this.fromDate == undefined || this.fromDate == null)
+    {
+      alert("Phải chọn thời gian của hoá đơn")
+      return
+    }
+    if(this.toDate == undefined || this.toDate == null)
+    {
+      alert("Phải chọn thời gian của hoá đơn")
+      return
+    }
+    if(this.selectedRoomBill == undefined || this.selectedRoomBill == null)
+    {
+      alert("Phải chọn phòng")
+      return
+    }
+    if(this.datas.value == undefined || this.datas.value == null || this.datas.value.length == 0)
+    {
+      alert("Phải chọn dịch vụ cho phòng")
+      return
+    }
+    this.serviceService.addServiceForRoom(JSON.stringify(this.datas.value), this.selectedRoomBill, this.fromDate, this.toDate).subscribe(x => {
+      this.getListRoom("", this.pageIndex, 10);
+      this.getServiceFeeBillId();
+      if (x.responseStatus = 'success') {
+        this.visible = false;
+        alert("Cập nhật thành công")
+      }
+      else {
+        alert("Cập nhật không thành công")
+      }
+    })
   }
 
-  handleOk(): void {
-    this.submitForm();
-    this.isVisible = false;
+  open(): void {
+    this.visible = true;
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
+  close(): void {
+    this.visible = false;
   }
 
   showModal1(roomServiceId : number): void {
@@ -130,17 +205,17 @@ export class ServiceFeeComponent implements OnInit {
     this.isVisible1 = false;
   }
 
-  submitForm(): void {
-    this.validateForm.controls['roomId'].setValue(this.selectedRoomId)
-    this.serviceService.addServiceForRoom(this.validateForm.value).subscribe(x => {
-      this.getListRoom("", this.pageIndex, 10);
-      this.getServiceFeeByRoom(this.selectedRoomId);
-      if (x.responseStatus = 'success') {
-        alert("Cập nhật thành công")
-      }
-      else {
-        alert("Cập nhật không thành công")
-      }
-    })
+  showModal(billId : number): void {
+    this.selectedBillId = billId;
+    this.getServiceFeeBillId();
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }

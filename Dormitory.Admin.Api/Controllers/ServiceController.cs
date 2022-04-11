@@ -4,7 +4,9 @@ using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dormitory.Admin.Api.Controllers
@@ -36,6 +38,12 @@ namespace Dormitory.Admin.Api.Controllers
             var list = await _serviceRepo.GetServiceByRoom(roomId);
             return Ok(list);
         }
+        [HttpGet("get-service-in-bill")]
+        public async Task<IActionResult> GetListServiceInBill([FromQuery] int billId)
+        {
+            var list = await _serviceRepo.GetServiceByBill(billId);
+            return Ok(list);
+        }
         [HttpPost("create-or-update")]
         public async Task<IActionResult> CreateOrUpdateService([FromForm] ServiceEntity request)
         {
@@ -52,10 +60,11 @@ namespace Dormitory.Admin.Api.Controllers
             return Ok(new { responseStatus });
         }
         [HttpPost("add-service-for-room")]
-        public async Task<IActionResult> AddServiceForRoom([FromForm] AddServiceForRoomRequest request)
+        public async Task<IActionResult> AddServiceForRoom([FromForm] string request, [FromForm] int roomId, [FromForm] DateTime fromDate, [FromForm] DateTime toDate)
         {
             var responseStatus = "";
-            var result = await _serviceRepo.AddServiceForRoom(request);
+            var requestConvert = JsonConvert.DeserializeObject<List<AddServiceForRoomRequest>>(request);
+            var result = await _serviceRepo.AddServiceForRoom(requestConvert, roomId, fromDate, toDate);
             if (result > 0)
             {
                 responseStatus = "success";

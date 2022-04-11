@@ -1,6 +1,7 @@
 ﻿using Dormitory.Admin.Application.Catalog.RoomRepository.Dtos;
 using Dormitory.Admin.Application.Catalog.RoomRepository.Requests;
 using Dormitory.Admin.Application.CommonDto;
+using Dormitory.Domain.AppEntites;
 using Dormitory.Domain.AppEntities;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,24 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                 _dbContext.RoomEntities.Remove(room);
             }
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<BillServiceDto>> GetBillByRoom(int roomId)
+        {
+            var roomServiceList = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == roomId).ToListAsync();
+            var roomServiceFeeList = await _dbContext.RoomServiceFeeEntities.Where(x => roomServiceList.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
+            var totalPrice = roomServiceFeeList.Sum(x => x.ServicePrice);
+            var isPaid = !roomServiceFeeList.Select(x => x.IsPaid).ToList().Contains(false);
+            var listBill = await _dbContext.BillServiceEntities.Where(x => x.RoomId == roomId).Select(x => new BillServiceDto
+            {
+                Id = x.Id,
+                Code = x.Code,
+                FromDate = x.FromDate,
+                ToDate = x.ToDate,
+                TotalPrice = totalPrice,
+                IsPaid = isPaid
+            }).ToListAsync();
+            return listBill;
         }
 
         public async Task<PageResult<RoomDto>> GetList(PageRequestBase request)
@@ -124,6 +143,17 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
             }).ToListAsync();
 
             return listEmptyRoom;
+        }
+
+        public async Task<List<ComboSelectDto>> GetListRoomSelect()
+        {
+            var roomList = await _dbContext.RoomEntities.Select(x => new ComboSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+
+            return roomList;
         }
     }
 }

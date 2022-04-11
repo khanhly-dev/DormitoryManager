@@ -10,59 +10,95 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" style="float: right;">
+            <button nz-button [nzType]="'primary'" style="float: right;" (click)="open()">
                 <span>Thêm hoá đơn điện nước</span>
             </button>
         </div>
     </div>
     <br>
 
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm dịch vụ cho phòng" (nzOnCancel)="handleCancel()"
-        (nzOnOk)="handleOk()">
-        <ng-container *nzModalContent>
-            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Thêm hoá đơn dịch vụ cho phòng"
+        (nzOnClose)="close()" nzWidth="1000px">
+        <ng-container *nzDrawerContent>
+            <nz-card style="margin-left: 30px;">
+                <b>Chọn phòng:</b>
+                <nz-select style="width: 100%;" nzShowSearch [(ngModel)]="selectedRoomBill">
+                    <nz-option *ngFor="let item of roomSelect" [nzLabel]="item.name" [nzValue]="item.id">
+                    </nz-option>
+                </nz-select>
+                <br><br>
+                <b>Chọn thời gian hoá đơn:</b>
+                <div nz-row [nzGutter]="16">
+                    <div nz-col class="gutter-row" [nzSpan]="12">
+                        <div class="inner-box"> <input class="form-control" [(ngModel)]="fromDate" type="date"
+                                style="width : 100%"></div>
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="12">
+                        <div class="inner-box"> <input class="form-control" [(ngModel)]="toDate" type="date"
+                                style="width : 100%"></div>
+                    </div>
+                </div>
+                <br>
 
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Dịch vụ</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy chọn dịch vụ">
-                        <nz-select formControlName="serviceId">
-                            <nz-option *ngFor="let item of serviceSelect" [nzValue]="item.id" [nzLabel]="item.name">
-                            </nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
+                <b>Chọn dịch vụ:</b>
+                <br>
+                <nz-select style="width: 95%;" [(ngModel)]="selectServiceBill" nzShowSearch #service>
+                    <nz-option *ngFor="let item of serviceSelect" [nzValue]="item" [nzLabel]="item.name">
+                    </nz-option>
+                </nz-select>
+                <button style="width: 5%;" nz-button nzType="primary"><i nz-icon nzType="plus" nzTheme="outline"
+                        (click)="addServiceIntoBill(service.value)"></i></button>
+                <br><br>
 
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Từ ngày</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập từ ngày">
-                        <input class="form-control" formControlName="fromDate" type="date" style="width : 100%">
-                    </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Đến ngày</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập đến ngày">
-                        <input class="form-control" formControlName="toDate" type="date" style="width : 100%">
-                    </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Số đầu</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập số đầu">
-                        <nz-input-number formControlName="statBegin" [nzStep]="1" style="width: 100%"></nz-input-number>
-                    </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Số cuối</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập số cuối">
-                        <nz-input-number formControlName="statEnd" [nzStep]="1" style="width: 100%"></nz-input-number>
-                    </nz-form-control>
-                </nz-form-item>
-
-            </form>
+                <b>Danh sách dịch vụ</b>
+                <nz-table #basicTable [nzBordered]="true" class="nz-table" [nzBordered]="false">
+                    <thead>
+                        <tr>
+                            <th>Tên dịch vụ</th>
+                            <th>Số đầu</th>
+                            <th>Số cuối</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let contr of datas.controls; index as i">
+                            <tr [formGroup]="contr">
+                                <td>
+                                    <nz-form-item>
+                                        <nz-form-control nzErrorTip="Giá trị bắt buộc!">
+                                            <input nz-input nzBorderless readonly formControlName="name" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </td>
+                                <td>
+                                    <nz-form-item>
+                                        <nz-form-control nzErrorTip="Giá trị bắt buộc!">
+                                            <nz-input-number formControlName="statBegin"></nz-input-number>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </td>
+                                <td>
+                                    <nz-form-item>
+                                        <nz-form-control nzErrorTip="Giá trị bắt buộc!">
+                                            <nz-input-number formControlName="statEnd"></nz-input-number>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </td>
+                                <td>
+                                    <button nz-button nzType="primary" nzDanger (click)="removeServiceFromBill(i)">
+                                        <i nz-icon nzType="delete" nzTheme="outline"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </nz-table>
+                <button nz-button [nzType]="'primary'" style="width: 100%; height: 50px;" (click)="addServiceForRoom()">
+                    <span>Cập nhật</span>
+                </button>
+            </nz-card>
         </ng-container>
-    </nz-modal>
+    </nz-drawer>
 
     <nz-modal [(nzVisible)]="isVisible1" nzTitle="Thêm dịch vụ cho phòng" (nzOnCancel)="handleCancel1()"
         (nzOnOk)="handleOk1()">
@@ -87,6 +123,57 @@
         </ng-container>
     </nz-modal>
 
+    <nz-modal nzWidth="1800px" [(nzVisible)]="isVisible" nzTitle="Thêm dịch vụ cho phòng" (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+
+            <div style="background: #ECECEC;padding:30px;">
+                <nz-card [nzBordered]="false">
+                    <div>
+                        <nz-table #basicTable1 [nzData]="roomServiceList" *ngIf="roomServiceList != undefined"
+                            [nzFrontPagination]="false" nzBordered>
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên dịch vụ</th>
+                                    <th>Số đầu</th>
+                                    <th>Số cuối</th>
+                                    <th>Tổng số</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ngày đóng</th>
+                                    <th>Số tiền đóng</th>
+                                    <th>Trạng thái đóng</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of basicTable1.data">
+                                    <td>{{ roomServiceList.indexOf(data) + 1 }}</td>
+                                    <td>{{ data.serviceName }}</td>
+                                    <td>{{ data.statBegin }}</td>
+                                    <td>{{ data.statEnd }}</td>
+                                    <td>{{ data.quantity }}</td>
+                                    <td>{{ data.totalServicePrice | currency : "VND"}}</td>
+                                    <td>{{ data.paidDate | date: "dd-MM-yyyy" }}</td>
+                                    <td>{{ data.moneyPaid | currency : "VND"}}</td>
+                                    <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
+                                    <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
+                                    <td>
+                                        <button nz-button nzSize="small" nzType="primary"
+                                            (click)="showModal1(data.id)">Cập
+                                            nhật</button>&nbsp;
+                                        <button nz-button nzSize="small" nzType="primary" nzDanger
+                                            (click)="deleteRoomService(data.id)">Xoá</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                </nz-card>
+            </div>
+        </ng-container>
+    </nz-modal>
+
     <nz-table #basicTable [nzData]="listRoom.items" *ngIf="listRoom != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
@@ -106,58 +193,49 @@
                     <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
                     <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
                     <td>
-                        <button nzSize="small" nz-button nzType="primary" (click)="showModal(data.id)">Cập nhật điện nước</button>&nbsp;
-                        <button nzSize="small" nz-button nzType="primary" (click)="getServiceFeeByRoom(data.id)">Chi tiết</button>
+                        <button nzSize="small" nz-button nzType="primary" (click)="getListBill(data.id)">Chi
+                            tiết</button>
                     </td>
                 </tr>
+
                 <td colspan="13" *ngIf="collapseActive == data.id && collapseStatus">
                     <div style="background: #ECECEC;padding:30px;">
                         <nz-card [nzBordered]="false">
                             <div>
-                                <nz-table #basicTable1 [nzData]="roomServiceList" *ngIf="roomServiceList != undefined" [nzFrontPagination]="false" nzBordered>
+                                <nz-table #basicTable2 [nzData]="listBill" *ngIf="listBill != undefined"
+                                    [nzFrontPagination]="false" nzBordered>
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Tên dịch vụ</th>
+                                            <th>Mã hoá đơn</th>
                                             <th>Tính từ ngày</th>
                                             <th>Đến ngày</th>
-                                            <th>Số đầu</th>
-                                            <th>Số cuối</th>
-                                            <th>Tổng số</th>
                                             <th>Tổng tiền</th>
-                                            <th>Ngày đóng</th>
-                                            <th>Số tiền đóng</th>
                                             <th>Trạng thái đóng</th>
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr *ngFor="let data of basicTable1.data">
-                                            <td>{{ roomServiceList.indexOf(data) + 1 }}</td>
-                                            <td>{{ data.serviceName }}</td>
-                                            <td>{{ data.fromDate | date: "dd-MM-yyyy"}}</td>
-                                            <td>{{ data.toDate | date: "dd-MM-yyyy"}}</td>
-                                            <td>{{ data.statBegin }}</td>
-                                            <td>{{ data.statEnd }}</td>
-                                            <td>{{ data.quantity }}</td>
-                                            <td>{{ data.totalServicePrice | currency : "VND"}}</td>
-                                            <td>{{ data.paidDate | date: "dd-MM-yyyy" }}</td>
-                                            <td>{{ data.moneyPaid }}</td>
-                                            <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
-                                            <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
-                                            <td>
-                                                <button nz-button nzSize="small" nzType="primary" (click)="showModal1(data.id)">Cập nhật</button>&nbsp;
-                                                <button nz-button nzSize="small" nzType="primary" nzDanger (click)="deleteRoomService(data.id)">Xoá</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </nz-table>
-                            </div>
-                        </nz-card>
-                    </div>
+        <tbody>
+            <tr *ngFor="let data of basicTable2.data">
+                <td>{{ listBill.indexOf(data) + 1 }}</td>
+                <td>{{ data.code }}</td>
+                <td>{{ data.fromDate | date: "dd-MM-yyyy"}}</td>
+                <td>{{ data.toDate | date: "dd-MM-yyyy"}}</td>
+                <td>{{ data.totalPrice | currency: "VND"}}</td>
+                <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
+                <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
+                <td>
+                    <button nz-button nzSize="small" nzType="primary" (click)="showModal(data.id)">Chi tiết HĐ</button>
                 </td>
-            </ng-container>
+            </tr>
         </tbody>
+    </nz-table>
+    </div>
+    </nz-card>
+    </div>
+    </td>
+    </ng-container>
+    </tbody>
     </nz-table>
     <nz-pagination *ngIf="listRoom != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listRoom.totalRecords"
         [nzPageSize]="10" (nzPageIndexChange)="getListRoom('', pageIndex, 10)"></nz-pagination>

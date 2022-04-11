@@ -40,6 +40,7 @@ import { ServiceFeeComponent } from './manage/service-fee/service-fee.component'
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     NzPopconfirmModule,
     NzCollapseModule,
     NzRadioModule,
-    NzCardModule
+    NzCardModule,
+    NzDrawerModule
   ]
 })
 export class MainModule { }

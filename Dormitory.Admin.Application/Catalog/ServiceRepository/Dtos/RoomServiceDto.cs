@@ -13,8 +13,6 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository.Dtos
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
         public float Quantity { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
         public float StatBegin { get; set; }
         public float StatEnd { get; set; }
         public float TotalServicePrice { get; set; }
