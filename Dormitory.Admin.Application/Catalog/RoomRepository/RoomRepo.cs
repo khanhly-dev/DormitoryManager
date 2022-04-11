@@ -89,6 +89,20 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                     EmptySlot = x.r.EmptySlot.Value,
                 }).ToListAsync();
 
+            foreach (var item in data)
+            {
+                var listRoomService = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == item.Id).ToListAsync();
+                var listRoomServiceFee = await _dbContext.RoomServiceFeeEntities.Where(t => listRoomService.Select(x => x.Id).ToList().Contains(t.RoomServiceId)).ToArrayAsync();
+                if(listRoomServiceFee.Select(x => x.IsPaid).ToList().Contains(false))
+                {
+                    item.IsPaid = false;
+                }
+                else
+                {
+                    item.IsPaid = true;
+                }
+            }
+
             var pageResult = new PageResult<RoomDto>()
             {
                 PageSize = request.PageSize,

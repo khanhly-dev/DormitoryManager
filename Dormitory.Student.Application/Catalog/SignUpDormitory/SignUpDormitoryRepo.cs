@@ -174,20 +174,20 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
             float roomFee = 0;
             float serviceContractFee = 0;
             //tinh tien phong
+            var totalDayContract = (contract.ToDate.Value - contract.FromDate.Value).Days;
+            double totalMonth = (int)totalDayContract / 30;
+            var dayLeft = totalDayContract % 30;
+            if (dayLeft >= 15)
+            {
+                totalMonth += 1;
+            }
+            if (dayLeft < 15)
+            {
+                totalMonth += 0.5;
+            }
             var room = _dbContext.RoomEntities.Find(contract.RoomId);
             if(room != null)
             {
-                var totalDayContract = (contract.ToDate.Value - contract.FromDate.Value).Days;
-                double totalMonth = (int)totalDayContract / 30;
-                var dayLeft = totalDayContract % 30;
-                if(dayLeft >= 15)
-                {
-                    totalMonth += 1;
-                }
-                if (dayLeft < 15)
-                {
-                    totalMonth += 0.5;
-                }
                 roomFee = (float)(totalMonth * room.Price);
             }
             //tinh tien dich vu
@@ -195,7 +195,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
             foreach (var item in listServiceContract)
             {
                 var service = await _dbContext.ServiceEntities.FirstOrDefaultAsync(x => x.Id == item.ServiceId);
-                serviceContractFee += service.Price;
+                serviceContractFee += (float)(service.Price * totalMonth);
             }
             //add vao bang contractFee
             var contractFee = new ContractFeeEntity
@@ -243,6 +243,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 IsDeleted = contract.IsDeleted,
                 IsExtendContract = DataConfigConstant.extendContract
             };
+            //them phi hop dong
 
             _dbContext.ContractEntities.Add(extendContract);
             return await _dbContext.SaveChangesAsync();

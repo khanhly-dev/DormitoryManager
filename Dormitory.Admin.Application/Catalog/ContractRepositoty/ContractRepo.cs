@@ -102,6 +102,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     await UpdateRoomStatus(contract.Id);
                 }
             }
+            //neu la hop dong gia han thi khi huy hop dong p xoa not phi hop dong
             return await _dbContext.SaveChangesAsync();
         }
 

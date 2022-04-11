@@ -4,14 +4,16 @@ using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dormitory.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(AdminSolutionDbContext))]
-    partial class AdminSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220410040742_add room service fee table")]
+    partial class addroomservicefeetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,7 +127,7 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("PaidDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RoomServiceId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<float>("ServicePrice")

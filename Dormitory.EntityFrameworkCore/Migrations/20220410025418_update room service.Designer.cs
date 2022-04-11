@@ -4,14 +4,16 @@ using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dormitory.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(AdminSolutionDbContext))]
-    partial class AdminSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220410025418_update room service")]
+    partial class updateroomservice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,33 +109,6 @@ namespace Dormitory.EntityFrameworkCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PositionEntities");
-                });
-
-            modelBuilder.Entity("Dormitory.Domain.AppEntites.RoomServiceFeeEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<float?>("MoneyPaid")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime?>("PaidDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RoomServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("ServicePrice")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomServiceFeeEntities");
                 });
 
             modelBuilder.Entity("Dormitory.Domain.AppEntites.ServiceContractEntity", b =>

@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dormitory.Domain.AppEntities
+namespace Dormitory.Admin.Application.Catalog.ServiceRepository.Requests
 {
-    public class RoomServiceEntity
+    public class AddServiceForRoomRequest
     {
-        public int Id { get; set; }
         public int RoomId { get; set; }
         public int ServiceId { get; set; }
-        public float Quantity { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public float StatBegin { get; set; }

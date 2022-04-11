@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { AreaDto, BaseSelectDto } from 'src/app/dto/output-dto';
+import { AreaDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AreaServiceProxy {
@@ -24,7 +24,7 @@ export class AreaServiceProxy {
         return this.http.get<PageResultBase<AreaDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
-    getListSelect(): Observable<BaseSelectDto[]> {
+    getListSelect(): Observable<AreaDto[]> {
         let url = this.baseUrl + `/api/area/get-list-select`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<AreaDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });

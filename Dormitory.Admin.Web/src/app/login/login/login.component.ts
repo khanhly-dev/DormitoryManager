@@ -21,8 +21,10 @@ export class LoginComponent implements OnInit {
           if (x.isLoginSuccess && x.access_token !== null && x.access_token !== undefined && x.access_token !== "") {
             localStorage.setItem("access_token", x.access_token);
             localStorage.setItem("user", x.userName);
-            this.isSpinning = false
-            this.router.navigate(["/main"]);
+            setTimeout(() => {
+              this.isSpinning = false
+              this.router.navigate(["/main"]);
+            }, 1000);
           }
           else {
             this.isSpinning = false

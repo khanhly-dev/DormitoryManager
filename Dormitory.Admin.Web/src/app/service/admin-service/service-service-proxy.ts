@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { FacilityDto, RoomDto, ServiceDto } from 'src/app/dto/output-dto';
+import { BaseSelectDto, FacilityDto, RoomDto, RoomServiceDto, ServiceDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class ServiceServiceProxy {
@@ -23,11 +23,45 @@ export class ServiceServiceProxy {
         return this.http.get<PageResultBase<ServiceDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
+    getListSelect(): Observable<BaseSelectDto[]> {
+        let url = this.baseUrl + `/api/service/get-list-select`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<BaseSelectDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getServiceByRoom(roomId : any): Observable<RoomServiceDto[]> {
+        let url = this.baseUrl + `/api/service/get-service-in-room?roomId=${roomId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<RoomServiceDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/service/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
 
         return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    deleteRoomService(roomService: number): Observable<any> {
+        let url = this.baseUrl + `/api/service/delete-room-service?roomServiceId=${roomService}`;
+        url = url.replace(/[?&]$/, "");
+
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    updateServicePaid(roomServiceId: any, data: any): Observable<any> {
+        let url = this.baseUrl + `/api/service/update-room-service-fee`;
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (roomServiceId !== null && roomServiceId !== undefined)
+            content.append("roomServiceId", roomServiceId);
+        if (data.datePaid !== null && data.datePaid !== undefined)
+            content.append("datePaid", data.datePaid);
+        if (data.moneyPaid !== null && data.moneyPaid !== undefined)
+            content.append("moneyPaid", data.moneyPaid.toString());
+
+        return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 
     createOrUpdate(data: any): Observable<any> {
@@ -45,6 +79,27 @@ export class ServiceServiceProxy {
             content.append("unit", data.unit);
         if (data.serviceType !== null || data.serviceType !== undefined)
             content.append("serviceType", data.serviceType);
+
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
+
+    addServiceForRoom(data: any): Observable<any> {
+        let url = this.baseUrl + "/api/service/add-service-for-room";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (data.roomId !== null && data.roomId !== undefined)
+            content.append("roomId", data.roomId);
+        if (data.serviceId !== null && data.serviceId !== undefined)
+            content.append("serviceId", data.serviceId.toString());
+        if (data.fromDate !== null || data.fromDate !== undefined)
+            content.append("fromDate", data.fromDate);
+        if (data.toDate !== null || data.toDate !== undefined)
+            content.append("toDate", data.toDate);
+        if (data.statBegin !== null || data.statBegin !== undefined)
+            content.append("statBegin", data.statBegin);
+        if (data.statEnd !== null || data.statEnd !== undefined)
+            content.append("statEnd", data.statEnd);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

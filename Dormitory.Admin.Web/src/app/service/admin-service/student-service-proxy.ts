@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { AreaDto, BaseSelectDto, StudentDto } from 'src/app/dto/output-dto';
+import { StudentDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class StudentServiceProxy {

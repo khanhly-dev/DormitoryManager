@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BaseSelectDto, RoomDto } from 'src/app/dto/output-dto';
+import { AreaDto, RoomDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { AreaServiceProxy } from 'src/app/service/admin-service/area-service-proxy';
 import { RoomServiceProxy } from 'src/app/service/admin-service/room-service-proxy';
@@ -13,7 +13,7 @@ export class RoomComponent implements OnInit {
   modalTitle: string = "";
   validateForm!: FormGroup;
   listRoom!: PageResultBase<RoomDto>;
-  areaSelect : BaseSelectDto[] = [];
+  areaSelect : AreaDto[] = [];
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;

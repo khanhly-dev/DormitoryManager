@@ -55,7 +55,7 @@
                 <tr>
                     <td>{{ listStudent.items.indexOf(data) + 1 }}</td>
                     <td>{{ data.name }}</td>
-                    <td>{{ data.dob }}</td>
+                    <td>{{ data.dob | date : "dd-MM-yyyy" }}</td>
                     <td *ngIf="data.gender == 1">Nam</td>
                     <td *ngIf="data.gender == 0">Nữ</td>
                     <td>{{ data.studentCode }}</td>
@@ -84,7 +84,6 @@
                                             <th>Ngày đăng ký</th>
                                             <th>Ngày bắt đầu</th>
                                             <th>Ngày kết thúc</th>
-                                            <th>Kiểu hợp đồng</th>
                                             <th>Khu ở</th>
                                             <th>Phòng ở</th>
                                             <th>Tiền phòng</th>
@@ -98,18 +97,16 @@
                                     </thead>
         <tbody>
             <tr *ngFor="let data1 of basicTable.data">
-                <td>{{ data1.contractCode }}</td>
+                <td><b>{{ data1.contractCode }}</b> </td>
                 <td>{{ data1.dateCreated | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data1.fromDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data1.toDate | date : "dd-MM-yyyy"}}</td>
-                <td *ngIf="!data1.isExtendContract">Hợp đồng thường</td>
-                <td *ngIf="data1.isExtendContract">Hợp đồng gia hạn</td>
                 <td>{{ data1.areaName }}</td>
                 <td>{{ data1.roomName }}</td>
                 <td>{{ data1.contractPrice | currency : "VND" }}</td>
                 <td>{{ data1.servicePrice | currency : "VND" }}</td>
                 <td>{{ data1.contractPriceValue | currency : "VND"}}</td>
-                <td>{{ data1.paidDate }}</td>
+                <td>{{ data1.paidDate | date : "dd-MM-yyyy" }}</td>
                 <td>{{ data1.moneyPaid | currency : "VND"}}</td>
                 <td *ngIf="!data1.isPaid" style="color: #f40404;">Chưa đóng</td>
                 <td *ngIf="data1.isPaid" style="color: #25da91;">Đã đóng</td>

@@ -7,7 +7,6 @@ export interface AreaDto {
 export interface BaseSelectDto {
     id: number;
     name: string;
-    totalRoom: number;
 }
 
 export interface RoomDto {
@@ -21,6 +20,7 @@ export interface RoomDto {
     emptySlot: number;
     filledSlot: number;
     avaiableSlot: number;
+    isPaid: boolean;
 }
 
 export interface FacilityDto {
@@ -141,4 +141,20 @@ export interface StudentDto {
     religion: string
     point: number;
     paymentStatus: boolean
+}
+
+export interface RoomServiceDto {
+    id: number;
+    roomId: number;
+    serviceId: number;
+    serviceName: string;
+    quantity:number;
+    fromDate: Date;
+    toDate: Date;
+    statBegin: number;
+    statEnd: number;
+    totalServicePrice: number;
+    paidDate: Date;
+    moneyPaid: Date;
+    isPaid: boolean
 }
