@@ -48,6 +48,13 @@ export class ServiceServiceProxy {
         return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
+    deleteBillService(billId: number): Observable<any> {
+        let url = this.baseUrl + `/api/service/delete-bill-service?billId=${billId}`;
+        url = url.replace(/[?&]$/, "");
+
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
     deleteRoomService(roomService: number): Observable<any> {
         let url = this.baseUrl + `/api/service/delete-room-service?roomServiceId=${roomService}`;
         url = url.replace(/[?&]$/, "");

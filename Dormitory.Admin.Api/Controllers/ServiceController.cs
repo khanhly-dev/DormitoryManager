@@ -90,6 +90,21 @@ namespace Dormitory.Admin.Api.Controllers
             }
             return Ok(new { responseStatus });
         }
+        [HttpDelete("delete-bill-service")]
+        public async Task<IActionResult> DeleteBillService([FromQuery] int billId)
+        {
+            var responseStatus = "";
+            var result = await _serviceRepo.DeleteBillService(billId);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
         [HttpDelete("delete-room-service")]
         public async Task<IActionResult> DeleteRoomService([FromQuery] int roomServiceId)
         {

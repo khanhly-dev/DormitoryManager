@@ -112,6 +112,20 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
             return await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<int> DeleteBillService(int billId)
+        {
+            var billService = await _dbContext.BillServiceEntities.FindAsync(billId);
+            if(billService != null)
+            {
+                var listRoomService = await _dbContext.RoomServiceEntities.Where(x => x.BillId == billId).ToListAsync();
+                var listRoomServiceFee = await _dbContext.RoomServiceFeeEntities.Where(x => listRoomService.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
+                _dbContext.RoomServiceFeeEntities.RemoveRange(listRoomServiceFee);
+                _dbContext.RoomServiceEntities.RemoveRange(listRoomService);
+                _dbContext.BillServiceEntities.Remove(billService);
+            }
+            return await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<int> DeleteRoomServiceFee(int roomServiceId)
         {
             var roomService = await _dbContext.RoomServiceEntities.FirstOrDefaultAsync(x => x.Id == roomServiceId);

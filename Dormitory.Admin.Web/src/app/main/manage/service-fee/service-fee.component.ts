@@ -67,6 +67,20 @@ export class ServiceFeeComponent implements OnInit {
     this.getListSelect();
   }
 
+  deleteBillService(billId : number)
+  {
+    this.serviceService.deleteBillService(billId).subscribe(x => {
+      this.getListBill(this.selectedRoomId);
+      this.getListRoom("", this.pageIndex, 10);
+      if (x.responseStatus = 'success') {
+        alert("Xóa thành công")
+      }
+      else {
+        alert("Xóa không thành công")
+      }
+    })
+  }
+
   getListRoom(keyWord: string, pageIndex: number, pageSize: number) {
     this.isSpinning = true;
     this.roomService.getList(keyWord, pageIndex, pageSize).subscribe(x => {

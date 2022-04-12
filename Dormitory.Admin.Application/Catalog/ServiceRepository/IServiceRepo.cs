@@ -21,5 +21,6 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
         Task<int> UpdateRoomServiceFee(int roomServiceId, float moneyPaid, DateTime datePaid);
         Task<int> DeleteRoomServiceFee(int roomServiceId);
         Task<List<RoomServiceDto>> GetServiceByBill(int billId);
+        Task<int> DeleteBillService(int billId);
     }
 }
