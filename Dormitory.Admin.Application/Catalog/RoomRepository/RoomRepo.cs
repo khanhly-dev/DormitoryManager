@@ -65,7 +65,6 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
             var roomServiceList = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == roomId).ToListAsync();
             var roomServiceFeeList = await _dbContext.RoomServiceFeeEntities.Where(x => roomServiceList.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
             var totalPrice = roomServiceFeeList.Sum(x => x.ServicePrice);
-            var isPaid = !roomServiceFeeList.Select(x => x.IsPaid).ToList().Contains(false);
             var listBill = await _dbContext.BillServiceEntities.Where(x => x.RoomId == roomId).Select(x => new BillServiceDto
             {
                 Id = x.Id,
@@ -73,8 +72,15 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                 FromDate = x.FromDate,
                 ToDate = x.ToDate,
                 TotalPrice = totalPrice,
-                IsPaid = isPaid
+                IsPaid = false,
             }).ToListAsync();
+            foreach (var item in listBill)
+            {
+                var roomServiceListCheck = await _dbContext.RoomServiceEntities.Where(x => x.BillId == item.Id).ToListAsync();
+                var roomServiceFeeListCheck = await _dbContext.RoomServiceFeeEntities.Where(x => roomServiceListCheck.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
+                var isPaid = !roomServiceFeeListCheck.Select(x => x.IsPaid).ToList().Contains(false);
+                item.IsPaid = isPaid;
+            }
             return listBill;
         }
 

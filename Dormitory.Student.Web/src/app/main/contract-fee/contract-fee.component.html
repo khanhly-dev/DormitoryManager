@@ -1,0 +1,37 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <nz-table #basicTable [nzData]="currentStudentContract">
+        <thead>
+            <tr>
+                <th>Mã hợp đồng</th>
+                <th>Ngày đăng ký</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Khu ở</th>
+                <th>Phòng ở</th>
+                <th>Tiền phòng</th>
+                <th>Tiền dịch vụ</th>
+                <th>Tổng tiền</th>
+                <th>Ngày đóng</th>
+                <th>Số tiền đóng</th>
+                <th>Trạng thái đóng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data1 of basicTable.data">
+                <td><b>{{ data1.contractCode }}</b> </td>
+                <td>{{ data1.dateCreated | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data1.fromDate | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data1.toDate | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data1.areaName }}</td>
+                <td>{{ data1.roomName }}</td>
+                <td>{{ data1.contractPrice | currency : "VND" }}</td>
+                <td>{{ data1.servicePrice | currency : "VND" }}</td>
+                <td>{{ data1.contractPriceValue | currency : "VND"}}</td>
+                <td>{{ data1.paidDate | date : "dd-MM-yyyy" }}</td>
+                <td>{{ data1.moneyPaid | currency : "VND"}}</td>
+                <td *ngIf="!data1.isPaid" style="color: #f40404;">Chưa đóng</td>
+                <td *ngIf="data1.isPaid" style="color: #25da91;">Đã đóng</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-spin>

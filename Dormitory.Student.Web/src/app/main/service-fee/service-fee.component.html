@@ -1,0 +1,73 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <nz-modal nzWidth="1800px" [(nzVisible)]="isVisible" nzTitle="Thêm dịch vụ cho phòng" (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+
+            <div style="background: #ECECEC;padding:30px;">
+                <nz-card [nzBordered]="false">
+                    <div>
+                        <nz-table #basicTable1 [nzData]="roomServiceList" *ngIf="roomServiceList != undefined"
+                            [nzFrontPagination]="false" nzBordered>
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên dịch vụ</th>
+                                    <th>Số đầu</th>
+                                    <th>Số cuối</th>
+                                    <th>Tổng số</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ngày đóng</th>
+                                    <th>Số tiền đóng</th>
+                                    <th>Trạng thái đóng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of basicTable1.data">
+                                    <td>{{ roomServiceList.indexOf(data) + 1 }}</td>
+                                    <td>{{ data.serviceName }}</td>
+                                    <td>{{ data.statBegin }}</td>
+                                    <td>{{ data.statEnd }}</td>
+                                    <td>{{ data.quantity }}</td>
+                                    <td>{{ data.totalServicePrice | currency : "VND"}}</td>
+                                    <td>{{ data.paidDate | date: "dd-MM-yyyy" }}</td>
+                                    <td>{{ data.moneyPaid | currency : "VND"}}</td>
+                                    <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
+                                    <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                </nz-card>
+            </div>
+        </ng-container>
+    </nz-modal>
+
+
+    <nz-table #basicTable2 [nzData]="listBill" *ngIf="listBill != undefined" [nzFrontPagination]="false" nzBordered>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã hoá đơn</th>
+                <th>Tính từ ngày</th>
+                <th>Đến ngày</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái đóng</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable2.data">
+                <td>{{ listBill.indexOf(data) + 1 }}</td>
+                <td>{{ data.code }}</td>
+                <td>{{ data.fromDate | date: "dd-MM-yyyy"}}</td>
+                <td>{{ data.toDate | date: "dd-MM-yyyy"}}</td>
+                <td>{{ data.totalPrice | currency: "VND"}}</td>
+                <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
+                <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
+                <td>
+                    <button nz-button nzSize="small" nzType="primary" (click)="showModal(data.id)">Chi tiết HĐ</button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-spin>
