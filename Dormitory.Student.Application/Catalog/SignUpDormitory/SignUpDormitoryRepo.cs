@@ -243,9 +243,13 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 IsDeleted = contract.IsDeleted,
                 IsExtendContract = DataConfigConstant.extendContract
             };
-            //them phi hop dong
+          
 
             _dbContext.ContractEntities.Add(extendContract);
+            await _dbContext.SaveChangesAsync();
+
+            //add dich vu va them phi hop dong
+            await AddContractFee(extendContract.Id);
             return await _dbContext.SaveChangesAsync();
         }
 

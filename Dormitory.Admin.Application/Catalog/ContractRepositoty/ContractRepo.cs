@@ -99,6 +99,10 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 contract.IsDeleted = true;
                 if(!contract.IsExtendContract)
                 {
+                    var contractService = await _dbContext.ServiceContractEntities.Where(x => x.ContractId == contract.Id).ToListAsync();
+                    var contractFee = await _dbContext.ContractFeeEntities.FirstOrDefaultAsync(x => x.ContractId == contract.Id);
+                    _dbContext.ContractFeeEntities.Remove(contractFee);
+                    _dbContext.ServiceContractEntities.RemoveRange(contractService);                    
                     await UpdateRoomStatus(contract.Id);
                 }
             }
