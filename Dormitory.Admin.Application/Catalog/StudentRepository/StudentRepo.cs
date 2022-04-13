@@ -1,6 +1,7 @@
 ﻿using Dormitory.Admin.Application.Catalog.StudentRepository.Dtos;
 using Dormitory.Admin.Application.CommonDto;
 using Dormitory.Domain.AppEntities;
+using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -69,6 +70,8 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         public async Task<PageResult<StudentDto>> GetList(PageRequestBase request)
         {
             var query = from s in _dbContext.StudentEntities
+                        join c in _dbContext.ContractEntities on s.Id equals c.StudentId
+                        where c.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
                         select s ;
 
             if (!string.IsNullOrEmpty(request.Keyword))

@@ -101,7 +101,7 @@ namespace Dormitory.Admin.Api.Controllers
             {
                 responseStatus = "error";
             }
-            return Ok(new { responseStatus });
+            return Ok(new { status = responseStatus, count = result });
         }
         [HttpPut("schedule-room")]
         public async Task<IActionResult> ScheduleRoom([FromForm] int contractId)

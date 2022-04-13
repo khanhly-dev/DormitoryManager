@@ -23,7 +23,12 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
 
         public async Task<int> AdminConfirmAllContract(int minPoint, int maxPoint, int confirmStatus)
         {
+            var maleConfirmCount = 0;
+            var femaleConfirmCount = 0;
+            var confirmCount = 0;
+
             var query = from a in _dbContext.ContractEntities
+                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusPending
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         where s.Point >= minPoint && s.Point < maxPoint && a.IsDeleted == false
                         select new { a, s };
@@ -31,6 +36,11 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             query.Select(x => x.s.Point);
 
             var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
+            var listEmptyRoom = await _dbContext.RoomEntities.Where(x => x.AvaiableSlot > 0).ToListAsync();
+
+            var maleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.male).ToList();
+            var feMaleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.female).ToList();
+            var empltyRoom = listEmptyRoom.Where(x => x.RoomGender == null).ToList();
 
             foreach (var item in query)
             {
@@ -38,17 +48,55 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 {
                     continue;
                 }
-                item.a.AdminConfirmStatus = confirmStatus;
-                if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+                if(item.s.Gender == DataConfigConstant.female && maleConfirmCount < maleEmpltyRoom.Count)
                 {
-                    item.a.ToDate = contractTimeConfig.ToDate;
+                    maleConfirmCount++;
+                    item.a.AdminConfirmStatus = confirmStatus;
+                    if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+                    {
+                        item.a.ToDate = contractTimeConfig.ToDate;
+                    }
+                    if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+                    {
+                        item.a.ToDate = null;
+                    }
+                    continue;
                 }
-                if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+                if (item.s.Gender == DataConfigConstant.male && femaleConfirmCount < feMaleEmpltyRoom.Count)
                 {
-                    item.a.ToDate = null;
+                    femaleConfirmCount++;
+                    item.a.AdminConfirmStatus = confirmStatus;
+                    if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+                    {
+                        item.a.ToDate = contractTimeConfig.ToDate;
+                    }
+                    if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+                    {
+                        item.a.ToDate = null;
+                    }
+                    continue;
                 }
+                if(empltyRoom.Count > 0)
+                {
+                    if(confirmCount < empltyRoom.Count)
+                    {
+                        confirmCount++;
+                        item.a.AdminConfirmStatus = confirmStatus;
+                        if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+                        {
+                            item.a.ToDate = contractTimeConfig.ToDate;
+                        }
+                        if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+                        {
+                            item.a.ToDate = null;
+                        }
+                        continue;
+                    }
+                }
+                item.a.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusReject;
             }
-            return await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
+            return maleConfirmCount + femaleConfirmCount + confirmCount;
         }
 
         public async Task<int> AdminConfirmContract(int contractId, int confirmStatus)
@@ -105,6 +153,18 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     _dbContext.ServiceContractEntities.RemoveRange(contractService);                    
                     await UpdateRoomStatus(contract.Id);
                 }
+                else
+                {
+                    var room = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == contract.RoomId);
+                    room.EmptySlot += 1;
+                    room.AvaiableSlot += 1;
+                    room.FilledSlot -= 1;
+                    if(room.FilledSlot == 0)
+                    {
+                        room.RoomGender = null;
+                        room.RoomAcedemic = null;
+                    }
+                }    
             }
             //neu la hop dong gia han thi khi huy hop dong p xoa not phi hop dong
             return await _dbContext.SaveChangesAsync();
@@ -343,9 +403,9 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             }
             contract.RoomId = emptyRoom.Id;
 
-            //emptyRoom.RoomGender = student.Gender;
-            //emptyRoom.RoomAcedemic = student.AcademicYear;
-            
+            emptyRoom.RoomGender = student.Gender;
+            emptyRoom.RoomAcedemic = student.AcademicYear;
+
             return await _dbContext.SaveChangesAsync();
         }
 
@@ -411,7 +471,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         public async Task<List<ContractFeeStatusDto>> GetListContractByStudentId(int studentId)
         {
             var query = from a in _dbContext.ContractEntities
-                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && a.IsDeleted == false && a.StudentId == studentId
+                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && a.StudentId == studentId
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()

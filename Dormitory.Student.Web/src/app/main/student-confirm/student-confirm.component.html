@@ -23,6 +23,8 @@
                 <th>Số điện thoại</th>
                 <th>Ngày bắt đầu hợp đồng</th>
                 <th>Hạn hợp đồng</th>
+                <th>Giá phòng mong muốn</th>
+                <th>Giá phòng</th>
                 <th>Khu ở</th>
                 <th>Phòng ở</th>
                 <th>Trạng duyệt đơn đăng kí</th>
@@ -41,6 +43,8 @@
                 <td>{{ data.studentPhone }}</td>
                 <td>{{ data.fromDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data.toDate | date : "dd-MM-yyyy"}}</td>
+                <td>{{ data.desiredPrice | currency : "VND"}}</td>
+                <td>{{ data.roomPrice | currency : "VND" }}</td>
                 <td>{{ data.areaName }}</td>
                 <td>{{ data.roomName }}</td>
 

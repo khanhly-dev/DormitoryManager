@@ -76,8 +76,7 @@ export class ContractPendingComponent implements OnInit {
         })
       }
     }
-    else
-    {
+    else {
       this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
         this.getListContractPending("", 1, 10);
       })
@@ -86,6 +85,12 @@ export class ContractPendingComponent implements OnInit {
   adminConfirmAll(data: any) {
     this.contractService.adminConfirmAllContract(data).subscribe(x => {
       this.getListContractPending("", 1, 10);
+      if (x.status == 'success') {
+        alert(`Duyệt tự động thành công, có ${x.count} đơn được duyệt`)
+      }
+      else {
+        alert("Duyệt tự động không thành công")
+      }
     })
   }
 }
