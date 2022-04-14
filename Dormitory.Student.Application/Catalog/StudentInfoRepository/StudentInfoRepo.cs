@@ -1,4 +1,5 @@
-﻿using Dormitory.Domain.Shared.Constant;
+﻿using Dormitory.Domain.AppEntities;
+using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
 using Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos;
 using Dormitory.Student.Application.CommonDto;
@@ -21,6 +22,14 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
 
         public async Task<bool> CheckCanCreateExtendContract(int studentId)
         {
+            var student = await _adminSolutionDbContext.StudentEntities.FirstOrDefaultAsync(x => x.Id == studentId);
+            if (student != null)
+            {
+                if (student.IsStudying == false)
+                {
+                    return false;
+                }
+            }
             var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studentId).AsNoTracking().ToListAsync();
             if (contract == null || contract.Count == 0 || contract.Count >= 2)
             {
@@ -32,9 +41,17 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
             }
         }
 
-        public async Task<bool> CheckCanSignUp(int studenId)
+        public async Task<bool> CheckCanSignUp(int studentId)
         {
-            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studenId).AsNoTracking().ToListAsync();
+            var student = await _adminSolutionDbContext.StudentEntities.FirstOrDefaultAsync(x => x.Id == studentId);
+            if(student!= null)
+            {
+                if(student.IsStudying == false)
+                {
+                    return false;
+                }
+            }
+            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studentId).AsNoTracking().ToListAsync();
             if (contract == null || contract.Count == 0)
             {
                 return true;
@@ -51,6 +68,12 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     return true;
                 }
             }
+        }
+
+        public async Task<int> CreateStudent(StudentEntity student)
+        {
+            _adminSolutionDbContext.StudentEntities.Add(student);
+            return await _adminSolutionDbContext.SaveChangesAsync();
         }
 
         public async Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request)

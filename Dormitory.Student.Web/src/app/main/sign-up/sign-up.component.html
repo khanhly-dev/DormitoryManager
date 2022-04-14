@@ -46,7 +46,8 @@
                             <h4>.</h4>
                             <div class="label-margin">
                                 <b>Giới tính:</b>
-                                <input nz-input [value]="student.gender" readonly nzBorderless />
+                                <input *ngIf="student.gender == 1" nz-input value="Nam" readonly nzBorderless />
+                                <input *ngIf="student.gender == 0" nz-input value="Nữ" readonly nzBorderless />
                             </div>
                             <div class="label-margin">
                                 <b>Dân tộc:</b>

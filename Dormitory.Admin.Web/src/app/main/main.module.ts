@@ -41,6 +41,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { StudentListComponent } from './manage/student-list/student-list.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
     CompletedContractComponent,
     ContractFeeComponent,
     ServiceFeeComponent,
+    StudentListComponent,
   ],
   imports: [
     CommonModule,

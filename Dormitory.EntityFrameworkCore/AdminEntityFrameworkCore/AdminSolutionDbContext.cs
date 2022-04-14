@@ -36,5 +36,7 @@ namespace Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore
         public DbSet<NotificationEntity> NotificationEntities { get; set; }
         public DbSet<RoomServiceFeeEntity> RoomServiceFeeEntities { get; set; }
         public DbSet<BillServiceEntity> BillServiceEntities { get; set; }
+        public DbSet<DisciplineEntity> DisciplineEntities { get; set; }
+
     }
 }

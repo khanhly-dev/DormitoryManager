@@ -21,19 +21,19 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             _dbContext = dbContext;
         }
 
-        public async Task<int> AdminConfirmAllContract(int minPoint, int maxPoint, int confirmStatus)
+        public async Task<int> AdminConfirmAllContract()
         {
+            var confirmStatus = DataConfigConstant.contractConfirmStatusApprove;
             var maleConfirmCount = 0;
             var femaleConfirmCount = 0;
             var confirmCount = 0;
 
-            var query = from a in _dbContext.ContractEntities
-                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusPending
-                        join s in _dbContext.StudentEntities on a.StudentId equals s.Id
-                        where s.Point >= minPoint && s.Point < maxPoint && a.IsDeleted == false
-                        select new { a, s };
-
-            query.Select(x => x.s.Point);
+            var listContract = await (from a in _dbContext.ContractEntities
+                               //where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusPending
+                               join s in _dbContext.StudentEntities on a.StudentId equals s.Id
+                               where a.IsDeleted == false
+                               orderby s.Point descending
+                               select new { a, s }).ToListAsync();
 
             var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
             var listEmptyRoom = await _dbContext.RoomEntities.Where(x => x.AvaiableSlot > 0).ToListAsync();
@@ -42,7 +42,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             var feMaleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.female).ToList();
             var empltyRoom = listEmptyRoom.Where(x => x.RoomGender == null).ToList();
 
-            foreach (var item in query)
+            foreach (var item in listContract)
             {
                 if(item.a.RoomId.HasValue)
                 {

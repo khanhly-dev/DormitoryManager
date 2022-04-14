@@ -52,7 +52,7 @@ export class StudentConfirmComponent implements OnInit {
         alert("Xác nhận hợp đồng thành công");
       }
       else {
-        alert("Xác nhận hợp đồng không thành công");
+        alert("Xác nhận hợp đồng thành công");
       }
 
     })

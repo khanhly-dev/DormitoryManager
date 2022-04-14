@@ -1,4 +1,5 @@
-﻿using Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos;
+﻿using Dormitory.Domain.AppEntities;
+using Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos;
 using Dormitory.Student.Application.CommonDto;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
         Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request);
         Task<bool> CheckCanSignUp(int studenId);
         Task<bool> CheckCanCreateExtendContract(int studentId);
+        Task<int> CreateStudent(StudentEntity student);
     }
 }

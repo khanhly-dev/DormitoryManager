@@ -1,5 +1,6 @@
 ﻿using Dormitory.Admin.Application.Catalog.StudentRepository.Dtos;
 using Dormitory.Admin.Application.CommonDto;
+using Dormitory.Domain.AppEntites;
 using Dormitory.Domain.AppEntities;
 using Dormitory.Domain.Shared.Constant;
 using Dormitory.EntityFrameworkCore.AdminEntityFrameworkCore;
@@ -19,6 +20,13 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         {
             _dbContext = dbContext;
         }
+
+        public async Task<int> AddDiscipline(DisciplineEntity request)
+        {
+            _dbContext.DisciplineEntities.Add(request);
+            return await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<int> CreateOrUpdate(StudentEntity request)
         {
             var student = new StudentEntity()
@@ -65,6 +73,63 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 _dbContext.StudentEntities.Remove(student);
             }
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteDiscipline(int disciplineId)
+        {
+            var discipline = await _dbContext.DisciplineEntities.FindAsync(disciplineId);
+            if(discipline != null)
+            {
+                _dbContext.DisciplineEntities.Remove(discipline);
+            }
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<PageResult<StudentDto>> GetAll(PageRequestBase request)
+        {
+            var query = from s in _dbContext.StudentEntities
+                        select s;
+
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                query = query.Where(x => x.Name.Contains(request.Keyword));
+            }
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query
+                .Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new StudentDto()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Phone = x.Phone,
+                    Email = x.Email,
+                    Major = x.Major,
+                    Ethnic = x.Ethnic,
+                    AcademicYear = x.AcademicYear,
+                    Adress = x.Adress,
+                    BaseAdress = x.BaseAdress,
+                    DOB = x.DOB,
+                    RelativeName = x.RelativeName,
+                    RelativePhone = x.RelativePhone,
+                    Religion = x.Religion,
+                    Class = x.Class,
+                    Gender = x.Gender,
+                    StudentCode = x.StudentCode,
+                    Point = x.Point,
+                    PaymentStatus = true
+                }).ToListAsync();
+
+            var pageResult = new PageResult<StudentDto>()
+            {
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                TotalRecords = totalRow,
+                Items = data
+            };
+            return pageResult;
         }
 
         public async Task<PageResult<StudentDto>> GetList(PageRequestBase request)
@@ -130,6 +195,46 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
             return pageResult;
         }
 
+        public async Task<PageResult<DisciplineDto>> GetListDiscipline(PageRequestBase request)
+        {
+            var query = from s in _dbContext.StudentEntities
+                        join d in _dbContext.DisciplineEntities on s.Id equals d.StudentId
+                        select new { d, s };
+
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                query = query.Where(x => x.s.Name.Contains(request.Keyword));
+            }
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query
+                .Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new DisciplineDto()
+                {
+                    StudentId = x.d.StudentId,
+                    Name = x.s.Name,
+                    Phone = x.s.Phone,
+                    Major = x.s.Major,
+                    DOB = x.s.DOB,
+                    Class = x.s.Class,
+                    Gender = x.s.Gender,
+                    StudentCode = x.s.StudentCode,
+                    DisciplineId =x.d.Id,
+                    DisciplineDescription = x.d.Description
+                }).ToListAsync();
+
+            var pageResult = new PageResult<DisciplineDto>()
+            {
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                TotalRecords = totalRow,
+                Items = data
+            };
+            return pageResult;
+        }
+
         public async Task<int> UpdateContractFee(int contractId, DateTime datePaid, float moneyPaid)
         {
             var contractFee = await _dbContext.ContractFeeEntities.FirstOrDefaultAsync(x => x.ContractId == contractId);
@@ -147,6 +252,12 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
             {
                 contractFee.IsPaid = false;
             }
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateDiscipline(DisciplineEntity request)
+        {
+            _dbContext.DisciplineEntities.Update(request);
             return await _dbContext.SaveChangesAsync();
         }
     }

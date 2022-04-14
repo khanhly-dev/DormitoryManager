@@ -1,5 +1,6 @@
 ﻿using Dormitory.Admin.Application.Catalog.StudentRepository;
 using Dormitory.Admin.Application.CommonDto;
+using Dormitory.Domain.AppEntites;
 using Dormitory.Domain.AppEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,25 @@ namespace Dormitory.Admin.Api.Controllers
             _studentRepo = studentRepo;
         }
         [HttpGet("get-list")]
-        public async Task<IActionResult> GetListStudent(PageRequestBase request)
+        public async Task<IActionResult> GetListStudent([FromQuery] PageRequestBase request)
         {
-            var listArea = await _studentRepo.GetList(request);
-            return Ok(listArea);
+            var list = await _studentRepo.GetList(request);
+            return Ok(list);
+        }
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAllStudent([FromQuery] PageRequestBase request)
+        {
+            var list = await _studentRepo.GetAll(request);
+            return Ok(list);
+        }
+        [HttpGet("get-list-discipline")]
+        public async Task<IActionResult> GetListDiscipline([FromQuery] PageRequestBase request)
+        {
+            var list = await _studentRepo.GetListDiscipline(request);
+            return Ok(list);
         }
         [HttpPost("create-or-update")]
-        public async Task<IActionResult> CreateOrUpdateStudent(StudentEntity request)
+        public async Task<IActionResult> CreateOrUpdateStudent([FromForm] StudentEntity request)
         {
             var responseStatus = "";
             var result = await _studentRepo.CreateOrUpdate(request);
@@ -58,6 +71,52 @@ namespace Dormitory.Admin.Api.Controllers
         {
             var responseStatus = "";
             var result = await _studentRepo.Delete(id);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+
+        [HttpPost("add-discipline")]
+        public async Task<IActionResult> AddDiscipline([FromForm] DisciplineEntity request)
+        {
+            var responseStatus = "";
+            var result = await _studentRepo.AddDiscipline(request);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+        [HttpPut("update-discipline")]
+        public async Task<IActionResult> UpdateDiscipline([FromForm] DisciplineEntity request)
+        {
+            var responseStatus = "";
+            var result = await _studentRepo.UpdateDiscipline(request);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
+        [HttpDelete("delete-discipline")]
+        public async Task<IActionResult> DeleteDiscipline([FromQuery] int id)
+        {
+            var responseStatus = "";
+            var result = await _studentRepo.DeleteDiscipline(id);
             if (result > 0)
             {
                 responseStatus = "success";

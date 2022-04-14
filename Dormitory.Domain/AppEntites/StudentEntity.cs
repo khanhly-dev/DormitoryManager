@@ -25,5 +25,6 @@ namespace Dormitory.Domain.AppEntities
         public string Ethnic { get; set; }
         public string Religion { get; set; }
         public int? Point { get; set; }
+        public bool IsStudying { get; set; }
     }
 }

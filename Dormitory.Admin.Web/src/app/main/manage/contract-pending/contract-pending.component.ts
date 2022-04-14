@@ -11,19 +11,13 @@ import { ContracServiceProxy } from 'src/app/service/admin-service/contract-serv
 })
 export class ContractPendingComponent implements OnInit {
   modalTitle: string = "";
-  validateForm!: FormGroup;
   listContractPending!: PageResultBase<ContractPendingDto>;
   pageIndex: number = 1;
   pageSize!: number;
-  isVisible = false;
   isSpinning = false;
 
-  constructor(private contractService: ContracServiceProxy, private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      minPoint: [0, [Validators.required]],
-      maxPoint: [0, [Validators.required]],
-      confirmStatus: [[Validators.required]],
-    });
+  constructor(private contractService: ContracServiceProxy) {
+ 
   }
 
   ngOnInit(): void {
@@ -44,22 +38,8 @@ export class ContractPendingComponent implements OnInit {
     })
   }
 
-  showModal(modalTitle: string): void {
-    this.modalTitle = modalTitle;
-    this.isVisible = true;
-  }
-
-  handleOk(): void {
-    this.submitForm();
-    this.isVisible = false;
-  }
-
-  handleCancel(): void {
-    this.isVisible = false;
-  }
-
   submitForm(): void {
-    this.adminConfirmAll(this.validateForm.value);
+    this.adminConfirmAll();
   }
 
   adminConfirm(contractId: number, confirmStatus: number) {
@@ -68,6 +48,7 @@ export class ContractPendingComponent implements OnInit {
       if (item) {
         if (item.roomId) {
           alert("Đã xếp phòng cho sinh viên này, không thể từ chối")
+          return
         }
       }
       else {
@@ -76,14 +57,12 @@ export class ContractPendingComponent implements OnInit {
         })
       }
     }
-    else {
-      this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
-        this.getListContractPending("", 1, 10);
-      })
-    }
+    this.contractService.adminConfirmContract(contractId, confirmStatus).subscribe(x => {
+      this.getListContractPending("", 1, 10);
+    })
   }
-  adminConfirmAll(data: any) {
-    this.contractService.adminConfirmAllContract(data).subscribe(x => {
+  adminConfirmAll() {
+    this.contractService.adminConfirmAllContract().subscribe(x => {
       this.getListContractPending("", 1, 10);
       if (x.status == 'success') {
         alert(`Duyệt tự động thành công, có ${x.count} đơn được duyệt`)

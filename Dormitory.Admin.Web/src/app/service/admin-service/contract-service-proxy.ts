@@ -86,17 +86,11 @@ export class ContracServiceProxy {
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 
-    adminConfirmAllContract(data: any,): Observable<any> {
+    adminConfirmAllContract(): Observable<any> {
         let url = this.baseUrl + "/api/contract/admin-all-confirm";
         url = url.replace(/[?&]$/, "");
 
         const content = new FormData();
-        if (data.minPoint !== null && data.minPoint !== undefined)
-            content.append("minPoint", data.minPoint);
-        if (data.maxPoint !== null && data.maxPoint !== undefined)
-            content.append("maxPoint", data.maxPoint);
-        if (data.confirmStatus !== null && data.confirmStatus !== undefined)
-            content.append("confirmStatus", data.confirmStatus);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

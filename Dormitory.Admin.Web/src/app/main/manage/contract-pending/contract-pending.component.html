@@ -10,52 +10,12 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" style="float: right;" (click)="showModal('Cấu hình duyệt tự động')">
+            <button nz-button [nzType]="'primary'" style="float: right;" (click)="submitForm()">
                 <span>Duyệt tự động</span>
             </button>
         </div>
     </div>
     <br>
-    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-        <ng-container *nzModalContent>
-            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-                <div nz-row [nzGutter]="16">
-                    <div nz-col class="gutter-row" [nzSpan]="24">
-                        <div class="inner-box">
-                            <nz-form-label [nzSpan]="7" nzRequired>Thao tác</nz-form-label>
-                            <nz-form-control [nzSpan]="24" nzErrorTip="Hãy chọn thao tác">
-                                <nz-select formControlName="confirmStatus" style="width: 100%;">
-                                    <nz-option [nzValue]="2" nzLabel="Chấp nhận"></nz-option>
-                                    <nz-option [nzValue]="1" nzLabel="Từ chối"></nz-option>
-                                </nz-select>
-                            </nz-form-control>
-                        </div>
-                    </div>
-                </div>
-                <div nz-row [nzGutter]="16">
-                    <div nz-col class="gutter-row" [nzSpan]="12">
-                        <div class="inner-box">
-                            <nz-form-label [nzSpan]="10" nzRequired>Điểm từ</nz-form-label>
-                            <nz-form-control [nzSpan]="24" nzErrorTip="Hãy nhập điểm thấp nhất">
-                                <nz-input-number formControlName="minPoint" [nzStep]="1" style="width: 100%;">
-                                </nz-input-number>
-                            </nz-form-control>
-                        </div>
-                    </div>
-                    <div nz-col class="gutter-row" [nzSpan]="12">
-                        <div class="inner-box">
-                            <nz-form-label [nzSpan]="10" nzRequired>Đến</nz-form-label>
-                            <nz-form-control [nzSpan]="24" nzErrorTip="Hãy nhập điểm cao nhất">
-                                <nz-input-number formControlName="maxPoint" [nzStep]="1" style="width: 100%;">
-                                </nz-input-number>
-                            </nz-form-control>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-        </ng-container>
-    </nz-modal>
 
     <nz-table #basicTable [nzData]="listContractPending.items" *ngIf="listContractPending != undefined"
         [nzFrontPagination]="false">

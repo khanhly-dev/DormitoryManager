@@ -13,6 +13,7 @@ import { WaitingRoomComponent } from './manage/waiting-room/waiting-room.compone
 import { CompletedContractComponent } from './manage/completed-contract/completed-contract.component';
 import { ServiceFeeComponent } from './manage/service-fee/service-fee.component';
 import { ContractFeeComponent } from './manage/contract-fee/contract-fee.component';
+import { StudentListComponent } from './manage/student-list/student-list.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'completed-contract', component: CompletedContractComponent, canActivate: [AuthGuardService] },
       { path: 'contract-fee', component: ContractFeeComponent, canActivate: [AuthGuardService] },
       { path: 'service-fee', component: ServiceFeeComponent, canActivate: [AuthGuardService] },
+      { path: 'student-list', component: StudentListComponent, canActivate: [AuthGuardService] },
     ]
   },
 ];

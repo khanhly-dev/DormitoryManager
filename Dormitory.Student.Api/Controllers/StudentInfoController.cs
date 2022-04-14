@@ -1,4 +1,5 @@
-﻿using Dormitory.Student.Application.Catalog.StudentInfoRepository;
+﻿using Dormitory.Domain.AppEntities;
+using Dormitory.Student.Application.Catalog.StudentInfoRepository;
 using Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Student.Api.Controllers
 {
     [Route("api/student")]
-    [Authorize]
+    //[Authorize]
     public class StudentInfoController : Controller
     {
         private readonly IStudentInfoRepo _studentInfoRepo;
@@ -45,6 +46,19 @@ namespace Dormitory.Student.Api.Controllers
         {
             var check = await _studentInfoRepo.CheckCanCreateExtendContract(studentId);
             return Ok(check);
+        }
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateStudent([FromForm] StudentEntity student)
+        {
+            var result = await _studentInfoRepo.CreateStudent(student);
+            if(result > 0)
+            {
+                return Ok(new { status = "success" });
+            }
+            else
+            {
+                return Ok(new { status = "error" });
+            }
         }
     }
 }
