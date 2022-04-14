@@ -14,6 +14,7 @@ import { CompletedContractComponent } from './manage/completed-contract/complete
 import { ServiceFeeComponent } from './manage/service-fee/service-fee.component';
 import { ContractFeeComponent } from './manage/contract-fee/contract-fee.component';
 import { StudentListComponent } from './manage/student-list/student-list.component';
+import { DisciplineComponent } from './manage/discipline/discipline.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'contract-fee', component: ContractFeeComponent, canActivate: [AuthGuardService] },
       { path: 'service-fee', component: ServiceFeeComponent, canActivate: [AuthGuardService] },
       { path: 'student-list', component: StudentListComponent, canActivate: [AuthGuardService] },
+      { path: 'discipline', component: DisciplineComponent, canActivate: [AuthGuardService] },
     ]
   },
 ];

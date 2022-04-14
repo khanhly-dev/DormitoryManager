@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/room")]
-    [Authorize]
+    //[Authorize]
     public class RoomController : Controller
     {
         private readonly IRoomRepo _roomRepo;

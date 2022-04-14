@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/criteria")]
-    [Authorize]
+    //[Authorize]
     public class CriteriaController : Controller
     {
         private readonly ICriteriaRepo _criteriaRepo;

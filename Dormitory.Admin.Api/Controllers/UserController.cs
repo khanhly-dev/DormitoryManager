@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/user")]
-    [Authorize]
+    //[Authorize]
     public class UserController : Controller
     {
         private readonly IUserRepo _userRepo;

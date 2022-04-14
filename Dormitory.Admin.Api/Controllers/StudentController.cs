@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/student")]
-    [Authorize]
+    //[Authorize]
     public class StudentController : Controller
     {
         private readonly IStudentRepo _studentRepo;
@@ -28,6 +28,12 @@ namespace Dormitory.Admin.Api.Controllers
         public async Task<IActionResult> GetAllStudent([FromQuery] PageRequestBase request)
         {
             var list = await _studentRepo.GetAll(request);
+            return Ok(list);
+        }
+        [HttpGet("get-list-student-select")]
+        public async Task<IActionResult> GetListStudentSelect()
+        {
+            var list = await _studentRepo.GetListStudentSelect();
             return Ok(list);
         }
         [HttpGet("get-list-discipline")]
@@ -82,7 +88,7 @@ namespace Dormitory.Admin.Api.Controllers
             return Ok(new { responseStatus });
         }
 
-        [HttpPost("add-discipline")]
+        [HttpPost("add-or-update-discipline")]
         public async Task<IActionResult> AddDiscipline([FromForm] DisciplineEntity request)
         {
             var responseStatus = "";

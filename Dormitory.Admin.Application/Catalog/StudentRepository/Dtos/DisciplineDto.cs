@@ -16,9 +16,10 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository.Dtos
         public string Phone { get; set; }
         public string Major { get; set; }
         public int Gender { get; set; }
-        public int DisciplineId { get; set; }
-        public string DisciplineDescription { get; set; }
+        public int Id { get; set; }
+        public string Description { get; set; }
         public string RoomName { get; set; }
         public string AreaName { get; set; }
+        public string Punish { get; set; }
     }
 }

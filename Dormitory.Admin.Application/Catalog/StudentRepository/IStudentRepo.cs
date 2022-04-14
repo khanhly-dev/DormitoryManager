@@ -21,5 +21,6 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         Task<int> UpdateDiscipline(DisciplineEntity request);
         Task<int> DeleteDiscipline(int disciplineId);
         Task<PageResult<DisciplineDto>> GetListDiscipline(PageRequestBase request);
+        Task<List<ComboSelectDto>> GetListStudentSelect();
     }
 }

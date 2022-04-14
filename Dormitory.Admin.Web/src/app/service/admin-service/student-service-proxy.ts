@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { DisciplineDto, StudentDto } from 'src/app/dto/output-dto';
+import { BaseSelectDto, DisciplineDto, StudentDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class StudentServiceProxy {
@@ -30,6 +30,12 @@ export class StudentServiceProxy {
         return this.http.get<PageResultBase<StudentDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
+    getListStudentSelect(): Observable<BaseSelectDto[]> {
+        let url = this.baseUrl + `/api/student/get-list-student-select`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<BaseSelectDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
 
     updateContractPaid(contractId: any, data: any): Observable<any> {
         let url = this.baseUrl + `/api/student/update-contract-fee`;
@@ -46,8 +52,8 @@ export class StudentServiceProxy {
         return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
 
-    addDiscipline(data: any): Observable<any> {
-        let url = this.baseUrl + `/api/student/add-discipline`;
+    addOrUpdateDiscipline(data: any): Observable<any> {
+        let url = this.baseUrl + `/api/student/add-or-update-discipline`;
         url = url.replace(/[?&]$/, "");
 
         const content = new FormData();
@@ -55,26 +61,14 @@ export class StudentServiceProxy {
             content.append("id", data.id);
         if (data.studentId !== null && data.studentId !== undefined)
             content.append("studentId", data.studentId);
-        if (data.desciption !== null && data.desciption !== undefined)
-            content.append("desciption", data.desciption);
+        if (data.description !== null && data.description !== undefined)
+            content.append("description", data.description);
+        if (data.punish !== null && data.punish !== undefined)
+            content.append("punish", data.punish);
 
-        return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
-    updateDiscipline(data: any): Observable<any> {
-        let url = this.baseUrl + `/api/student/update-discipline`;
-        url = url.replace(/[?&]$/, "");
-
-        const content = new FormData();
-        if (data.id !== null && data.id !== undefined)
-            content.append("id", data.id);
-        if (data.studentId !== null && data.studentId !== undefined)
-            content.append("studentId", data.studentId);
-        if (data.desciption !== null && data.desciption !== undefined)
-            content.append("desciption", data.desciption);
-
-        return this.http.put<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
-    }
-    delete(id: number): Observable<any> {
+    deleteDiscipline(id: number): Observable<any> {
         let url = this.baseUrl + `/api/student/delete-discipline?id=${id}`;
         url = url.replace(/[?&]$/, "");
 

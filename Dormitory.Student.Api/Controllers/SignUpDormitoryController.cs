@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Student.Api.Controllers
 {
     [Route("api/contract")]
-    [Authorize]
+    //[Authorize]
     public class SignUpDormitoryController : Controller
     {
         private readonly ISignUpDormitoryRepo _signUpDormitoryRepo;

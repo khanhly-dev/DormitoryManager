@@ -14,5 +14,11 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
         Task<PageResult<FacilityDto>> GetList(PageRequestBase request);
         Task<int> CreateOrUpdate(FacilityEntity request);
         Task<int> Delete(int id);
+
+        Task<List<FacilityInRoomDto>> GetListFacilityInRoom();
+        Task<int> AddFacilityIntoRoom(FacilityInRoomEntity request);
+        Task<int> DeleteFacilityInRoom(int id);
+        Task<List<FacilityInRoomDto>> GetFacilityByRoomId(int roomId);
+        Task<List<ComboSelectDto>> GetListSelect();
     }
 }

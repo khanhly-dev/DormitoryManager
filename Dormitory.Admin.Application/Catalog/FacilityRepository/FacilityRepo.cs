@@ -18,6 +18,13 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
         {
             _dbContext = dbContext;
         }
+
+        public Task<int> AddFacilityIntoRoom(FacilityInRoomEntity request)
+        {
+            _dbContext.FacilityInRoomEntities.Add(request);
+            return _dbContext.SaveChangesAsync();
+        }
+
         public async Task<int> CreateOrUpdate(FacilityEntity request)
         {
             var facility = new FacilityEntity()
@@ -25,7 +32,6 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
                 Id = request.Id,
                 Name = request.Name,
                 TotalCount = request.TotalCount,
-                Status = request.Status,
             };
             if (facility.Id == 0)
             {
@@ -53,6 +59,34 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
             return await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<int> DeleteFacilityInRoom(int id)
+        {
+            var facilityInRoom = await _dbContext.FacilityInRoomEntities.FindAsync(id);
+            if(facilityInRoom != null)
+            {
+                _dbContext.FacilityInRoomEntities.Remove(facilityInRoom);
+            }
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<FacilityInRoomDto>> GetFacilityByRoomId(int roomId)
+        {
+            var query = from f in _dbContext.FacilityInRoomEntities
+                        join fa in _dbContext.FacilityEntities on f.FacilityId equals fa.Id
+                        where f.RoomId == roomId
+                        select new { f, fa };
+            var list = await query.Select(x => new FacilityInRoomDto
+            {
+                Id = x.f.Id,
+                FacilityId = x.f.FacilityId,
+                FacilityName = x.fa.Name,
+                Count = x.f.Count,
+                RoomId = x.f.RoomId,
+                Status = x.f.Status,
+            }).ToListAsync();
+            return list;
+        }
+
         public async Task<PageResult<FacilityDto>> GetList(PageRequestBase request)
         {
             var query = from a in _dbContext.FacilityEntities
@@ -73,7 +107,6 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
                     Id = x.Id,
                     Name = x.Name,
                     TotalCount = x.TotalCount,
-                    Status = x.Status
                 }).ToListAsync();
 
             var pageResult = new PageResult<FacilityDto>()
@@ -84,6 +117,33 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
                 Items = data
             };
             return pageResult;
+        }
+
+        public async Task<List<FacilityInRoomDto>> GetListFacilityInRoom()
+        {
+            var query = from f in _dbContext.FacilityInRoomEntities
+                        join fa in _dbContext.FacilityEntities on f.FacilityId equals fa.Id
+                        select new { f, fa };
+            var list = await query.Select(x => new FacilityInRoomDto
+            {
+                Id = x.f.Id,
+                FacilityId = x.f.FacilityId,
+                FacilityName = x.fa.Name,
+                Count = x.f.Count,
+                RoomId = x.f.RoomId,
+                Status = x.f.Status,
+            }).ToListAsync(); 
+            return list;
+        }
+
+        public async Task<List<ComboSelectDto>> GetListSelect()
+        {
+            var list = await _dbContext.FacilityEntities.Select(x => new ComboSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+            return list;
         }
     }
 }

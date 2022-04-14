@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/contract-time-config")]
-    [Authorize]
+    //[Authorize]
     public class ContractTimeConfigController : Controller
     {
         private readonly IContractTimeConfigRepo _contractTimeConfigRepo;

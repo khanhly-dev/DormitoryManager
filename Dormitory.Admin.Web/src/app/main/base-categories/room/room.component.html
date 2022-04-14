@@ -84,6 +84,68 @@
         </ng-container>
     </nz-modal>
 
+    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Danh sách cơ sở vật chất" (nzOnCancel)="handleCancel1()"
+        (nzOnOk)="handleOk1()" nzWidth="1500px">
+        <ng-container *nzModalContent>
+            <nz-table #basicTable [nzData]="listFaciliy" *ngIf="listFaciliy != undefined" [nzFrontPagination]="false">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên csvc</th>
+                        <th>Số lượng</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data">
+                        <td>{{ listFaciliy.indexOf(data) + 1 }}</td>
+                        <td>{{ data.facilityName }}</td>
+                        <td>{{ data.count }}</td>
+                        <td>{{ data.status }}</td>
+                        <td>
+                            <button nz-button nzSize="small" nzType="primary" (click)="showModal2()">Thêm</button>&nbsp;
+                            <button nz-button nzSize="small" nzDanger nzType="primary">Xoá</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </ng-container>
+    </nz-modal>
+
+    <nz-modal [(nzVisible)]="isVisible2" nzTitle="The first Modal" (nzOnCancel)="handleCancel2()"
+        (nzOnOk)="handleOk2()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="facilityForm" (ngSubmit)="submitForm()">
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Cơ sở vật chất</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy chọn cơ sở vật chất">
+                        <nz-select formControlName="facilityId">
+                            <nz-option *ngFor="let item of facilitySelect" [nzValue]="item.id" [nzLabel]="item.name">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Số lượng</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập số lượng">
+                        <nz-input-number formControlName="count" [nzStep]="1" style="width: 100%"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Trạng thái</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập trạng thái">
+                        <input nz-input formControlName="status" />
+                    </nz-form-control>
+                </nz-form-item>
+     
+            </form>
+        </ng-container>
+    </nz-modal>
+
     <nz-table #basicTable [nzData]="listRoom.items" *ngIf="listRoom != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
@@ -114,7 +176,8 @@
                     <button nz-button nzSize="small" nzType="primary"
                         (click)="showModal('Sửa thông tin phòng', data)">Sửa</button>&nbsp;
                     <button nz-button nzSize="small" nzDanger nzType="primary"
-                        (click)="deleteRoom(data.id)">Xoá</button>
+                        (click)="deleteRoom(data.id)">Xoá</button>&nbsp;
+                    <button nz-button nzSize="small" nzType="default" (click)="showModal1(data.id)">CSVC</button>
                 </td>
             </tr>
         </tbody>

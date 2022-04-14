@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Dormitory.Admin.Api.Controllers
 {
     [Route("api/contract")]
-    [Authorize]
+    //[Authorize]
     public class ContractController : Controller
     {
         private readonly IContractRepo _contractRepo;

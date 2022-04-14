@@ -23,7 +23,14 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
 
         public async Task<int> AddDiscipline(DisciplineEntity request)
         {
-            _dbContext.DisciplineEntities.Add(request);
+            if(request.Id == 0)
+            {
+                _dbContext.DisciplineEntities.Add(request);
+            }
+            else
+            {
+                _dbContext.DisciplineEntities.Update(request);
+            }
             return await _dbContext.SaveChangesAsync();
         }
 
@@ -199,7 +206,11 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         {
             var query = from s in _dbContext.StudentEntities
                         join d in _dbContext.DisciplineEntities on s.Id equals d.StudentId
-                        select new { d, s };
+                        join co in _dbContext.ContractEntities on s.Id equals co.StudentId
+                        where co.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
+                        join r in _dbContext.RoomEntities on co.RoomId equals r.Id
+                        join a in _dbContext.AreaEntities on r.AreaId equals a.Id
+                        select new { d, s, r, a };
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -221,8 +232,11 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                     Class = x.s.Class,
                     Gender = x.s.Gender,
                     StudentCode = x.s.StudentCode,
-                    DisciplineId =x.d.Id,
-                    DisciplineDescription = x.d.Description
+                    Id =x.d.Id,
+                    Description = x.d.Description,
+                    Punish = x.d.Punish,
+                    RoomName = x.r.Name,
+                    AreaName = x.a.Name
                 }).ToListAsync();
 
             var pageResult = new PageResult<DisciplineDto>()
@@ -233,6 +247,16 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 Items = data
             };
             return pageResult;
+        }
+
+        public async Task<List<ComboSelectDto>> GetListStudentSelect()
+        {
+            var listStudent = await _dbContext.StudentEntities.Select(x => new ComboSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+            return listStudent;
         }
 
         public async Task<int> UpdateContractFee(int contractId, DateTime datePaid, float moneyPaid)

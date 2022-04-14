@@ -159,7 +159,7 @@ export interface RoomServiceDto {
     roomId: number;
     serviceId: number;
     serviceName: string;
-    quantity:number;
+    quantity: number;
     fromDate: Date;
     toDate: Date;
     statBegin: number;
@@ -191,6 +191,16 @@ export interface DisciplineDto {
     major: string
     gender: number;
     disciplineId: number;
-    disciplineDescription : string
+    description: string
+    punish: string
 }
 
+
+export interface FacilityInRoom {
+    id: number;
+    roomId: number
+    facilityId: number
+    facilityName: number
+    count: number
+    status: number
+}

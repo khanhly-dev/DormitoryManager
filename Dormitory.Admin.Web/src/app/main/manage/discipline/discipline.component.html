@@ -1,0 +1,99 @@
+<div>
+    <h4>Danh sách sinh viên bị kỷ luật</h4>
+    <br>
+</div>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListDiscipline(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+        <div nz-col nzSpan="12">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới sv kỷ luật')" style="float: right;">
+                <span>Thêm mới</span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Sinh viên</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy chọn sinh viên">
+                        <nz-select formControlName="studentId">
+                            <nz-option *ngFor="let item of studentSelect" [nzValue]="item.id" [nzLabel]="item.name">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Lỗi kỷ luật</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập lỗi kỷ luật">
+                        <input nz-input formControlName="description" />
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Hình thức kỷ luật</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập hình thức kỷ luật">
+                        <input nz-input formControlName="punish" />
+                    </nz-form-control>
+                </nz-form-item>
+
+            </form>
+        </ng-container>
+    </nz-modal>
+
+    <nz-table #basicTable [nzData]="listDiscipline.items" *ngIf="listDiscipline != undefined" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên sinh viên</th>
+                <th>Mã sinh viên</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <!-- <th>Khoa</th>
+                <th>Lớp</th> -->
+                <th>Số điện thoại</th>
+                <th>Phòng</th>
+                <th>Khu</th>
+                <th>Lỗi kỹ luật</th>
+                <th>Hình thức xử lý</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ listDiscipline.items.indexOf(data) + 1}}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.studentCode }}</td>
+                <td *ngIf="data.gender == 1">Nam</td>
+                <td *ngIf="data.gender == 0">Nữ</td>
+                <td>{{ data.dob | date : "dd-MM-yyyy"}}</td>
+                <!-- <td>{{ data.major }}</td>
+                <td>{{ data.class }}</td> -->
+                <td>{{ data.phone }}</td>
+                <td>{{ data.roomName }}</td>
+                <td>{{ data.areaName }}</td>
+                <td>{{ data.description }}</td>
+                <td>{{ data.punish }}</td>
+                <td>
+                    <button nz-button nzSize="small" nzType="primary"
+                        (click)="showModal('Sửa sv kỷ luật', data)">Sửa</button>&nbsp;
+                    <button nz-button nzSize="small" nzDanger nzType="primary"
+                        (click)="deleteDiscipline(data.id)">Xoá</button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listDiscipline != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listDiscipline.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListDiscipline('', pageIndex, 10)"></nz-pagination>
+</nz-spin>

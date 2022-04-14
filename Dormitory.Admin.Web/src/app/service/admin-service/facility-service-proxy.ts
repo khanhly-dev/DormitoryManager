@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { FacilityDto, RoomDto } from 'src/app/dto/output-dto';
+import { BaseSelectDto, FacilityDto, FacilityInRoom, RoomDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class FacilityServiceProxy {
@@ -43,6 +43,50 @@ export class FacilityServiceProxy {
             content.append("totalCount", data.totalCount);
         if (data.status !== null || data.status !== undefined)
             content.append("status", data.status);
+
+        return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
+    }
+
+    getListFacilityInRoom(): Observable<PageResultBase<FacilityInRoom>> {
+        let url = this.baseUrl + `/api/facility/get-list-facility-in-room`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<PageResultBase<FacilityInRoom>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getListFacilitySelect(): Observable<BaseSelectDto[]> {
+        let url = this.baseUrl + `/api/facility/get-list-select`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<BaseSelectDto[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    getListFacilityByRoomId(roomId: number): Observable<FacilityInRoom[]> {
+        let url = this.baseUrl + `/api/facility/get-list-facility-by-room?roomId=${roomId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<FacilityInRoom[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    deleteFacilityInRoom(id: number): Observable<any> {
+        let url = this.baseUrl + `/api/facility/delete-facility-in-room?id=${id}`;
+        url = url.replace(/[?&]$/, "");
+
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
+    AddFacilityIntoRoom(data: any): Observable<any> {
+        let url = this.baseUrl + "/api/facility/add-facility-into-room";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (data.id !== null && data.id !== undefined)
+            content.append("id", data.id);
+        if (data.RoomId !== null && data.RoomId !== undefined)
+            content.append("RoomId", data.RoomId.toString());
+        if (data.FacilityId !== null || data.FacilityId !== undefined)
+            content.append("FacilityId", data.FacilityId);
+        if (data.Count !== null || data.Count !== undefined)
+            content.append("Count", data.Count);
+        if (data.Status !== null || data.Status !== undefined)
+            content.append("Status", data.Status);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
