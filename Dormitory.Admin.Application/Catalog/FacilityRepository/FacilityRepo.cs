@@ -19,10 +19,19 @@ namespace Dormitory.Admin.Application.Catalog.FacilityRepository
             _dbContext = dbContext;
         }
 
-        public Task<int> AddFacilityIntoRoom(FacilityInRoomEntity request)
+        public async Task<int> AddFacilityIntoRoom(FacilityInRoomEntity request)
         {
-            _dbContext.FacilityInRoomEntities.Add(request);
-            return _dbContext.SaveChangesAsync();
+            var facility = await _dbContext.FacilityInRoomEntities.Where(x => x.FacilityId == request.FacilityId && x.RoomId == request.RoomId).FirstOrDefaultAsync();
+            if(facility != null)
+            {
+                facility.Count += request.Count;
+                facility.Status = request.Status;
+            }
+            else
+            {
+                _dbContext.FacilityInRoomEntities.Add(request);
+            }    
+            return await _dbContext.SaveChangesAsync();
         }
 
         public async Task<int> CreateOrUpdate(FacilityEntity request)

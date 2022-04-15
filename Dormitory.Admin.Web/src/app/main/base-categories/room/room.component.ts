@@ -24,6 +24,7 @@ export class RoomComponent implements OnInit {
   isVisible2 = false;
   isSpinning = false;
   listFaciliy : FacilityInRoom[] = [];
+  roomSelectedId : number = 0;
 
   constructor(
     private roomService: RoomServiceProxy, 
@@ -42,7 +43,7 @@ export class RoomComponent implements OnInit {
     });
 
     this.facilityForm = this.fb.group({
-      id: [],
+      id: [0],
       roomId: ['', [Validators.required]],
       facilityId: ['', [Validators.required]],
       count: ['', [Validators.required]],
@@ -100,7 +101,31 @@ export class RoomComponent implements OnInit {
     this.createOrUpdateRoom(this.validateForm.value);
   }
 
-  facilityDubmitForm(): void {
+  facilitySubmitForm(): void {
+    this.facilityForm.controls['roomId'].setValue(this.roomSelectedId);
+    this.facilityService.addFacilityIntoRoom(this.facilityForm.value).subscribe(x => {
+      this.getFacilityByRoomId(this.roomSelectedId)
+      this.isVisible2 = false
+      if (x.responseStatus = 'success') {
+        alert("Thêm thành công")
+      }
+      else {
+        alert("Thêm không thành công")
+      }
+    })
+  }
+
+  deleteFacilityInRoom(id : number)
+  {
+    this.facilityService.deleteFacilityInRoom(id).subscribe(x => {
+      this.getFacilityByRoomId(this.roomSelectedId)
+      if (x.responseStatus = 'success') {
+        alert("Xoá thành công")
+      }
+      else {
+        alert("Xoá không thành công")
+      }
+    })
   }
 
   showModal(modalTitle: string, data?: RoomDto): void {
@@ -125,24 +150,21 @@ export class RoomComponent implements OnInit {
   }
 
   showModal1(roomId : number): void {
+    this.roomSelectedId = roomId;
     this.getFacilityByRoomId(roomId);
     this.isVisible1 = true;
   }
 
-  handleOk1(): void {
+  close(): void {
     this.isVisible1 = false;
   }
-
-  handleCancel1(): void {
-    this.isVisible1 = false;
-  }
-
+  
   showModal2(): void {
     this.isVisible2 = true;
   }
 
   handleOk2(): void {
-    this.isVisible2 = false;
+    this.facilitySubmitForm();
   }
 
   handleCancel2(): void {

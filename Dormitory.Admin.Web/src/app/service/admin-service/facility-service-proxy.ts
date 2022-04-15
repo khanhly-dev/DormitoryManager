@@ -72,21 +72,22 @@ export class FacilityServiceProxy {
         return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
-    AddFacilityIntoRoom(data: any): Observable<any> {
+    addFacilityIntoRoom(data: any): Observable<any> {
+        debugger
         let url = this.baseUrl + "/api/facility/add-facility-into-room";
         url = url.replace(/[?&]$/, "");
 
         const content = new FormData();
         if (data.id !== null && data.id !== undefined)
             content.append("id", data.id);
-        if (data.RoomId !== null && data.RoomId !== undefined)
-            content.append("RoomId", data.RoomId.toString());
-        if (data.FacilityId !== null || data.FacilityId !== undefined)
-            content.append("FacilityId", data.FacilityId);
-        if (data.Count !== null || data.Count !== undefined)
-            content.append("Count", data.Count);
-        if (data.Status !== null || data.Status !== undefined)
-            content.append("Status", data.Status);
+        if (data.roomId !== null && data.roomId !== undefined)
+            content.append("roomId", data.roomId.toString());
+        if (data.facilityId !== null || data.facilityId !== undefined)
+            content.append("facilityId", data.facilityId);
+        if (data.count !== null || data.count !== undefined)
+            content.append("count", data.count);
+        if (data.status !== null || data.status !== undefined)
+            content.append("status", data.status);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

@@ -84,9 +84,9 @@
         </ng-container>
     </nz-modal>
 
-    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Danh sách cơ sở vật chất" (nzOnCancel)="handleCancel1()"
-        (nzOnOk)="handleOk1()" nzWidth="1500px">
-        <ng-container *nzModalContent>
+    <nz-drawer [nzClosable]="false" [nzVisible]="isVisible1" nzPlacement="right" nzTitle="Danh sách cơ sở vật chất trong phòng" (nzOnClose)="close()" nzWidth="800px">
+        <ng-container *nzDrawerContent>
+            <button nz-button nzType="primary" (click)="showModal2()" style="float: right;">Thêm mới</button><br><br>
             <nz-table #basicTable [nzData]="listFaciliy" *ngIf="listFaciliy != undefined" [nzFrontPagination]="false">
                 <thead>
                     <tr>
@@ -104,16 +104,16 @@
                         <td>{{ data.count }}</td>
                         <td>{{ data.status }}</td>
                         <td>
-                            <button nz-button nzSize="small" nzType="primary" (click)="showModal2()">Thêm</button>&nbsp;
-                            <button nz-button nzSize="small" nzDanger nzType="primary">Xoá</button>
+                            <button nz-button nzSize="small" nzDanger nzType="primary"
+                                (click)="deleteFacilityInRoom(data.id)">Xoá</button>
                         </td>
                     </tr>
                 </tbody>
             </nz-table>
         </ng-container>
-    </nz-modal>
+    </nz-drawer>
 
-    <nz-modal [(nzVisible)]="isVisible2" nzTitle="The first Modal" (nzOnCancel)="handleCancel2()"
+    <nz-modal [(nzVisible)]="isVisible2" nzTitle="Thêm cơ sở vật chất" (nzOnCancel)="handleCancel2()"
         (nzOnOk)="handleOk2()">
         <ng-container *nzModalContent>
             <form nz-form [formGroup]="facilityForm" (ngSubmit)="submitForm()">
@@ -141,7 +141,7 @@
                         <input nz-input formControlName="status" />
                     </nz-form-control>
                 </nz-form-item>
-     
+
             </form>
         </ng-container>
     </nz-modal>
@@ -177,7 +177,7 @@
                         (click)="showModal('Sửa thông tin phòng', data)">Sửa</button>&nbsp;
                     <button nz-button nzSize="small" nzDanger nzType="primary"
                         (click)="deleteRoom(data.id)">Xoá</button>&nbsp;
-                    <button nz-button nzSize="small" nzType="default" (click)="showModal1(data.id)">CSVC</button>
+                    <button nz-button nzSize="small" nzType="default" (click)="showModal1(data.id)">Cơ sở vật chất</button>
                 </td>
             </tr>
         </tbody>
