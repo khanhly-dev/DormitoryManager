@@ -30,8 +30,8 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     return false;
                 }
             }
-            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studentId).AsNoTracking().ToListAsync();
-            if (contract == null || contract.Count == 0 || contract.Count >= 2)
+            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studentId && x.IsDeleted == false && x.IsExtendContract == true).AsNoTracking().ToListAsync();
+            if (contract.Count >= 1)
             {
                 return false;
             }
@@ -79,7 +79,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
         public async Task<PageResult<ContractPendingDto>> GetListStudentConfirmContractPending(GetListContractByStudentIdRepuest request)
         {
             var query = from a in _adminSolutionDbContext.ContractEntities
-                        where a.StudentId == request.StudentId && a.IsDeleted == false
+                        where a.StudentId == request.StudentId 
                         join s in _adminSolutionDbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _adminSolutionDbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()
@@ -120,7 +120,9 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
                     FromDate = x.a.FromDate.Value,
                     ContractCompletedStatus = x.a.ContractCompletedStatus.Value,
                     IsExtendContract = x.a.IsExtendContract,
-                    RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null
+                    RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null,
+                    IsDelete = x.a.IsDeleted,
+                    IsSummerContract = x.a.IsSummerSemesterContract
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractPendingDto>()

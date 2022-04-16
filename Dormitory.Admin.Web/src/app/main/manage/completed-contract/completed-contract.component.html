@@ -14,6 +14,27 @@
             </ng-template>
         </div>
     </div>
+    
+    <br>
+    <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <div class="inner-box">
+                Từ ngày: 
+                <input [(ngModel)]="fromDateFilter" class="form-control" type="date" style="width : 100%">
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <div class="inner-box">
+                Đến ngày:
+                <input [(ngModel)]="toDateFilter" class="form-control" type="date" style="width : 100%">
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="8">
+            <div class="inner-box">
+                <button nz-button nzType="primary" style="height: 60px;">Lọc</button>
+            </div>
+        </div>
+    </div>
     <br>
 
     <nz-modal [(nzVisible)]="isVisible" nzTitle="Thay đổi phòng" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
@@ -40,6 +61,7 @@
                 <th>Giá phòng</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
+                <th>Kiểu hợp đồng</th>
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
             </tr>
@@ -59,6 +81,12 @@
                 <td>{{ data.roomPrice | currency : "VND"}}</td>
                 <td>{{ data.fromDate | date : "dd-MM-yyyy" }}</td>
                 <td>{{ data.toDate | date : "dd-MM-yyyy" }}</td>
+
+                <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract" style="color: #efbf38;">Thường</td>
+                <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract" style="color: #25da91;">Gia hạn</td>
+                <td *ngIf="data.isDelete == true" style="color: #f40404;">Đã huỷ</td>
+                <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract" style="color: #11bde7;">Kỳ hè</td>
+
                 <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
                 <td *ngIf="compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>
                 <td>

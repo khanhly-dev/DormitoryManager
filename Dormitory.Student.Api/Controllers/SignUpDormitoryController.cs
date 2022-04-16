@@ -47,6 +47,21 @@ namespace Dormitory.Student.Api.Controllers
             }
             return Ok(new { responseStatus });
         }
+        [HttpPost("summer-contract")]
+        public async Task<IActionResult> CreateSummerContract([FromForm] int studentId)
+        {
+            var responseStatus = "";
+            var result = await _signUpDormitoryRepo.CreateSummerSemesterContract(studentId);
+            if (result > 0)
+            {
+                responseStatus = "success";
+            }
+            else
+            {
+                responseStatus = "error";
+            }
+            return Ok(new { responseStatus });
+        }
         [HttpPost("set-student-point")]
         public async Task<IActionResult> SetStudentPoint([FromForm] int studentId, [FromForm] string listCriteriaId)
         {
@@ -77,6 +92,12 @@ namespace Dormitory.Student.Api.Controllers
         {
             var extendContractTime = await _signUpDormitoryRepo.GetExtendContractTime(studentId);
             return Ok(extendContractTime);
+        }
+        [HttpGet("get-summer-contract-time")]
+        public async Task<IActionResult> GetSummerContractTime([FromQuery] int studentId)
+        {
+            var contractTime = await _signUpDormitoryRepo.GetSummerContractTime(studentId);
+            return Ok(contractTime);
         }
         [HttpPut("student-confirm")]
         public async Task<IActionResult> StudentConfirm([FromForm] int contractId, [FromForm] int confirmStatus)

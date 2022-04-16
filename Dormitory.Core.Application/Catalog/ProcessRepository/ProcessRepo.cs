@@ -41,21 +41,24 @@ namespace Dormitory.Core.Application.Catalog.ProcessRepository
                     .OrderByDescending(x => x.Id)
                     .FirstOrDefaultAsync();
 
-                if(contract.RoomId.HasValue)
+                if(contract.ToDate < DateTime.Now)
                 {
-                    var room = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == contract.RoomId);
-                    if ((contract.IsDeleted == false && contract.ToDate < DateTime.Now) || contract.IsDeleted == true)
+                    if (contract.RoomId.HasValue)
                     {
-                        room.FilledSlot -= 1;
-                        room.EmptySlot += 1;
-                        room.AvaiableSlot += 1;
-                        if (room.FilledSlot == 0)
+                        var room = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == contract.RoomId);
+                        if ((contract.IsDeleted == false && contract.ToDate < DateTime.Now) || contract.IsDeleted == true)
                         {
-                            room.RoomAcedemic = null;
-                            room.RoomGender = null;
+                            room.FilledSlot -= 1;
+                            room.EmptySlot += 1;
+                            room.AvaiableSlot += 1;
+                            if (room.FilledSlot == 0)
+                            {
+                                room.RoomAcedemic = null;
+                                room.RoomGender = null;
+                            }
                         }
                     }
-                }
+                }    
             }
             return await _dbContext.SaveChangesAsync();
         }

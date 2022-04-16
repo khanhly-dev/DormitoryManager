@@ -58,11 +58,6 @@
                 <th>STT</th>
                 <th>Tên sinh viên</th>
                 <th>Mã sinh viên</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <!-- <th>Khoa</th>
-                <th>Lớp</th> -->
-                <th>Số điện thoại</th>
                 <th>Phòng</th>
                 <th>Khu</th>
                 <th>Lỗi kỹ luật</th>
@@ -75,12 +70,6 @@
                 <td>{{ listDiscipline.items.indexOf(data) + 1}}</td>
                 <td>{{ data.name }}</td>
                 <td>{{ data.studentCode }}</td>
-                <td *ngIf="data.gender == 1">Nam</td>
-                <td *ngIf="data.gender == 0">Nữ</td>
-                <td>{{ data.dob | date : "dd-MM-yyyy"}}</td>
-                <!-- <td>{{ data.major }}</td>
-                <td>{{ data.class }}</td> -->
-                <td>{{ data.phone }}</td>
                 <td>{{ data.roomName }}</td>
                 <td>{{ data.areaName }}</td>
                 <td>{{ data.description }}</td>

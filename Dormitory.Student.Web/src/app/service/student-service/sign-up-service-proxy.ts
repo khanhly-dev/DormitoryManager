@@ -28,6 +28,12 @@ export class SignUpServiceProxy {
         return this.http.get<ExtendContractTime>(url, { headers: headers, observe: 'body', responseType: 'json' });
     }
 
+    getSummerContractTime(studentId : number): Observable<ExtendContractTime> {
+        let url = this.baseUrl + `/api/contract/get-summer-contract-time?studentId=${studentId}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<ExtendContractTime>(url, { headers: headers, observe: 'body', responseType: 'json' });
+    }
+
     delete(id: number): Observable<any> {
         let url = this.baseUrl + `/api/contract/delete?id=${id}`;
         url = url.replace(/[?&]$/, "");
@@ -63,6 +69,17 @@ export class SignUpServiceProxy {
 
     extendContract(studentId : number): Observable<any> {
         let url = this.baseUrl + "/api/contract/extend-contract";
+        url = url.replace(/[?&]$/, "");
+
+        const content = new FormData();
+        if (studentId !== null && studentId !== undefined)
+            content.append("studentId", studentId.toString());
+
+        return this.http.post<any>(url, content, { headers: headers, observe: 'body', responseType: 'json' } );
+    }
+
+    summerContract(studentId : number): Observable<any> {
+        let url = this.baseUrl + "/api/contract/summer-contract";
         url = url.replace(/[?&]$/, "");
 
         const content = new FormData();

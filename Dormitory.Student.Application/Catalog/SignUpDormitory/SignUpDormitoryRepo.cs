@@ -40,7 +40,8 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 StudentId = request.StudentId,
                 AdminConfirmStatus = DataConfigConstant.contractConfirmStatusPending,
                 StudentConfirmStatus = DataConfigConstant.contractConfirmStatusPending,
-                IsDeleted = false
+                IsDeleted = false,
+                IsSummerSemesterContract = false,
             };
 
             _dbContext.ContractEntities.Add(criterial);
@@ -227,12 +228,12 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 contractCode = "HD" + random.Next(100000, 999999).ToString();
             }
             //tinh ngay ket thuc hop dong
-            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
+            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate && x.IsSummerSemester == false).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
             var extendContract = new ContractEntity
             {
                 ContractCode = contractCode,
                 DateCreated = DateTime.Now,
-                FromDate = contract.ToDate,
+                FromDate = contractTimeConfigToDate.FromDate,
                 ToDate = contractTimeConfigToDate.ToDate,
                 RoomId = contract.RoomId,
                 DesiredPrice = contract.DesiredPrice,
@@ -241,7 +242,8 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 StudentConfirmStatus = contract.StudentConfirmStatus,
                 ContractCompletedStatus = contract.ContractCompletedStatus,
                 IsDeleted = contract.IsDeleted,
-                IsExtendContract = DataConfigConstant.extendContract
+                IsExtendContract = DataConfigConstant.extendContract,
+                IsSummerSemesterContract = false
             };
           
 
@@ -262,7 +264,69 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 return null;
             }
 
-            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
+            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate && x.IsSummerSemester == false).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
+            var time = new ExtendContractTime
+            {
+                FromDate = contractTimeConfigToDate.FromDate,
+                ToDate = contractTimeConfigToDate.ToDate,
+            };
+            return time;
+        }
+
+        public async Task<int> CreateSummerSemesterContract(int studentId)
+        {
+            var contract = await _dbContext.ContractEntities.Where(x => x.StudentId == studentId && x.ToDate > DateTime.Now && x.IsDeleted == false).FirstOrDefaultAsync();
+            //neu hop dong het han hoac ko co thi p dki moi
+            if (contract == null)
+            {
+                return 0;
+            }
+            //gen contract code
+            var listCode = await _dbContext.ContractEntities.Select(x => x.ContractCode).ToListAsync();
+            var random = new Random();
+            var contractCode = "HD" + random.Next(100000, 999999).ToString();
+            while (listCode.Contains(contractCode))
+            {
+                contractCode = "HD" + random.Next(100000, 999999).ToString();
+            }
+            //tinh ngay ket thuc hop dong
+            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate && x.IsSummerSemester == true).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
+         
+            var extendContract = new ContractEntity
+            {
+                ContractCode = contractCode,
+                DateCreated = DateTime.Now,
+                FromDate = contractTimeConfigToDate.FromDate,
+                ToDate = contractTimeConfigToDate.ToDate,
+                RoomId = contract.RoomId,
+                DesiredPrice = contract.DesiredPrice,
+                StudentId = contract.StudentId,
+                AdminConfirmStatus = contract.AdminConfirmStatus,
+                StudentConfirmStatus = contract.StudentConfirmStatus,
+                ContractCompletedStatus = contract.ContractCompletedStatus,
+                IsDeleted = contract.IsDeleted,
+                IsExtendContract = false,
+                IsSummerSemesterContract = true
+            };
+
+            _dbContext.ContractEntities.Add(extendContract);
+            await _dbContext.SaveChangesAsync();
+
+            //add dich vu va them phi hop dong
+            await AddContractFee(extendContract.Id);
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ExtendContractTime> GetSummerContractTime(int studentId)
+        {
+            var contract = await _dbContext.ContractEntities.Where(x => x.StudentId == studentId && x.ToDate > DateTime.Now && x.IsDeleted == false).FirstOrDefaultAsync();
+            //neu hop dong het han hoac ko co thi p dki moi
+            if (contract == null)
+            {
+                return null;
+            }
+
+            var contractTimeConfigToDate = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate >= contract.ToDate && x.IsSummerSemester == true).OrderBy(x => x.ToDate).FirstOrDefaultAsync();
             var time = new ExtendContractTime
             {
                 FromDate = contractTimeConfigToDate.FromDate,

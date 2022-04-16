@@ -43,6 +43,8 @@ export class ContracConfigServiceProxy {
             content.append("fromDate", data.fromDate);
         if (data.toDate !== null || data.toDate !== undefined)
             content.append("toDate", data.toDate);
+        if (data.isSummerSemester !== null || data.isSummerSemester !== undefined)
+            content.append("isSummerSemester", data.isSummerSemester);
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }

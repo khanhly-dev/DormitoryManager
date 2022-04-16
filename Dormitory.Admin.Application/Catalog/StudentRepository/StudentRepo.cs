@@ -55,6 +55,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 Religion = request.Religion,
                 StudentCode = request.StudentCode,
                 Point = request.Point.HasValue ? request.Point.Value : 0,
+                IsStudying = request.IsStudying,
             };
             if (student.Id == 0)
             {
@@ -142,8 +143,6 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         public async Task<PageResult<StudentDto>> GetList(PageRequestBase request)
         {
             var query = from s in _dbContext.StudentEntities
-                        join c in _dbContext.ContractEntities on s.Id equals c.StudentId
-                        where c.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
                         select s ;
 
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -189,6 +188,10 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 else
                 {
                     item.PaymentStatus = true;
+                }
+                if(listContract.Select(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk).ToList().Count == 0)
+                {
+                    data.Remove(item);
                 }
             }
 

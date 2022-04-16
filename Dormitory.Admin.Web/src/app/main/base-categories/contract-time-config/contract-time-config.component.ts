@@ -23,6 +23,7 @@ export class ContractTimeConfigComponent implements OnInit {
       name: ['', [Validators.required]],
       fromDate: ['', [Validators.required]],
       toDate: ['', [Validators.required]],
+      isSummerSemester: [false, [Validators.required]]
     });
   }
 
@@ -53,6 +54,7 @@ export class ContractTimeConfigComponent implements OnInit {
   showModal(modalTitle: string, data?: ContractConfig): void {
     if (data != null) {
       this.validateForm.patchValue(data);
+      this.validateForm.controls['toDate'].setValue(data.toDate.toString());
     }
     else {
       this.validateForm.reset();

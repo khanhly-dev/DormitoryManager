@@ -230,7 +230,8 @@
                 <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary" (click)="showModal(data.id)">Chi tiết HĐ</button>
-                    <button nz-button nzSize="small" nzType="primary" nzDanger (click)="deleteBillService(data.id)">Xóa</button>
+                    <button nz-button nzSize="small" nzType="primary" nzDanger
+                        (click)="deleteBillService(data.id)">Xóa</button>
                 </td>
             </tr>
         </tbody>

@@ -17,8 +17,10 @@ export class CompletedContractComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
+  isVisible1 = false;
   isSpinning = false;
   extendContractTime! : ExtendContractTime;
+  summerContractTime! : ExtendContractTime;
   CanCreateExtendContract: boolean = false;
 
   constructor(
@@ -74,7 +76,20 @@ export class CompletedContractComponent implements OnInit {
         alert("Gia hạn thành công")
       }
       else {
-        alert("Gia hạn không thành công")
+        alert("Gia hạn thành công")
+      }
+    })
+  }
+  createSummerContract()
+  {
+    this.signUpService.summerContract(this.student.id).subscribe(x => {
+      this.getListContractPending("", this.student.id, this.pageIndex, 10)
+      this.checkCanCreateExtendContract(this.student.id)
+      if (x.responseStatus == 'success') {
+        alert("Gia hạn thành công")
+      }
+      else {
+        alert("Gia hạn thành công")
       }
     })
   }
@@ -92,5 +107,21 @@ export class CompletedContractComponent implements OnInit {
 
   handleCancel(): void {
     this.isVisible = false;
+  }
+
+  showModal1(): void {
+    this.signUpService.getSummerContractTime(this.student.id).subscribe(x => {
+      this.summerContractTime = x;
+    })
+    this.isVisible1 = true;
+  }
+
+  handleOk1(): void {
+    this.createSummerContract();
+    this.isVisible1 = false;
+  }
+
+  handleCancel1(): void {
+    this.isVisible1 = false;
   }
 }

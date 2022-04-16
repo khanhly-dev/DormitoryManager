@@ -49,6 +49,8 @@ export interface ContractPendingDto {
     contractCompletedStatus: number;
     isExtendContract: boolean;
     roomPrice: number;
+    isDelete:boolean
+    isSummerContract: boolean;
 }
 
 export interface ExtendContractTime {

@@ -164,6 +164,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                         room.RoomGender = null;
                         room.RoomAcedemic = null;
                     }
+                    var contractFee = await _dbContext.ContractFeeEntities.FirstOrDefaultAsync(x => x.ContractId == contract.Id);
+                    _dbContext.ContractFeeEntities.Remove(contractFee);
                 }    
             }
             //neu la hop dong gia han thi khi huy hop dong p xoa not phi hop dong
@@ -173,7 +175,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         public async Task<PageResult<ContractDto>> GetListCompletedContract(PageRequestBase request)
         {
             var query = from a in _dbContext.ContractEntities
-                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && a.IsDeleted == false
+                        where a.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()
@@ -214,8 +216,9 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     FromDate = x.a.FromDate.Value,
                     ToDate = x.a.ToDate.Value,
                     RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null,
-                    IsExtendContract = x.a.IsExtendContract
-                    
+                    IsExtendContract = x.a.IsExtendContract,
+                    IsDelete = x.a.IsDeleted,
+                    IsSummerContract = x.a.IsSummerSemesterContract
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractDto>()
@@ -478,6 +481,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                         join e in _dbContext.AreaEntities on r.AreaId equals e.Id into re
                         from e in re.DefaultIfEmpty()
                         join f in _dbContext.ContractFeeEntities on a.Id equals f.ContractId
+                        where !(a.IsExtendContract == true && a.IsDeleted == true)
                         select new { a, s, r, e, f };
 
             int totalRow = await query.CountAsync();

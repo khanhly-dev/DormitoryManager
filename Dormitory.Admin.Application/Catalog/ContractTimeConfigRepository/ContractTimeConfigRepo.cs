@@ -26,6 +26,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository
                 Name = request.Name,
                 FromDate = request.FromDate,
                 ToDate = request.ToDate,
+                IsSummerSemester = request.IsSummerSemester,
             };
             if (config.Id == 0)
             {
@@ -73,7 +74,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository
                     Id = x.Id,
                     Name = x.Name,
                     FromDate = x.FromDate,
-                    ToDate = x.ToDate
+                    ToDate = x.ToDate,
+                    IsSummerSemester = x.IsSummerSemester,
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractTimeConfigDto>()

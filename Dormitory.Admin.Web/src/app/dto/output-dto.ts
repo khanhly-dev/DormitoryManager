@@ -59,7 +59,8 @@ export interface ContractConfig {
     id: number;
     name: string
     fromDate: Date;
-    toDate: Date
+    toDate: Date;
+    isSummerSemester: boolean
 }
 
 export interface ContractDto {
@@ -85,6 +86,7 @@ export interface ContractDto {
     contractCompletedStatus: number;
     roomPrice: number;
     isExtendContract: number;
+    isDelete : boolean
 }
 export interface ContractFeeStatusDto {
     id: number;

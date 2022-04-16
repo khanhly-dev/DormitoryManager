@@ -30,6 +30,7 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository.Dtos
         public int? ContractCompletedStatus { get; set; }
         public bool? IsExtendContract { get; set; }
         public float? RoomPrice { get; set; }
-
+        public bool IsDelete { get; set; }
+        public bool IsSummerContract { get; set; }
     }
 }

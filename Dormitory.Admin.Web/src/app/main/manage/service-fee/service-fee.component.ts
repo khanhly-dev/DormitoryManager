@@ -35,7 +35,6 @@ export class ServiceFeeComponent implements OnInit {
   selectServiceBill: any;
   fromDate!: Date;
   toDate!: Date;
-  
 
   constructor(
     private roomService: RoomServiceProxy,

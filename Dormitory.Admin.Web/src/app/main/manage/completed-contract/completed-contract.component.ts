@@ -21,6 +21,9 @@ export class CompletedContractComponent implements OnInit {
   selectedRoom: any;
   selectedContract: number = 0;
 
+  fromDateFilter! : Date;
+  toDateFilter! : Date;
+
   constructor(private contractService: ContracServiceProxy, private roomService: RoomServiceProxy) {
   }
 
@@ -46,10 +49,10 @@ export class CompletedContractComponent implements OnInit {
     this.contractService.delete(id).subscribe((x) => {
       this.getListContract("", this.pageIndex, 10)
       if (x.responseStatus = 'success') {
-        alert("Xoá thành công")
+        alert("Huỷ thành công")
       }
       else {
-        alert("Xoá không thành công")
+        alert("Huỷ không thành công")
       }
     })
   }

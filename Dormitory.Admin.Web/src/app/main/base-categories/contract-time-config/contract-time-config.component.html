@@ -32,16 +32,26 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Số tháng</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập số tháng">
-                        <input class="form-control"  formControlName="fromDate" type="date" style="width : 100%">
+                    <nz-form-label [nzSpan]="7" nzRequired>Từ ngày</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tè ngày">
+                        <input class="form-control" formControlName="fromDate" type="date" style="width : 100%">
                     </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Số tháng</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập số tháng">
-                        <input class="form-control"  formControlName="toDate" type="date" style="width : 100%">
+                    <nz-form-label [nzSpan]="7" nzRequired>Đến ngày</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập đến ngày">
+                        <input class="form-control" formControlName="toDate" type="date" style="width : 100%">
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Kỳ hè</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy chọn kỳ">
+                        <nz-radio-group formControlName="isSummerSemester">
+                            <label nz-radio [nzValue]="true">Có</label>
+                            <label nz-radio [nzValue]="false">Không</label>
+                        </nz-radio-group>
                     </nz-form-control>
                 </nz-form-item>
 
@@ -57,6 +67,7 @@
                 <th>Tên cấu hình</th>
                 <th>Từ ngày</th>
                 <th>Đến ngày</th>
+                <th>Kỳ</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -66,6 +77,8 @@
                 <td>{{ data.name }}</td>
                 <td>{{ data.fromDate | date: "dd-MM-yyyy" }}</td>
                 <td>{{ data.toDate | date: "dd-MM-yyyy"}}</td>
+                <td *ngIf="data.isSummerSemester == true">Kỳ hè</td>
+                <td *ngIf="data.isSummerSemester == false">Kỳ thường</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary"
                         (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
