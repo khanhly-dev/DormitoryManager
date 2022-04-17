@@ -14,7 +14,7 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới cấu hình hợp đồng')" style="float: right;">
                 <span>Thêm mới</span>
             </button>
         </div>
@@ -63,12 +63,12 @@
         [nzFrontPagination]="false">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Tên cấu hình</th>
-                <th>Từ ngày</th>
-                <th>Đến ngày</th>
-                <th>Kỳ</th>
-                <th>Thao tác</th>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên cấu hình</th>
+                <th style="background-color: #002140; color: white;">Từ ngày</th>
+                <th style="background-color: #002140; color: white;">Đến ngày</th>
+                <th style="background-color: #002140; color: white;">Kỳ</th>
+                <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -81,7 +81,7 @@
                 <td *ngIf="data.isSummerSemester == false">Kỳ thường</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary"
-                        (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
+                        (click)="showModal('Sửa cấu hình hợp đồng', data)">Sửa</button>&nbsp;
                     <button nz-button nzSize="small" nzDanger nzType="primary"
                         (click)="deleteConfig(data.id)">Xoá</button>
                 </td>

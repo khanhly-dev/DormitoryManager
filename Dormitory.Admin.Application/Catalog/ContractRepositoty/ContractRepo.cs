@@ -145,13 +145,13 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             if (contract != null)
             {
                 contract.IsDeleted = true;
-                if(!contract.IsExtendContract)
+                if(contract.IsExtendContract)
                 {
                     var contractService = await _dbContext.ServiceContractEntities.Where(x => x.ContractId == contract.Id).ToListAsync();
                     var contractFee = await _dbContext.ContractFeeEntities.FirstOrDefaultAsync(x => x.ContractId == contract.Id);
                     _dbContext.ContractFeeEntities.Remove(contractFee);
                     _dbContext.ServiceContractEntities.RemoveRange(contractService);                    
-                    await UpdateRoomStatus(contract.Id);
+                    //await UpdateRoomStatus(contract.Id);
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         public async Task<PageResult<ContractPendingDto>> GetListAdminConfirmContractPending(PageRequestBase request)
         {
             var query = from a in _dbContext.ContractEntities
-                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusApprove && a.IsDeleted == false
+                        where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusApprove && a.IsDeleted == false && a.ContractCompletedStatus != DataConfigConstant.contractCompletedStatusOk
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in ra.DefaultIfEmpty()
@@ -424,6 +424,30 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             var newRoom = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == roomId);
             if(contract != null)
             {
+                var contractFee = await _dbContext.ContractFeeEntities.FirstOrDefaultAsync(x => x.ContractId == contract.Id);
+                if (contract.IsExtendContract == true && contractFee.IsPaid == false)
+                {
+                    //tinh tien phong
+                    float roomFee = 0;
+                    var totalDayContract = (contract.ToDate.Value - contract.FromDate.Value).Days;
+                    double totalMonth = (int)totalDayContract / 30;
+                    var dayLeft = totalDayContract % 30;
+                    if (dayLeft >= 15)
+                    {
+                        totalMonth += 1;
+                    }
+                    if (dayLeft < 15)
+                    {
+                        totalMonth += 0.5;
+                    }
+                    var room = _dbContext.RoomEntities.Find(roomId);
+                    if (room != null)
+                    {
+                        roomFee = (float)(totalMonth * room.Price);
+                    }
+                    contractFee.RoomPrice = roomFee;
+                    contractFee.ContractPriceValue = contractFee.ServicePrice + roomFee;
+                }
                 oldRoom.EmptySlot += 1;
                 oldRoom.FilledSlot -= 1;
                 oldRoom.AvaiableSlot += 1;

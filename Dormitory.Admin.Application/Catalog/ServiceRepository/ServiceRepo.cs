@@ -68,6 +68,7 @@ namespace Dormitory.Admin.Application.Catalog.ServiceRepository
                 {
                     RoomServiceId = roomService.Id,
                     ServicePrice = serviceRoomPrice,
+                    MoneyPaid = 0,
                     IsPaid = false
                 };
                 _dbContext.RoomServiceFeeEntities.Add(serviceRoomFee);

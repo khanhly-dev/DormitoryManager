@@ -205,6 +205,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 RoomPrice = roomFee,
                 ServicePrice = serviceContractFee,
                 ContractPriceValue = roomFee + serviceContractFee,
+                MoneyPaid = 0,
                 IsPaid = false,
             };
             _dbContext.ContractFeeEntities.Add(contractFee);
@@ -240,7 +241,7 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 StudentId = contract.StudentId,
                 AdminConfirmStatus = contract.AdminConfirmStatus,
                 StudentConfirmStatus = contract.StudentConfirmStatus,
-                ContractCompletedStatus = contract.ContractCompletedStatus,
+                ContractCompletedStatus = DataConfigConstant.contractCompletedStatusOk,
                 IsDeleted = contract.IsDeleted,
                 IsExtendContract = DataConfigConstant.extendContract,
                 IsSummerSemesterContract = false

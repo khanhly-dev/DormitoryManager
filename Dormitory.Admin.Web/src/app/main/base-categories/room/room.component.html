@@ -14,7 +14,7 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới phòng')" style="float: right;">
                 <span>Thêm mới</span>
             </button>
         </div>
@@ -149,16 +149,16 @@
     <nz-table #basicTable [nzData]="listRoom.items" *ngIf="listRoom != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Tên phòng</th>
-                <th>Giá phòng</th>
-                <th>Khu</th>
-                <th nzWidth="120px">Sức chứa tối đa</th>
-                <th nzWidth="120px">Sức chứa tối thiểu</th>
-                <th nzWidth="120px">Còn trống</th>
-                <th nzWidth="120px">Đã có người ở</th>
-                <th nzWidth="120px">Chỗ trống có sẵn</th>
-                <th>Thao tác</th>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên phòng</th>
+                <th style="background-color: #002140; color: white;">Giá phòng</th>
+                <th style="background-color: #002140; color: white;">Khu</th>
+                <th style="background-color: #002140; color: white;" nzWidth="120px">Sức chứa tối đa</th>
+                <th style="background-color: #002140; color: white;" nzWidth="120px">Sức chứa tối thiểu</th>
+                <th style="background-color: #002140; color: white;" nzWidth="120px">Còn trống</th>
+                <th style="background-color: #002140; color: white;" nzWidth="120px">Đã có người ở</th>
+                <th style="background-color: #002140; color: white;" nzWidth="120px">Chỗ trống có sẵn</th>
+                <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
         </thead>
         <tbody>

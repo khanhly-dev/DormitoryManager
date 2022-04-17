@@ -49,21 +49,21 @@
     <nz-table #basicTable [nzData]="listContract.items" *ngIf="listContract != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Ngày tạo hợp đồng</th>
-                <th>Mã hợp đồng</th>
-                <th>Tên sinh viên</th>
-                <th>Mã sinh viên</th>
-                <th>Giới tính</th>
-                <th>Số điện thoại</th>
-                <th>Khu ở</th>
-                <th>Phòng ở</th>
-                <th>Giá phòng</th>
-                <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
-                <th>Kiểu hợp đồng</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Ngày tạo hợp đồng</th>
+                <th style="background-color: #002140; color: white;">Mã hợp đồng</th>
+                <th style="background-color: #002140; color: white;">Tên sinh viên</th>
+                <th style="background-color: #002140; color: white;">Mã sinh viên</th>
+                <th style="background-color: #002140; color: white;">Giới tính</th>
+                <th style="background-color: #002140; color: white;">Số điện thoại</th>
+                <th style="background-color: #002140; color: white;">Khu ở</th>
+                <th style="background-color: #002140; color: white;">Phòng ở</th>
+                <th style="background-color: #002140; color: white;">Giá phòng</th>
+                <th style="background-color: #002140; color: white;">Ngày bắt đầu</th>
+                <th style="background-color: #002140; color: white;">Ngày kết thúc</th>
+                <th style="background-color: #002140; color: white;">Kiểu hợp đồng</th>
+                <th style="background-color: #002140; color: white;">Trạng thái</th>
+                <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -84,7 +84,7 @@
 
                 <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract" style="color: #efbf38;">Thường</td>
                 <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract" style="color: #25da91;">Gia hạn</td>
-                <td *ngIf="data.isDelete == true" style="color: #f40404;">Đã huỷ</td>
+                <td *ngIf="data.isDelete == true" style="color: #c0c3c8;">Đã huỷ</td>
                 <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract" style="color: #11bde7;">Kỳ hè</td>
 
                 <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>

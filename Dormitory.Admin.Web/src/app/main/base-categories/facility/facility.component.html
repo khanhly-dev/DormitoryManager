@@ -14,7 +14,7 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới cơ sở vật chất')" style="float: right;">
                 <span>Thêm mới</span>
             </button>
         </div>
@@ -46,10 +46,10 @@
     <nz-table #basicTable [nzData]="listFacility.items" *ngIf="listFacility != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Tên cơ sở vật chất</th>
-                <th>Tổng số lượng</th>
-                <th>Thao tác</th>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên cơ sở vật chất</th>
+                <th style="background-color: #002140; color: white;">Tổng số lượng</th>
+                <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -59,7 +59,7 @@
                 <td>{{ data.totalCount }}</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary"
-                        (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
+                        (click)="showModal('Sửa cơ sở vật chất', data)">Sửa</button>&nbsp;
                     <button nz-button nzSize="small" nzDanger nzType="primary"
                         (click)="deleteFacility(data.id)">Xoá</button>
                 </td>

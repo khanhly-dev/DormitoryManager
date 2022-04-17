@@ -19,5 +19,6 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository.Dtos
         public int? FilledSlot { get; set; }
         public int? AvaiableSlot { get; set; }
         public bool? IsPaid { get; set; }
+        public float Dept { get; set; }
     }
 }

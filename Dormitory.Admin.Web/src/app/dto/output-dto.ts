@@ -21,6 +21,7 @@ export interface RoomDto {
     filledSlot: number;
     avaiableSlot: number;
     isPaid: boolean;
+    dept: number
 }
 
 export interface FacilityDto {
@@ -154,6 +155,7 @@ export interface StudentDto {
     religion: string
     point: number;
     paymentStatus: boolean
+    dept: number
 }
 
 export interface RoomServiceDto {

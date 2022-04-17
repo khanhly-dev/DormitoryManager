@@ -6,3 +6,9 @@
 {
     font-family: 'Roboto', sans-serif;
 }
+
+.table-header
+{
+    background-color: #000C17;
+    color: white;
+}

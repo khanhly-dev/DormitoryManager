@@ -14,7 +14,7 @@
             </ng-template>
         </div>
         <div nz-col nzSpan="12">
-            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới khu')" style="float: right;">
+            <button nz-button [nzType]="'primary'" (click)="showModal('Thêm mới dịch vụ')" style="float: right;">
                 <span>Thêm mới</span>
             </button>
         </div>
@@ -62,12 +62,12 @@
     <nz-table #basicTable [nzData]="listService.items" *ngIf="listService != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Tên dịch vụ</th>
-                <th>Giá</th>
-                <th>Đơn vị</th>
-                <th>Kiểu dịch vụ</th>
-                <th>Thao tác</th>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên dịch vụ</th>
+                <th style="background-color: #002140; color: white;">Giá</th>
+                <th style="background-color: #002140; color: white;">Đơn vị</th>
+                <th style="background-color: #002140; color: white;">Kiểu dịch vụ</th>
+                <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -80,7 +80,7 @@
                 <td *ngIf="data.serviceType == 0">Dịch vụ theo phòng</td>
                 <td>
                     <button nz-button nzSize="small" nzType="primary"
-                        (click)="showModal('Sửa khu', data)">Sửa</button>&nbsp;
+                        (click)="showModal('Sửa dịch vụ', data)">Sửa</button>&nbsp;
                     <button nz-button nzSize="small" nzDanger nzType="primary"
                         (click)="deleteService(data.id)">Xoá</button>
                 </td>

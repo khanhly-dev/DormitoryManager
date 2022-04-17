@@ -181,11 +181,12 @@
     <nz-table #basicTable [nzData]="listRoom.items" *ngIf="listRoom != undefined" [nzFrontPagination]="false">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Tên phòng</th>
-                <th>Khu</th>
-                <th>Trạng thái đóng</th>
-                <th nzWidth="300px">Thao tác</th>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên phòng</th>
+                <th style="background-color: #002140; color: white;">Khu</th>
+                <th style="background-color: #002140; color: white;">Trạng thái đóng</th>
+                <th style="background-color: #002140; color: white;">Tổng nợ</th>
+                <th style="background-color: #002140; color: white;" nzWidth="300px">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -196,6 +197,7 @@
                     <td>{{ data.areaName }}</td>
                     <td *ngIf="!data.isPaid" style="color: #f40404;">Chưa đóng</td>
                     <td *ngIf="data.isPaid" style="color: #25da91;">Đã đóng</td>
+                    <td><b>{{ data.dept | currency : "VND"}}</b> </td>
                     <td>
                         <button nzSize="small" nz-button nzType="primary" (click)="getListBill(data.id)">Chi
                             tiết</button>

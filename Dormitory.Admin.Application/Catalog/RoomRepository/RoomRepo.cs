@@ -62,16 +62,12 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
 
         public async Task<List<BillServiceDto>> GetBillByRoom(int roomId)
         {
-            var roomServiceList = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == roomId).ToListAsync();
-            var roomServiceFeeList = await _dbContext.RoomServiceFeeEntities.Where(x => roomServiceList.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
-            var totalPrice = roomServiceFeeList.Sum(x => x.ServicePrice);
             var listBill = await _dbContext.BillServiceEntities.Where(x => x.RoomId == roomId).Select(x => new BillServiceDto
             {
                 Id = x.Id,
                 Code = x.Code,
                 FromDate = x.FromDate,
                 ToDate = x.ToDate,
-                TotalPrice = totalPrice,
                 IsPaid = false,
             }).ToListAsync();
             foreach (var item in listBill)
@@ -80,6 +76,11 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
                 var roomServiceFeeListCheck = await _dbContext.RoomServiceFeeEntities.Where(x => roomServiceListCheck.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
                 var isPaid = !roomServiceFeeListCheck.Select(x => x.IsPaid).ToList().Contains(false);
                 item.IsPaid = isPaid;
+
+                var roomServiceList = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == roomId && x.BillId == item.Id).ToListAsync();
+                var roomServiceFeeList = await _dbContext.RoomServiceFeeEntities.Where(x => roomServiceList.Select(x => x.Id).ToList().Contains(x.RoomServiceId)).ToListAsync();
+                item.TotalPrice = roomServiceFeeList.Sum(x => x.ServicePrice);
+
             }
             return listBill;
         }
@@ -118,7 +119,8 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
             {
                 var listRoomService = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == item.Id).ToListAsync();
                 var listRoomServiceFee = await _dbContext.RoomServiceFeeEntities.Where(t => listRoomService.Select(x => x.Id).ToList().Contains(t.RoomServiceId)).ToArrayAsync();
-                if(listRoomServiceFee.Select(x => x.IsPaid).ToList().Contains(false))
+                item.Dept = listRoomServiceFee.Sum(x => x.ServicePrice) - listRoomServiceFee.Sum(x => x.MoneyPaid.Value);
+                if (listRoomServiceFee.Select(x => x.IsPaid).ToList().Contains(false))
                 {
                     item.IsPaid = false;
                 }

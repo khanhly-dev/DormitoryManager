@@ -182,6 +182,9 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
             {
                 var listContract = await _dbContext.ContractEntities.Where(x => x.StudentId == item.Id).ToListAsync();
                 var listFee = await _dbContext.ContractFeeEntities.Where(t => listContract.Select(x => x.Id).Contains(t.ContractId)).ToListAsync();
+
+                item.Dept = listFee.Sum(x => x.ContractPriceValue) - listFee.Sum(x => x.MoneyPaid.Value);
+
                 if(listFee.Where(x => x.IsPaid == false).ToList().Count > 0)
                 {
                     item.PaymentStatus = false;
@@ -214,11 +217,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
         {
             var query = from s in _dbContext.StudentEntities
                         join d in _dbContext.DisciplineEntities on s.Id equals d.StudentId
-                        join co in _dbContext.ContractEntities on s.Id equals co.StudentId
-                        where co.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk
-                        join r in _dbContext.RoomEntities on co.RoomId equals r.Id
-                        join a in _dbContext.AreaEntities on r.AreaId equals a.Id
-                        select new { d, s, r, a };
+                        select new { d, s };
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -243,9 +242,19 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                     Id =x.d.Id,
                     Description = x.d.Description,
                     Punish = x.d.Punish,
-                    RoomName = x.r.Name,
-                    AreaName = x.a.Name
                 }).ToListAsync();
+
+            foreach (var item in data)
+            {
+                var contract = await _dbContext.ContractEntities.FirstOrDefaultAsync(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && x.IsExtendContract == false);
+                if (contract != null)
+                {
+                    var room = await _dbContext.RoomEntities.FirstOrDefaultAsync(x => x.Id == contract.RoomId);
+                    var area = await _dbContext.AreaEntities.FirstOrDefaultAsync(x => x.Id == room.AreaId);
+                    item.RoomName = room.Name;
+                    item.AreaName = area.Name;
+                }
+            }
 
             var pageResult = new PageResult<DisciplineDto>()
             {
