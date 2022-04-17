@@ -177,9 +177,10 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                     PaymentStatus = true
                 }).ToListAsync();
 
+            var temp = new List<StudentDto>();
             foreach (var item in data)
             {
-                var listContract = await _dbContext.ContractEntities.Where(x => x.StudentId == item.Id).ToArrayAsync();
+                var listContract = await _dbContext.ContractEntities.Where(x => x.StudentId == item.Id).ToListAsync();
                 var listFee = await _dbContext.ContractFeeEntities.Where(t => listContract.Select(x => x.Id).Contains(t.ContractId)).ToListAsync();
                 if(listFee.Where(x => x.IsPaid == false).ToList().Count > 0)
                 {
@@ -191,9 +192,11 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 }
                 if(listContract.Select(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk).ToList().Count == 0)
                 {
-                    data.Remove(item);
+                    temp.Add(item);
                 }
             }
+
+            data.RemoveRange(0, temp.Count);
 
             var pageResult = new PageResult<StudentDto>()
             {
