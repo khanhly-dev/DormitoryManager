@@ -195,8 +195,10 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                     temp.Add(item);
                 }
             }
-
-            data.RemoveRange(0, temp.Count);
+            foreach (var item in temp)
+            {
+                data.Remove(item);
+            }
 
             var pageResult = new PageResult<StudentDto>()
             {
