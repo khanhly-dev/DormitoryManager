@@ -118,8 +118,16 @@ namespace Dormitory.Admin.Application.Catalog.RoomRepository
             foreach (var item in data)
             {
                 var listRoomService = await _dbContext.RoomServiceEntities.Where(x => x.RoomId == item.Id).ToListAsync();
-                var listRoomServiceFee = await _dbContext.RoomServiceFeeEntities.Where(t => listRoomService.Select(x => x.Id).ToList().Contains(t.RoomServiceId)).ToArrayAsync();
-                item.Dept = listRoomServiceFee.Sum(x => x.ServicePrice) - listRoomServiceFee.Sum(x => x.MoneyPaid.Value);
+                var listRoomServiceFee = await _dbContext.RoomServiceFeeEntities.Where(t => listRoomService.Select(x => x.Id).ToList().Contains(t.RoomServiceId)).ToListAsync();
+                if(listRoomServiceFee.Count > 0)
+                {
+                    item.Dept = listRoomServiceFee.Sum(x => x.ServicePrice) - listRoomServiceFee.Sum(x => x.MoneyPaid.Value);
+                }    
+                else
+                {
+                    item.Dept = 0;
+                }
+                
                 if (listRoomServiceFee.Select(x => x.IsPaid).ToList().Contains(false))
                 {
                     item.IsPaid = false;
