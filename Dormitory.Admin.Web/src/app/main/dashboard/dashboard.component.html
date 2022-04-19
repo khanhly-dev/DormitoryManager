@@ -1,0 +1,145 @@
+<div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzSpan]="16">
+        <div class="inner-box">
+            <!-- base stat -->
+            <div nz-row [nzGutter]="16">
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="shadow mb-5 bg-body rounded">
+                        <div class="inner-box" style="background-color: #75ed0c; height: 160px; padding: 10px;">
+                            <h5>Tổng đơn đăng ký mới</h5><br>
+                            <h2 style="color: #044969;">{{baseStat.totalSignUp}}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="shadow mb-5 bg-body rounded">
+                        <div class="inner-box" style="background-color: #f79807; height: 160px;padding: 10px;">
+                            <h5>Tổng chỗ ở trống</h5><br>
+                            <h2 style="color: #044969;"> {{baseStat.totalEmptySlot}}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="shadow mb-5 bg-body rounded">
+                        <div class="inner-box" style="background-color: #ff66a2; height: 160px;padding: 10px;">
+                            <h5>Tổng sinh viên nợ phí</h5><br>
+                            <h2 style="color: #044969;"> {{baseStat.totalContractDept}}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="shadow mb-5 bg-body rounded">
+                        <div class="inner-box" style="background-color: #12a892; height: 160px;padding: 10px;">
+                            <h5>Tổng phòng nợ phí</h5> <br>
+                            <h2 style="color: #044969;"> {{baseStat.totalServiceDept}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- list  -->
+            <div nz-row [nzGutter]="16">
+                <div nz-col class="gutter-row" [nzSpan]="12">
+                    <div class="inner-box">
+                        <nz-table #basicTable>
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #002140; color: white;">Name</th>
+                                    <th style="background-color: #002140; color: white;">Age</th>
+                                    <th style="background-color: #002140; color: white;">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asafa</td>
+                                    <td>casvc</td>
+                                    <td>asvav</td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="12">
+                    <div class="inner-box">
+                        <nz-table #basicTable>
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #002140; color: white;">Name</th>
+                                    <th style="background-color: #002140; color: white;">Age</th>
+                                    <th style="background-color: #002140; color: white;">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>av</td>
+                                    <td>asva</td>
+                                    <td>avav</td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+            <div style="display: block; width: 80%; float: right;">
+                <canvas mdbChart [chartType]="chartType1" [datasets]="chartDatasets1" [labels]="chartLabels1"
+                    [colors]="chartColors1" [options]="chartOptions1" [legend]="true"
+                    (chartHover)="chartHovered1($event)" (chartClick)="chartClicked1($event)">
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+            <div style="display: block">
+                <canvas mdbChart
+                  [chartType]="chartType2"
+                  [datasets]="chartDatasets2"
+                  [labels]="chartLabels2"
+                  [colors]="chartColors2"
+                  [options]="chartOptions2"
+                  [legend]="true"
+                  (chartHover)="chartHovered2($event)"
+                  (chartClick)="chartClicked2($event)">
+                </canvas>
+              </div> 
+        </div>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+            <div style="display: block">
+                <canvas mdbChart
+                  [chartType]="chartType3"
+                  [datasets]="chartDatasets3"
+                  [labels]="chartLabels3"
+                  [colors]="chartColors3"
+                  [options]="chartOptions3"
+                  [legend]="true"
+                  (chartHover)="chartHovered3($event)"
+                  (chartClick)="chartClicked3($event)">
+                </canvas>
+              </div>
+        </div>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+            <div style="display: block">
+                <canvas mdbChart
+                  [chartType]="chartType4"
+                  [datasets]="chartDatasets4"
+                  [labels]="chartLabels4"
+                  [colors]="chartColors4"
+                  [options]="chartOptions4"
+                  [legend]="true"
+                  (chartHover)="chartHovered4($event)"
+                  (chartClick)="chartClicked4($event)">
+                </canvas>
+              </div>
+        </div>
+    </div>
+</div>

@@ -198,8 +198,6 @@ export interface DisciplineDto {
     description: string
     punish: string
 }
-
-
 export interface FacilityInRoom {
     id: number;
     roomId: number
@@ -208,3 +206,11 @@ export interface FacilityInRoom {
     count: number
     status: number
 }
+
+export interface BaseStatDto {
+    totalEmptySlot: number
+    totalSignUp: number
+    totalContractDept: number
+    totalServiceDept: number
+}
+

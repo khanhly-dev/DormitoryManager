@@ -2,7 +2,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ContractPendingDto, StudentInfoDto } from 'src/app/dto/output-dto';
+import { ContractPendingDto, DisciplineDto, StudentInfoDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 
 const headers = new HttpHeaders({
@@ -41,5 +41,10 @@ export class StudentServiceProxy {
         let url = this.baseUrl + `/api/student/get-list-student-confirm-contract?keyword=${keyWord}&studentId=${studentId}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<PageResultBase<ContractPendingDto>>(url, { headers: headers, observe: 'body', responseType: 'json' });
+    }
+    getListDiscipline(keyWord: string | null | undefined, pageIndex: number, pageSize: number): Observable<PageResultBase<DisciplineDto>> {
+        let url = 'https://localhost:44332' + `/api/student/get-list-discipline?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<PageResultBase<DisciplineDto>>(url, { headers: headers, observe: 'body', responseType: 'json' });
     }
 }

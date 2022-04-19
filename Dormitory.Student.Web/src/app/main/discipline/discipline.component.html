@@ -1,0 +1,45 @@
+<div>
+    <h4>Kỷ luật</h4>
+    <br>
+</div>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <!-- <div nz-row>
+        <div nz-col nzSpan="12">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListDiscipline(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+    </div>
+    <br> -->
+
+    <nz-table #basicTable [nzData]="listDiscipline.items" *ngIf="listDiscipline != undefined" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên sinh viên</th>
+                <th style="background-color: #002140; color: white;">Mã sinh viên</th>
+                <th style="background-color: #002140; color: white;">Phòng</th>
+                <th style="background-color: #002140; color: white;">Khu</th>
+                <th style="background-color: #002140; color: white;">Lỗi kỹ luật</th>
+                <th style="background-color: #002140; color: white;">Hình thức xử lý</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ listDiscipline.items.indexOf(data) + 1}}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.studentCode }}</td>
+                <td>{{ data.roomName }}</td>
+                <td>{{ data.areaName }}</td>
+                <td>{{ data.description }}</td>
+                <td>{{ data.punish }}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listDiscipline != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listDiscipline.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListDiscipline('', pageIndex, 10)"></nz-pagination>
+</nz-spin>

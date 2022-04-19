@@ -43,6 +43,9 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { StudentListComponent } from './manage/student-list/student-list.component';
 import { DisciplineComponent } from './manage/discipline/discipline.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+//mdbootrap
+import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
 
 @NgModule({
   declarations: [
@@ -60,6 +63,7 @@ import { DisciplineComponent } from './manage/discipline/discipline.component';
     ServiceFeeComponent,
     StudentListComponent,
     DisciplineComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -87,7 +91,9 @@ import { DisciplineComponent } from './manage/discipline/discipline.component';
     NzCollapseModule,
     NzRadioModule,
     NzCardModule,
-    NzDrawerModule
+    NzDrawerModule,
+    ChartsModule,
+    WavesModule
   ]
 })
 export class MainModule { }

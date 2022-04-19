@@ -31,6 +31,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { CompletedContractComponent } from './completed-contract/completed-contract.component';
 import { ServiceFeeComponent } from './service-fee/service-fee.component';
 import { ContractFeeComponent } from './contract-fee/contract-fee.component';
+import { DisciplineComponent } from './discipline/discipline.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ContractFeeComponent } from './contract-fee/contract-fee.component';
     CompletedContractComponent,
     ServiceFeeComponent,
     ContractFeeComponent,
+    DisciplineComponent,
   ],
   imports: [
     CommonModule,

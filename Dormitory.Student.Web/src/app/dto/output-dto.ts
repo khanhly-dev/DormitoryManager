@@ -218,3 +218,20 @@ export interface AddRoomServiceRequest {
     statBegin: number;
     statEnd: number;
 }
+
+
+export interface DisciplineDto {
+    studentId: number
+    name: string
+    dob: Date;
+    roomName: string;
+    areaName: string;
+    class: string
+    studentCode: string
+    phone: string
+    major: string
+    gender: number;
+    disciplineId: number;
+    description: string
+    punish: string
+}

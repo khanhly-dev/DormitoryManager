@@ -15,6 +15,8 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
+
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -40,7 +42,8 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
     NzListModule,
     NzBreadCrumbModule,
     NzLayoutModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [
     AuthGuardService,

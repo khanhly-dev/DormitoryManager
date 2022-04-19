@@ -2,7 +2,7 @@
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed">
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-menu-item>
+            <li nz-menu-item routerLink="dashboard">
                 <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
                 <span>Thống kê</span>
             </li>
@@ -48,10 +48,7 @@
 
         </nz-header>
         <nz-content>
-            <nz-breadcrumb>
-                <nz-breadcrumb-item>User</nz-breadcrumb-item>
-                <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-            </nz-breadcrumb>
+            <br>
             <div class="inner-content">
                 <router-outlet></router-outlet>
             </div>
