@@ -188,6 +188,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
             if(contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
             {
+                contract.AdminConfirmStatus = confirmStatus;
                 contract.ToDate = contractTimeConfig.ToDate;
             }
             if(confirmStatus == DataConfigConstant.contractConfirmStatusReject)
@@ -421,83 +422,167 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             return pageResult;
         }
 
+        //public async Task<int> ScheduleRoom(int contractId)
+        //{
+        //    var contract = await _dbContext.ContractEntities.FindAsync(contractId);
+        //    if(contract == null)
+        //    {
+        //        return 0;
+        //    }
+        //    var student = await _dbContext.StudentEntities.FindAsync(contract.StudentId);
+
+        //    var listRoom = await _dbContext.RoomEntities
+        //          .Where(x => x.AvaiableSlot >0)
+        //          .OrderByDescending(x => x.FilledSlot).ToListAsync();
+
+        //    //truong hop khong con phong nao trong
+        //    if (listRoom.Count == 0)
+        //    {
+        //        return 0;
+        //    }
+
+        //    if(listRoom.Where(x => x.RoomGender.HasValue && x.RoomAcedemic.HasValue).ToList().Count() > 0)
+        //    {
+        //        listRoom = listRoom.Where(x => x.RoomGender.HasValue && x.RoomAcedemic.HasValue).ToList();
+        //        //lay phong theo 3 dkien: gioi tinh, khoa, gia phong mong muon
+        //        if(contract.DesiredPrice.HasValue)
+        //        {
+        //            listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender && x.RoomAcedemic.Value == student.AcademicYear && x.Price == contract.DesiredPrice).ToList();
+        //            //neu khong co phong thoa man tien phong mong muon
+        //            if (listRoom.Count == 0)
+        //            {
+        //                //neu khong co phong thoa man sinh vien khoa
+        //                listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender && x.RoomAcedemic.Value == student.AcademicYear).ToList();
+        //                if(listRoom.Count == 0)
+        //                {
+        //                    listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender).ToList();
+        //                    if(listRoom.Count == 0)
+        //                    {
+        //                        listRoom = new List<RoomEntity>();
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender && x.RoomAcedemic.Value == student.AcademicYear).ToList();
+        //            if(listRoom.Count == 0)
+        //            {
+        //                listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender).ToList();
+        //                if(listRoom.Count == 0)
+        //                {
+        //                    listRoom = new List<RoomEntity>();
+        //                }
+        //            }
+        //        }
+        //    }
+        //    if(listRoom.Count == 0)
+        //    {
+        //        listRoom = await _dbContext.RoomEntities
+        //          .Where(x => x.AvaiableSlot > 0 && !x.RoomGender.HasValue && !x.RoomAcedemic.HasValue)
+        //          .OrderByDescending(x => x.FilledSlot).ToListAsync();
+        //    }
+
+        //    var emptyRoom = listRoom.FirstOrDefault();
+        //    if(!contract.RoomId.HasValue)
+        //    {
+        //        emptyRoom.AvaiableSlot -= 1;
+        //    }
+        //    contract.RoomId = emptyRoom.Id;
+
+        //    if(emptyRoom.RoomGender == null)
+        //    {
+        //        emptyRoom.RoomGender = student.Gender;
+        //    }
+        //    if(emptyRoom.RoomAcedemic == null)
+        //    {
+        //        emptyRoom.RoomAcedemic = student.AcademicYear;
+        //    }
+        //    return await _dbContext.SaveChangesAsync();
+        //}
+
         public async Task<int> ScheduleRoom(int contractId)
         {
-            var contract = await _dbContext.ContractEntities.FindAsync(contractId);
-            if(contract == null)
+            var contract = await _dbContext.ContractEntities.FirstOrDefaultAsync(x => x.Id == contractId);
+            if(contract.RoomId.HasValue)
             {
                 return 0;
             }
-            var student = await _dbContext.StudentEntities.FindAsync(contract.StudentId);
-
-            var listRoom = await _dbContext.RoomEntities
-                  .Where(x => x.AvaiableSlot >0)
-                  .OrderByDescending(x => x.FilledSlot).ToListAsync();
-
-            //truong hop khong con phong nao trong
-            if (listRoom.Count == 0)
+            if(!contract.DesiredPrice.HasValue)
             {
-                return 0;
+                contract.DesiredPrice = 0;
             }
+            var student = await _dbContext.StudentEntities.FirstOrDefaultAsync(x => x.Id == contract.StudentId);
 
-            if(listRoom.Where(x => x.RoomGender.HasValue && x.RoomAcedemic.HasValue).ToList().Count() > 0)
+            #region luồng xếp vào phòng đã có người ở
+            //tìm phòng theo tiêu chí: giới tính, khoá học, giá mong muốn
+            var emptyRoom = await _dbContext.RoomEntities
+                    .Where(x => x.RoomGender == student.Gender && x.RoomAcedemic == student.AcademicYear && x.Price == contract.DesiredPrice && x.AvaiableSlot > 0)
+                    .OrderBy(x => x.AvaiableSlot)
+                    .FirstOrDefaultAsync();
+
+            // nếu không có phòng trống thì bỏ điều kiện giá mong muốn
+            if(emptyRoom == null)
             {
-                listRoom = listRoom.Where(x => x.RoomGender.HasValue && x.RoomAcedemic.HasValue).ToList();
-                //lay phong theo 3 dkien: gioi tinh, khoa, gia phong mong muon
-                if(contract.DesiredPrice.HasValue)
+                emptyRoom = await _dbContext.RoomEntities
+                    .Where(x => x.RoomGender == student.Gender && x.RoomAcedemic == student.AcademicYear && x.AvaiableSlot > 0)
+                    .OrderBy(x => x.AvaiableSlot)
+                    .FirstOrDefaultAsync();
+
+                //nếu không còn phòng trống thì bỏ điều kiện xếp theo khoá
+                if(emptyRoom == null)
                 {
-                    listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender && x.RoomAcedemic.Value == student.AcademicYear && x.Price == contract.DesiredPrice).ToList();
-                    //neu khong co phong thoa man tien phong mong muon
-                    if (listRoom.Count == 0)
-                    {
-                        //neu khong co phong thoa man sinh vien khoa
-                        listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender && x.RoomAcedemic.Value == student.AcademicYear).ToList();
-                        if(listRoom.Count == 0)
-                        {
-                            listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender).ToList();
-                            if(listRoom.Count == 0)
-                            {
-                                listRoom = new List<RoomEntity>();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender && x.RoomAcedemic.Value == student.AcademicYear).ToList();
-                    if(listRoom.Count == 0)
-                    {
-                        listRoom = listRoom.Where(x => x.RoomGender.Value == student.Gender).ToList();
-                        if(listRoom.Count == 0)
-                        {
-                            listRoom = new List<RoomEntity>();
-                        }
-                    }
-                }
-            }
-            if(listRoom.Count == 0)
-            {
-                listRoom = await _dbContext.RoomEntities
-                  .Where(x => x.AvaiableSlot > 0 && !x.RoomGender.HasValue && !x.RoomAcedemic.HasValue)
-                  .OrderByDescending(x => x.FilledSlot).ToListAsync();
-            }
+                    emptyRoom = await _dbContext.RoomEntities
+                       .Where(x => x.RoomGender == student.Gender && x.AvaiableSlot > 0)
+                       .OrderBy(x => x.AvaiableSlot)
+                       .FirstOrDefaultAsync();
+                }    
+            }   
 
-            var emptyRoom = listRoom.FirstOrDefault();
-            if(!contract.RoomId.HasValue)
+            if(emptyRoom != null)
             {
+                contract.RoomId = emptyRoom.Id;
+                if (contract.DesiredPrice == 0)
+                {
+                    contract.DesiredPrice = null;
+                }
                 emptyRoom.AvaiableSlot -= 1;
+                return await _dbContext.SaveChangesAsync();
             }
-            contract.RoomId = emptyRoom.Id;
+            #endregion
 
-            if(emptyRoom.RoomGender == null)
+            #region luồng xếp vào phòng mới chưa có người ở
+            //tìm phòng theo tiêu chí giá mong muốn
+            emptyRoom = await _dbContext.RoomEntities
+                    .Where(x => x.RoomGender == null && x.Price == contract.DesiredPrice && x.AvaiableSlot > 0)
+                    .OrderBy(x => x.AvaiableSlot)
+                    .FirstOrDefaultAsync();
+
+            // nếu không có phòng trống thì bỏ điều kiện giá mong muốn
+            if(emptyRoom == null)
             {
+                emptyRoom = await _dbContext.RoomEntities
+                    .Where(x => x.RoomGender == null && x.AvaiableSlot > 0)
+                    .OrderBy(x => x.AvaiableSlot)
+                    .FirstOrDefaultAsync();
+            }    
+
+            if(emptyRoom != null)
+            {
+                contract.RoomId = emptyRoom.Id;
+                if(contract.DesiredPrice == 0)
+                {
+                    contract.DesiredPrice = null;
+                }
+                emptyRoom.AvaiableSlot -= 1;
                 emptyRoom.RoomGender = student.Gender;
-            }
-            if(emptyRoom.RoomAcedemic == null)
-            {
                 emptyRoom.RoomAcedemic = student.AcademicYear;
+
+                return await _dbContext.SaveChangesAsync();
             }
-            return await _dbContext.SaveChangesAsync();
+            #endregion
+
+            return 0;
         }
 
         public async Task<int> ChangeRoom(int contractId, int roomId)
