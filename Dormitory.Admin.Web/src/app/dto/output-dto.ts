@@ -87,7 +87,7 @@ export interface ContractDto {
     contractCompletedStatus: number;
     roomPrice: number;
     isExtendContract: number;
-    isDelete : boolean
+    isDelete: boolean
 }
 export interface ContractFeeStatusDto {
     id: number;
@@ -212,5 +212,27 @@ export interface BaseStatDto {
     totalSignUp: number
     totalContractDept: number
     totalServiceDept: number
+}
+
+export interface FeeDto {
+    id: number
+    billCode: string
+    fee: number
+}
+
+export interface GenderPercent {
+    countMale: number
+    countFemale: number
+}
+
+export interface feeChartDto {
+    totalFee: number;
+    paid: number;
+    dept: number;
+}
+
+export interface AreaChartDto {
+    area: string;
+    studentCount: number;
 }
 

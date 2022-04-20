@@ -1,12 +1,10 @@
 /.vs
 /Dormitory.Admin.Api/bin
 /Dormitory.Admin.Api/obj
-/Dormitory.Admin.Api/Properties
 /Dormitory.Admin.Application/bin
 /Dormitory.Admin.Application/obj
 /Dormitory.Core.Api/bin
 /Dormitory.Core.Api/obj
-/Dormitory.Core.Api/Properties
 /Dormitory.Core.Application/bin
 /Dormitory.Core.Application/obj
 /Dormitory.Domain/bin
@@ -17,7 +15,6 @@
 /Dormitory.EntityFrameworkCore/obj
 /Dormitory.Student.Api/bin
 /Dormitory.Student.Api/obj
-/Dormitory.Student.Api/Properties
 /Dormitory.Student.Application/bin
 /Dormitory.Student.Application/obj
 *.user

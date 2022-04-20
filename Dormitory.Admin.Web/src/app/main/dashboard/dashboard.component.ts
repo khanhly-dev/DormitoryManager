@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseStatDto } from 'src/app/dto/output-dto';
+import { BaseStatDto, FeeDto } from 'src/app/dto/output-dto';
+import { PageResultBase } from 'src/app/dto/page-result-base';
 import { DashboardServiceProxy } from 'src/app/service/admin-service/dashboard-service-proxy';
 
 @Component({
@@ -8,33 +9,84 @@ import { DashboardServiceProxy } from 'src/app/service/admin-service/dashboard-s
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  baseStat! : BaseStatDto;
+  baseStat!: BaseStatDto;
+  listContractFee!: PageResultBase<FeeDto>
+  listServiceFee!: PageResultBase<FeeDto>
+  pageIndex = 1;
 
-  constructor(private dashboardService : DashboardServiceProxy) { }
+  constructor(private dashboardService: DashboardServiceProxy) { }
 
   ngOnInit(): void {
     this.getBaseStat();
+    this.getListContractFee("", 1, 3);
+    this.getListServiceFee("", 1, 3);
+    this.getGenderPercent();
+    this.getContractFeeChart();
+    this.getServiceFeeChart();
+    this.getAreaChart();
   }
 
-  getBaseStat()
-  {
+  getBaseStat() {
     this.dashboardService.getBaseStat().subscribe(x => {
       this.baseStat = x;
     })
   }
-   // bieu do tron
+  getListContractFee(keyword: string, pageIndex: number, pageSize: number) {
+    this.dashboardService.getListContractFee(keyword, pageIndex, pageSize).subscribe(x => {
+      this.listContractFee = x;
+    })
+  }
+  getListServiceFee(keyword: string, pageIndex: number, pageSize: number) {
+    this.dashboardService.getListServiceFee(keyword, pageIndex, pageSize).subscribe(x => {
+      this.listServiceFee = x;
+    })
+  }
+  getGenderPercent()
+  {
+    this.dashboardService.getGenderPercent().subscribe(x => {
+      this.chartDatasets1 = [
+        { data: [x.countMale, x.countFemale], label: 'Tổng sinh viên ở KTX' }
+      ]
+    })
+  }
+  getContractFeeChart()
+  {
+    this.dashboardService.getContractFeeChart().subscribe(x => {
+      this.chartDatasets3 = [
+        { data: [x.dept, x.paid, x.totalFee], label: 'Biểu đồ phí hợp đồng' }
+      ];
+    })
+  }
+  getServiceFeeChart()
+  {
+    this.dashboardService.getServiceFeeChart().subscribe(x => {
+      this. chartDatasets2 = [
+        { data: [x.dept, x.paid, x.totalFee], label: 'Biểu đồ phí điện nước' }
+      ];
+    })
+  }
+  getAreaChart()
+  {
+    this.dashboardService.getAreaChart().subscribe(x => {
+      this.chartLabels4 = x.map(x => x.area);
+      this. chartDatasets4 = [
+        { data: x.map(x => x.studentCount), label: 'Biểu đồ sinh viên ở theo khu' }
+      ];
+    })
+  }
+  // bieu do tron
   chartType1 = 'pie';
 
   chartDatasets1 = [
-    { data: [300, 50, 100, 40, 120], label: 'My First dataset' }
+    { data: [50, 50], label: 'Tổng sinh viên ở KTX' }
   ];
 
-  chartLabels1 = ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'];
+  chartLabels1 = ['Nam', 'Nữ'];
 
   chartColors1 = [
     {
-      backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
-      hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774'],
+      backgroundColor: ['#F7464A', '#46BFBD'],
+      hoverBackgroundColor: ['#FF5A5E', '#5AD3D1'],
       borderWidth: 2,
     }
   ];
@@ -42,23 +94,15 @@ export class DashboardComponent implements OnInit {
   chartOptions1: any = {
     responsive: true
   };
-
-  chartClicked1(event: any): void {
-    console.log(event);
-  }
-
-  chartHovered1(event: any): void {
-    console.log(event);
-  }
   //-------------------------------------------------------------
   //bieu do cot 1
-  chartType2 = 'bar';
+  chartType2 = 'horizontalBar';
 
   chartDatasets2 = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
+    { data: [65, 59, 80], label: 'Biểu đồ phí điện nước' }
   ];
 
-  chartLabels2 = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+  chartLabels2 = ['Red', 'Blue', 'Yellow'];
 
   chartColors2 = [
     {
@@ -66,17 +110,11 @@ export class DashboardComponent implements OnInit {
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
         'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
       ],
       borderWidth: 2,
     }
@@ -85,23 +123,15 @@ export class DashboardComponent implements OnInit {
   chartOptions2: any = {
     responsive: true
   };
-
-  chartClicked2(event: any): void {
-    console.log(event);
-  }
-
-  chartHovered2(event: any): void {
-    console.log(event);
-  }
   //------------------------------------------------------------
   //bieu do cot 2
-  chartType3 = 'bar';
+  chartType3 = 'horizontalBar';
 
   chartDatasets3 = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
+    { data: [65, 59, 80], label: 'Biểu đồ phí hợp đồng' }
   ];
 
-  chartLabels3 = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+  chartLabels3 = ['Chưa đóng', 'Đã đóng', 'Phải thu'];
 
   chartColors3 = [
     {
@@ -109,17 +139,11 @@ export class DashboardComponent implements OnInit {
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
         'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
       ],
       borderWidth: 2,
     }
@@ -128,56 +152,18 @@ export class DashboardComponent implements OnInit {
   chartOptions3: any = {
     responsive: true
   };
-
-  chartClicked3(event: any): void {
-    console.log(event);
-  }
-
-  chartHovered3(event: any): void {
-    console.log(event);
-  }
   //-----------------------------------------------------------\
   //bieu do hang
-  chartType4 = 'horizontalBar';
+  chartType4 = 'bar';
 
   chartDatasets4 = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
+    { data: [0,0,0], label: 'My First dataset' }
   ];
 
-  chartLabels4 = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
-
-  chartColors4 = [
-    {
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-      borderWidth: 2,
-    }
-  ];
+  chartLabels4! : Array<any>;
 
   chartOptions4: any = {
     responsive: true
   };
-
-  chartClicked4(event: any): void {
-    console.log(event);
-  }
-
-  chartHovered4(event: any): void {
-    console.log(event);
-  }
   //-----------------------------------------------------------
 }
