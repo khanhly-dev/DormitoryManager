@@ -21,105 +21,111 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
             _dbContext = dbContext;
         }
 
+        //public async Task<int> AdminConfirmAllContract()
+        //{
+        //    var confirmStatus = DataConfigConstant.contractConfirmStatusApprove;
+        //    var maleConfirmCount = 0;
+        //    var femaleConfirmCount = 0;
+        //    var confirmCount = 0;
+
+        //    var listContract = await (from a in _dbContext.ContractEntities
+        //                       where a.AdminConfirmStatus == DataConfigConstant.contractCompletedStatusOk
+        //                       join s in _dbContext.StudentEntities on a.StudentId equals s.Id
+        //                       where a.IsDeleted == false
+        //                       orderby s.Point descending
+        //                       select new { a, s }).ToListAsync();
+
+        //    var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
+        //    var listEmptyRoom = await _dbContext.RoomEntities.Where(x => x.AvaiableSlot > 0).ToListAsync();
+
+        //    var maleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.male).ToList();
+        //    var feMaleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.female).ToList();
+        //    var empltyRoom = listEmptyRoom.Where(x => x.RoomGender == null).ToList();
+
+        //    foreach (var item in listContract)
+        //    {
+        //        if(item.a.RoomId.HasValue)
+        //        {
+        //            continue;
+        //        }
+        //        if(item.s.Gender == DataConfigConstant.female && maleConfirmCount < maleEmpltyRoom.Count)
+        //        {
+        //            maleConfirmCount++;
+        //            item.a.AdminConfirmStatus = confirmStatus;
+        //            if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+        //            {
+        //                item.a.ToDate = contractTimeConfig.ToDate;
+        //            }
+        //            if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+        //            {
+        //                item.a.ToDate = null;
+        //            }
+        //            continue;
+        //        }
+        //        if (item.s.Gender == DataConfigConstant.male && femaleConfirmCount < feMaleEmpltyRoom.Count)
+        //        {
+        //            femaleConfirmCount++;
+        //            item.a.AdminConfirmStatus = confirmStatus;
+        //            if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+        //            {
+        //                item.a.ToDate = contractTimeConfig.ToDate;
+        //            }
+        //            if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+        //            {
+        //                item.a.ToDate = null;
+        //            }
+        //            continue;
+        //        }
+        //        if(empltyRoom.Count > 0)
+        //        {
+        //            if(confirmCount < empltyRoom.Count)
+        //            {
+        //                confirmCount++;
+        //                item.a.AdminConfirmStatus = confirmStatus;
+        //                if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
+        //                {
+        //                    item.a.ToDate = contractTimeConfig.ToDate;
+        //                }
+        //                if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
+        //                {
+        //                    item.a.ToDate = null;
+        //                }
+        //                continue;
+        //            }
+        //        }
+        //        item.a.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusReject;
+        //    }
+        //    await _dbContext.SaveChangesAsync();
+        //    return maleConfirmCount + femaleConfirmCount + confirmCount;
+        //}
         public async Task<int> AdminConfirmAllContract()
-        {
-            var confirmStatus = DataConfigConstant.contractConfirmStatusApprove;
-            var maleConfirmCount = 0;
-            var femaleConfirmCount = 0;
-            var confirmCount = 0;
-
-            var listContract = await (from a in _dbContext.ContractEntities
-                               where a.AdminConfirmStatus == DataConfigConstant.contractCompletedStatusOk
-                               join s in _dbContext.StudentEntities on a.StudentId equals s.Id
-                               where a.IsDeleted == false
-                               orderby s.Point descending
-                               select new { a, s }).ToListAsync();
-
-            var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
-            var listEmptyRoom = await _dbContext.RoomEntities.Where(x => x.AvaiableSlot > 0).ToListAsync();
-
-            var maleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.male).ToList();
-            var feMaleEmpltyRoom = listEmptyRoom.Where(x => x.RoomGender == DataConfigConstant.female).ToList();
-            var empltyRoom = listEmptyRoom.Where(x => x.RoomGender == null).ToList();
-
-            foreach (var item in listContract)
-            {
-                if(item.a.RoomId.HasValue)
-                {
-                    continue;
-                }
-                if(item.s.Gender == DataConfigConstant.female && maleConfirmCount < maleEmpltyRoom.Count)
-                {
-                    maleConfirmCount++;
-                    item.a.AdminConfirmStatus = confirmStatus;
-                    if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
-                    {
-                        item.a.ToDate = contractTimeConfig.ToDate;
-                    }
-                    if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
-                    {
-                        item.a.ToDate = null;
-                    }
-                    continue;
-                }
-                if (item.s.Gender == DataConfigConstant.male && femaleConfirmCount < feMaleEmpltyRoom.Count)
-                {
-                    femaleConfirmCount++;
-                    item.a.AdminConfirmStatus = confirmStatus;
-                    if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
-                    {
-                        item.a.ToDate = contractTimeConfig.ToDate;
-                    }
-                    if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
-                    {
-                        item.a.ToDate = null;
-                    }
-                    continue;
-                }
-                if(empltyRoom.Count > 0)
-                {
-                    if(confirmCount < empltyRoom.Count)
-                    {
-                        confirmCount++;
-                        item.a.AdminConfirmStatus = confirmStatus;
-                        if (contractTimeConfig != null && confirmStatus == DataConfigConstant.contractConfirmStatusApprove)
-                        {
-                            item.a.ToDate = contractTimeConfig.ToDate;
-                        }
-                        if (confirmStatus == DataConfigConstant.contractConfirmStatusReject)
-                        {
-                            item.a.ToDate = null;
-                        }
-                        continue;
-                    }
-                }
-                item.a.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusReject;
-            }
-            await _dbContext.SaveChangesAsync();
-            return maleConfirmCount + femaleConfirmCount + confirmCount;
-        }
-        public async Task<int> AdminConfirmAllContractV2()
         {
             var countRoomMale = 0;
             var countRoomFemale = 0;
-            var countRoomAll = 0;
 
             var listContract = await (from a in _dbContext.ContractEntities
-                                      where a.AdminConfirmStatus == DataConfigConstant.contractCompletedStatusOk
+                                      where a.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusPending
                                       join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                                       where a.IsDeleted == false
                                       orderby s.Point descending
                                       select new ContractConfirmDto
                                       {
                                           Id = a.Id,
-                                          StudentId = a.StudentId,
-                                          Gender = s.Gender,
+                                          ContractCode = a.ContractCode,
+                                          DateCreated = a.DateCreated,
                                           FromDate = a.FromDate,
                                           ToDate = a.ToDate,
+                                          RoomId = a.RoomId,
+                                          DesiredPrice = a.DesiredPrice,
+                                          StudentId = a.StudentId,
+                                          Gender = s.Gender,
+                                         
                                           AdminConfirmStatus = a.AdminConfirmStatus,
                                           StudentConfirmStatus = a.StudentConfirmStatus,
                                           ContractCompletedStatus = a.ContractCompletedStatus,
-                                          IsDelete = a.IsDeleted
+                                          IsDeleted = a.IsDeleted,
+                                          IsExtendContract = a.IsExtendContract,
+                                          IsSummerSemesterContract = a.IsSummerSemesterContract
                                       }).ToListAsync();
             //lay cau hinh hop dong
             var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
@@ -170,16 +176,80 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 }
             }
             //so hop dong nam con lai chua duoc duyet
-            var nonConfirmMaleContract = maleContract.Where(x => x.AdminConfirmStatus == null).ToList();
+            var nonConfirmMaleContract = new List<ContractConfirmDto>();
             //so hop dong nu con lai chua duoc duyet
-            var nonConfirmFemaleContract = femaleContract.Where(x => x.AdminConfirmStatus == null).ToList();
+            var nonConfirmFemaleContract = new List<ContractConfirmDto>();
             //duyet qua tung phong
+
+            bool genderExamine = true;
             foreach (var item in emptyRoomForAll)
             {
+                nonConfirmMaleContract = maleContract.Where(x => x.AdminConfirmStatus == null || x.AdminConfirmStatus == 0).ToList();
+                nonConfirmFemaleContract = femaleContract.Where(x => x.AdminConfirmStatus == null || x.AdminConfirmStatus == 0).ToList();
 
+                if(nonConfirmMaleContract.Count == 0 && nonConfirmFemaleContract.Count == 0)
+                {
+                    break;
+                }
+
+                //duyệt đan xen nam nữ
+                genderExamine = !genderExamine;
+                //nếu duyệt xong nữ rồi thì sẽ duyệt nam và ngược lại
+                if(nonConfirmFemaleContract.Count == 0)
+                {
+                    genderExamine = true;
+                }    
+                if(nonConfirmMaleContract.Count == 0)
+                {
+                    genderExamine = false;
+                }    
+
+                if (nonConfirmMaleContract.Count > 0 && genderExamine == true)
+                {
+                    foreach (var childItem in nonConfirmMaleContract.Take(item.EmptySlot ?? 0).ToList())
+                    {
+                        childItem.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusApprove;
+                    } 
+                    continue;
+                }   
+                if(nonConfirmFemaleContract.Count > 0 && genderExamine == false)
+                {
+                    foreach (var childItem in nonConfirmFemaleContract.Take(item.EmptySlot ?? 0).ToList())
+                    {
+                        childItem.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusApprove;
+                    }
+                    continue;
+                }
             }
 
-            return 0;
+            var rejectConfirm = listContract.Where(x => x.AdminConfirmStatus == null || x.AdminConfirmStatus == 0).ToList();
+            foreach (var item in rejectConfirm)
+            {
+                item.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusReject;
+            }
+            var listUpdate = listContract.Select(x => new ContractEntity
+            {
+                Id = x.Id,
+                ContractCode = x.ContractCode,
+                DateCreated = x.DateCreated,
+                FromDate = x.FromDate,
+                ToDate = x.ToDate,
+                RoomId = x.RoomId,
+                DesiredPrice = x.DesiredPrice,
+                StudentId = x.StudentId,
+                AdminConfirmStatus = x.AdminConfirmStatus,
+                StudentConfirmStatus = x.StudentConfirmStatus,
+                ContractCompletedStatus = x.ContractCompletedStatus,
+                IsDeleted = x.IsDeleted,
+                IsExtendContract = x.IsExtendContract,
+                IsSummerSemesterContract = x.IsSummerSemesterContract
+            }).ToList();
+
+            _dbContext.ContractEntities.UpdateRange(listUpdate);
+
+            await _dbContext.SaveChangesAsync();
+
+            return listContract.Where(x => x.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusApprove).ToList().Count;
         }
 
         public async Task<int> AdminConfirmContract(int contractId, int confirmStatus)
@@ -442,15 +512,15 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     .OrderBy(x => x.AvaiableSlot)
                     .FirstOrDefaultAsync();
 
-            // nếu không có phòng trống thì bỏ điều kiện giá mong muốn
+            // nếu không có phòng trống thì bỏ điều kiện cùng khóa
             if(emptyRoom == null)
             {
                 emptyRoom = await _dbContext.RoomEntities
-                    .Where(x => x.RoomGender == student.Gender && x.RoomAcedemic == student.AcademicYear && x.AvaiableSlot > 0)
+                    .Where(x => x.RoomGender == student.Gender && x.Price == contract.DesiredPrice && x.AvaiableSlot > 0)
                     .OrderBy(x => x.AvaiableSlot)
                     .FirstOrDefaultAsync();
 
-                //nếu không còn phòng trống thì bỏ điều kiện xếp theo khoá
+                //nếu không còn phòng trống thì bỏ điều kiện giá mong muốn
                 if(emptyRoom == null)
                 {
                     emptyRoom = await _dbContext.RoomEntities
