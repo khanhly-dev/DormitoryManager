@@ -9,13 +9,15 @@
                         (click)="getListContractPending(inputSearch.value, student.id, 1, 10)"></i></button>
             </ng-template>
         </div>
-        <div nz-col nzSpan="12">
-            <button nz-button nzType="primary" (click)="showModal()" [disabled]="!CanCreateExtendContract"
-                style="float: right;">Gia hạn</button>
-            <button nz-button nzType="primary" (click)="showModal1()" style="float: right; margin-right: 10px;">Đăng ký ở hè</button>
+        <div nz-col nzSpan="12" *ngIf="this.listContractPending != undefined">
+            <button nz-button nzType="primary" (click)="showModal()"
+                [disabled]="!CanCreateExtendContract || this.listContractPending.items.length == 0" style="float: right;">Gia hạn</button>
+            <button nz-button nzType="primary" (click)="showModal1()" style="float: right; margin-right: 10px;"
+                [disabled]="!CanCreateSummerContract || this.listContractPending.items.length == 0">Đăng ký ở hè</button>
         </div>
     </div>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Gia hạn hợp đồng" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" *ngIf="extendContractTime!= undefined">
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Gia hạn hợp đồng" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+        *ngIf="extendContractTime!= undefined">
         <ng-container *nzModalContent>
             Bạn có muốn gia hạn hợp đồng thêm từ ngày <span><b>{{extendContractTime.fromDate | date :
                     "dd-MM-yyyy"}}</b></span>
@@ -23,8 +25,9 @@
         </ng-container>
     </nz-modal>
     <br>
-    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Đăng ký ở hè" (nzOnCancel)="handleCancel1()" (nzOnOk)="handleOk1()" *ngIf="summerContractTime!= undefined">
-        <ng-container *nzModalContent >
+    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Đăng ký ở hè" (nzOnCancel)="handleCancel1()" (nzOnOk)="handleOk1()"
+        *ngIf="summerContractTime!= undefined">
+        <ng-container *nzModalContent>
             Bạn có muốn đăng ký hợp đồng hè thêm từ ngày <span><b>{{summerContractTime.fromDate | date :
                     "dd-MM-yyyy"}}</b></span>
             đến ngày <span><b>{{summerContractTime.toDate | date : "dd-MM-yyyy"}}</b></span>
@@ -66,10 +69,13 @@
                 <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
                 <td *ngIf="compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>
 
-                <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract" style="color: #efbf38;">Thường</td>
-                <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract" style="color: #25da91;">Gia hạn</td>
+                <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract"
+                    style="color: #efbf38;">Thường</td>
+                <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract"
+                    style="color: #25da91;">Gia hạn</td>
                 <td *ngIf="data.isDelete == true" style="color: #c0c3c8;">Đã huỷ</td>
-                <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract" style="color: #11bde7;">Kỳ hè</td>
+                <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract"
+                    style="color: #11bde7;">Kỳ hè</td>
 
             </tr>
         </tbody>

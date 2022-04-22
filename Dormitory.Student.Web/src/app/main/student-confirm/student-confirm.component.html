@@ -21,6 +21,7 @@
                 <th style="background-color: #002140; color: white;">Tên sinh viên</th>
                 <th style="background-color: #002140; color: white;">Giới tính</th>
                 <th style="background-color: #002140; color: white;">Số điện thoại</th>
+                <th style="background-color: #002140; color: white;">Ngày đăng ký</th>
                 <th style="background-color: #002140; color: white;">Ngày bắt đầu hợp đồng</th>
                 <th style="background-color: #002140; color: white;">Hạn hợp đồng</th>
                 <th style="background-color: #002140; color: white;">Giá phòng mong muốn</th>
@@ -41,6 +42,7 @@
                 <td *ngIf="data.gender == 1">Nam</td>
                 <td *ngIf="data.gender == 0">Nữ</td>
                 <td>{{ data.studentPhone }}</td>
+                <td>{{ data.dateCreated | date : "dd-MM-yyyy" }}</td>
                 <td>{{ data.fromDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data.toDate | date : "dd-MM-yyyy"}}</td>
                 <td>{{ data.desiredPrice | currency : "VND"}}</td>

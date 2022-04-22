@@ -15,22 +15,23 @@ export class RoomComponent implements OnInit {
   validateForm!: FormGroup;
   facilityForm!: FormGroup;
   listRoom!: PageResultBase<RoomDto>;
-  areaSelect : AreaDto[] = [];
-  facilitySelect : BaseSelectDto[] = [];
+  areaSelect: AreaDto[] = [];
+  facilitySelect: BaseSelectDto[] = [];
   pageIndex: number = 1;
   pageSize!: number;
   isVisible = false;
   isVisible1 = false;
   isVisible2 = false;
   isSpinning = false;
-  listFaciliy : FacilityInRoom[] = [];
-  roomSelectedId : number = 0;
+  listFaciliy: FacilityInRoom[] = [];
+  roomSelectedId: number = 0;
+  areaFilter: number = 0;
 
   constructor(
-    private roomService: RoomServiceProxy, 
-    private facilityService: FacilityServiceProxy, 
+    private roomService: RoomServiceProxy,
+    private facilityService: FacilityServiceProxy,
     private fb: FormBuilder,
-    private areaService: AreaServiceProxy, ) {
+    private areaService: AreaServiceProxy,) {
     this.validateForm = this.fb.group({
       id: [],
       name: ['', [Validators.required]],
@@ -56,6 +57,19 @@ export class RoomComponent implements OnInit {
     this.getListAreaSelect();
     this.getListFacilitySelect()
   }
+  changeAreaFilter() {
+    this.isSpinning = true;
+    this.roomService.getList("", this.pageIndex, 10).subscribe(x => {
+      this.listRoom = x;
+      if (this.areaFilter != 0) {
+        this.listRoom.items = this.listRoom.items.filter(x => x.areaId == this.areaFilter)
+      }
+      else {
+        this.listRoom = x;
+      }
+      this.isSpinning = false;
+    })
+  }
 
   getListRoom(keyWord: string, pageIndex: number, pageSize: number) {
     this.isSpinning = true;
@@ -65,8 +79,7 @@ export class RoomComponent implements OnInit {
     })
   }
 
-  getListFacilitySelect()
-  {
+  getListFacilitySelect() {
     this.facilityService.getListFacilitySelect().subscribe(x => {
       this.facilitySelect = x
     })
@@ -90,8 +103,7 @@ export class RoomComponent implements OnInit {
     })
   }
 
-  getFacilityByRoomId(roomId: number)
-  {
+  getFacilityByRoomId(roomId: number) {
     this.facilityService.getListFacilityByRoomId(roomId).subscribe(x => {
       this.listFaciliy = x;
     })
@@ -115,8 +127,7 @@ export class RoomComponent implements OnInit {
     })
   }
 
-  deleteFacilityInRoom(id : number)
-  {
+  deleteFacilityInRoom(id: number) {
     this.facilityService.deleteFacilityInRoom(id).subscribe(x => {
       this.getFacilityByRoomId(this.roomSelectedId)
       if (x.responseStatus = 'success') {
@@ -149,7 +160,7 @@ export class RoomComponent implements OnInit {
     this.isVisible = false;
   }
 
-  showModal1(roomId : number): void {
+  showModal1(roomId: number): void {
     this.roomSelectedId = roomId;
     this.getFacilityByRoomId(roomId);
     this.isVisible1 = true;
@@ -158,7 +169,7 @@ export class RoomComponent implements OnInit {
   close(): void {
     this.isVisible1 = false;
   }
-  
+
   showModal2(): void {
     this.isVisible2 = true;
   }

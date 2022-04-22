@@ -15,6 +15,9 @@ export class ContractPendingComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isSpinning = false;
+  statusFilter : number = -1;
+  fromDateFilter!: Date;
+  toDateFilter!: Date;
 
   constructor(private contractService: ContracServiceProxy) {
  
@@ -22,6 +25,14 @@ export class ContractPendingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListContractPending("", this.pageIndex, 10)
+  }
+  changeStatusFilter()
+  {
+
+  }
+  onChange(data: any)
+  {
+
   }
 
   getListContractPending(keyWord: string, pageIndex: number, pageSize: number) {

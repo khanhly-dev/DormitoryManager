@@ -4,7 +4,8 @@
 </div>
 <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
     <div nz-row>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="8">
+            <label for="">Tìm kiếm</label>
             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                 <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
             </nz-input-group>
@@ -13,7 +14,36 @@
                         (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
             </ng-template>
         </div>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="10">
+            <div nz-row >
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="inner-box"> 
+                        <label for="">Từ ngày</label>
+                        <input class="form-control" [(ngModel)]="fromDateFilter" type="date" style="width : 150px; border-radius: 0; height: 32px;">
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="inner-box"> 
+                        <label for="">Đến này</label>
+                        <input class="form-control" [(ngModel)]="toDateFilter" type="date" style="width : 150px; border-radius: 0; height: 32px;">
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="6">
+                    <div class="inner-box">
+                        <label for="">Trạng thái duyệt</label><br>
+                        <nz-select [(ngModel)]="statusFilter" style="width: 150px;"
+                            (ngModelChange)="changeStatusFilter()">
+                            <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
+                            <nz-option [nzValue]="0" nzLabel="Chờ duyệt"></nz-option>
+                            <nz-option [nzValue]="1" nzLabel="Từ chối"></nz-option>
+                            <nz-option [nzValue]="2" nzLabel="Chấp nhận"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div nz-col nzSpan="6">
+            <label for="">&nbsp;</label><br>
             <button nz-button [nzType]="'primary'" style="float: right;" (click)="submitForm()">
                 <span>Duyệt tự động</span>
             </button>

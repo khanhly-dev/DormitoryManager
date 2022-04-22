@@ -36,6 +36,7 @@ export class StudentConfirmComponent implements OnInit {
     this.isSpinning = true
     this.studentService.getListStudentConfirmContract(keyWord, studentId, pageIndex, pageSize).subscribe(x => {
       this.listContractPending = x;
+      this.listContractPending.items = this.listContractPending.items.filter(x => x.studentConfirmStatus == 0)
       this.isSpinning = false
     })
   }

@@ -41,6 +41,27 @@ namespace Dormitory.Student.Application.Catalog.StudentInfoRepository
             }
         }
 
+        public async Task<bool> CheckCanCreateSummerContract(int studentId)
+        {
+            var student = await _adminSolutionDbContext.StudentEntities.FirstOrDefaultAsync(x => x.Id == studentId);
+            if (student != null)
+            {
+                if (student.IsStudying == false)
+                {
+                    return false;
+                }
+            }
+            var contract = await _adminSolutionDbContext.ContractEntities.Where(x => x.StudentId == studentId && x.IsDeleted == false && x.IsSummerSemesterContract == true).AsNoTracking().ToListAsync();
+            if (contract.Count >= 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public async Task<bool> CheckCanSignUp(int studentId)
         {
             var student = await _adminSolutionDbContext.StudentEntities.FirstOrDefaultAsync(x => x.Id == studentId);

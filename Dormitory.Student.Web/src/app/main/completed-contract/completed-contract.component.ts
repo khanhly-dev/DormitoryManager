@@ -19,9 +19,10 @@ export class CompletedContractComponent implements OnInit {
   isVisible = false;
   isVisible1 = false;
   isSpinning = false;
-  extendContractTime! : ExtendContractTime;
-  summerContractTime! : ExtendContractTime;
+  extendContractTime!: ExtendContractTime;
+  summerContractTime!: ExtendContractTime;
   CanCreateExtendContract: boolean = false;
+  CanCreateSummerContract: boolean = false;
 
   constructor(
     private studentService: StudentServiceProxy,
@@ -36,10 +37,15 @@ export class CompletedContractComponent implements OnInit {
     this.getStudentByUserId(this.userId);
   }
 
-  checkCanCreateExtendContract(studentId : number)
-  {
+  checkCanCreateExtendContract(studentId: number) {
     this.studentService.checkCreateExtendContract(studentId).subscribe(x => {
       this.CanCreateExtendContract = x;
+    })
+  }
+
+  checkCanCreateSummerContract(studentId: number) {
+    this.studentService.checkCreateSummerContract(studentId).subscribe(x => {
+      this.CanCreateSummerContract = x;
     })
   }
 
@@ -47,6 +53,7 @@ export class CompletedContractComponent implements OnInit {
     this.isSpinning = true
     this.studentService.getListStudentConfirmContract(keyWord, studentId, pageIndex, pageSize).subscribe(x => {
       this.listContractPending = x;
+      this.listContractPending.items = this.listContractPending.items.filter(x => x.contractCompletedStatus == 1)
       this.isSpinning = false
     })
   }
@@ -65,13 +72,14 @@ export class CompletedContractComponent implements OnInit {
       this.student = x;
       this.getListContractPending("", this.student.id, this.pageIndex, 10)
       this.checkCanCreateExtendContract(x.id)
+      this.checkCanCreateSummerContract(x.id)
     })
   }
-  createExtendContract()
-  {
+  createExtendContract() {
     this.signUpService.extendContract(this.student.id).subscribe(x => {
       this.getListContractPending("", this.student.id, this.pageIndex, 10)
       this.checkCanCreateExtendContract(this.student.id)
+      this.checkCanCreateSummerContract(this.student.id)
       if (x.responseStatus == 'success') {
         alert("Gia hạn thành công")
       }
@@ -80,11 +88,11 @@ export class CompletedContractComponent implements OnInit {
       }
     })
   }
-  createSummerContract()
-  {
+  createSummerContract() {
     this.signUpService.summerContract(this.student.id).subscribe(x => {
       this.getListContractPending("", this.student.id, this.pageIndex, 10)
       this.checkCanCreateExtendContract(this.student.id)
+      this.checkCanCreateSummerContract(this.student.id)
       if (x.responseStatus == 'success') {
         alert("Gia hạn thành công")
       }

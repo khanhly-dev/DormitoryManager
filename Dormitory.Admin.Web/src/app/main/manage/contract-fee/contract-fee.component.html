@@ -14,7 +14,7 @@
             </ng-template>
         </div>
     </div>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Cập nhật trạng thái đóng phí phòng" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
         <ng-container *nzModalContent>
             <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
 
@@ -79,7 +79,7 @@
                         </button>
                     </td>
                 </tr>
-                <td colspan="13" *ngIf="collapseActive == data.id && collapseStatus">
+                <td colspan="16" *ngIf="collapseActive == data.id && collapseStatus">
                     <div style="background: #ECECEC;padding:30px;">
                         <nz-card [nzBordered]="false">
                             <div>
