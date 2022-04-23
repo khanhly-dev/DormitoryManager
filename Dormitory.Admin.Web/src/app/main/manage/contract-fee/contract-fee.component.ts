@@ -23,6 +23,7 @@ export class ContractFeeComponent implements OnInit {
   currentStudentContract: ContractFeeStatusDto[] = []
   selectedContractId: number = 0;
   selectedStudentId: number = 0;
+  paidFilter! : boolean;
 
   constructor(private studentService: StudentServiceProxy, private fb: FormBuilder, private contractService: ContracServiceProxy) {
     this.validateForm = this.fb.group({
@@ -33,6 +34,21 @@ export class ContractFeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListStudent("", this.pageIndex, 10)
+  }
+
+  changePaidFilter()
+  {
+    this.isSpinning = true;
+    this.studentService.getList("", this.pageIndex, 10).subscribe(x => {
+      this.listStudent = x;
+      if (this.paidFilter != undefined) {
+        this.listStudent.items = this.listStudent.items.filter(x => x.paymentStatus == this.paidFilter)
+      }
+      else {
+        this.listStudent = x;
+      }
+      this.isSpinning = false;
+    })
   }
 
   getListStudent(keyWord: string, pageIndex: number, pageSize: number) {

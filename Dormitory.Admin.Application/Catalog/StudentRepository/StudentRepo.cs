@@ -193,7 +193,7 @@ namespace Dormitory.Admin.Application.Catalog.StudentRepository
                 {
                     item.PaymentStatus = true;
                 }
-                if(listContract.Select(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk).ToList().Count == 0)
+                if (listContract.Where(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk).ToList().Count == 0)
                 {
                     temp.Add(item);
                 }

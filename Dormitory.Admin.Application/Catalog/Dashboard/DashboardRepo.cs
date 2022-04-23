@@ -129,7 +129,7 @@ namespace Dormitory.Admin.Application.Catalog.Dashboard
         public async Task<GenderPercentDto> getGenderPercent()
         {
             var listContract = await _dbContext.ContractEntities
-                .Where(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && x.ToDate.Value > DateTime.Now && x.IsExtendContract == false)
+                .Where(x => x.ContractCompletedStatus == DataConfigConstant.contractCompletedStatusOk && x.ToDate.Value > DateTime.Now && x.IsDeleted == false)
                 .ToListAsync();
 
             var listStudent = await _dbContext.StudentEntities.Where(x => listContract.Select(x => x.StudentId).ToList().Contains(x.Id)).ToListAsync();

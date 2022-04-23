@@ -69,7 +69,7 @@
                             <thead>
                                 <tr>
                                     <th style="background-color: #002140; color: white;" class="table-header">STT</th>
-                                    <th style="background-color: #002140; color: white;">Mã hợp đồng</th>
+                                    <th style="background-color: #002140; color: white;">Mã hóa đơn</th>
                                     <th style="background-color: #002140; color: white;">Tổng phí</th>
                                 </tr>
                             </thead>
@@ -91,6 +91,7 @@
     </div>
     <div nz-col class="gutter-row" [nzSpan]="8">
         <div class="inner-box">
+            <label for="">Tổng sinh viên:</label>&nbsp;{{totalStudent}}
             <div style="display: block; width: 80%; float: right;">
                 <canvas mdbChart [chartType]="chartType1" [datasets]="chartDatasets1" [labels]="chartLabels1"
                     [colors]="chartColors1" [options]="chartOptions1" [legend]="true">
@@ -104,8 +105,8 @@
     <div nz-col class="gutter-row" [nzSpan]="8">
         <div class="inner-box">
             <div style="display: block">
-                <canvas mdbChart [chartType]="chartType2" [datasets]="chartDatasets2" [labels]="chartLabels2"
-                    [colors]="chartColors2" [options]="chartOptions2" [legend]="true">
+                <canvas mdbChart [chartType]="chartType3" [datasets]="chartDatasets3" [labels]="chartLabels3"
+                    [colors]="chartColors3" [options]="chartOptions3" [legend]="true">
                 </canvas>
             </div>
         </div>
@@ -113,8 +114,8 @@
     <div nz-col class="gutter-row" [nzSpan]="8">
         <div class="inner-box">
             <div style="display: block">
-                <canvas mdbChart [chartType]="chartType3" [datasets]="chartDatasets3" [labels]="chartLabels3"
-                    [colors]="chartColors3" [options]="chartOptions3" [legend]="true">
+                <canvas mdbChart [chartType]="chartType2" [datasets]="chartDatasets2" [labels]="chartLabels2"
+                    [colors]="chartColors2" [options]="chartOptions2" [legend]="true">
                 </canvas>
             </div>
         </div>

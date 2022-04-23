@@ -14,25 +14,35 @@
                         (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
             </ng-template>
         </div>
-        <div nz-col nzSpan="10">
-            <div nz-row >
-                <div nz-col class="gutter-row" [nzSpan]="6">
-                    <div class="inner-box"> 
+        <div nz-col nzSpan="16">
+            <label for="">&nbsp;</label><br>
+            <button nz-button [nzType]="'primary'" style="float: right;" (click)="submitForm()">
+                <span>Duyệt tự động</span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <div nz-row>
+        <div nz-col nzSpan="8">
+            <div nz-row>
+                <div nz-col class="gutter-row" [nzSpan]="7">
+                    <div class="inner-box">
                         <label for="">Từ ngày</label>
-                        <input class="form-control" [(ngModel)]="fromDateFilter" type="date" style="width : 150px; border-radius: 0; height: 32px;">
+                        <input class="form-control" [(ngModel)]="fromDateFilter" type="date"
+                            style="width : 150px; border-radius: 0; height: 32px;">
                     </div>
                 </div>
-                <div nz-col class="gutter-row" [nzSpan]="6">
-                    <div class="inner-box"> 
+                <div nz-col class="gutter-row" [nzSpan]="7">
+                    <div class="inner-box">
                         <label for="">Đến này</label>
-                        <input class="form-control" [(ngModel)]="toDateFilter" type="date" style="width : 150px; border-radius: 0; height: 32px;">
+                        <input class="form-control" [(ngModel)]="toDateFilter" type="date"
+                            style="width : 150px; border-radius: 0; height: 32px;">
                     </div>
                 </div>
-                <div nz-col class="gutter-row" [nzSpan]="6">
+                <div nz-col class="gutter-row" [nzSpan]="7">
                     <div class="inner-box">
                         <label for="">Trạng thái duyệt</label><br>
-                        <nz-select [(ngModel)]="statusFilter" style="width: 150px;"
-                            (ngModelChange)="changeStatusFilter()">
+                        <nz-select [(ngModel)]="statusFilter" style="width: 150px;">
                             <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
                             <nz-option [nzValue]="0" nzLabel="Chờ duyệt"></nz-option>
                             <nz-option [nzValue]="1" nzLabel="Từ chối"></nz-option>
@@ -40,13 +50,14 @@
                         </nz-select>
                     </div>
                 </div>
+                <div>
+                    <label for="">&nbsp;</label><br>
+                    <button nz-button [nzType]="'primary'" style="float: right;">
+                        <span>Lọc</span>
+                    </button>
+                </div>
+               
             </div>
-        </div>
-        <div nz-col nzSpan="6">
-            <label for="">&nbsp;</label><br>
-            <button nz-button [nzType]="'primary'" style="float: right;" (click)="submitForm()">
-                <span>Duyệt tự động</span>
-            </button>
         </div>
     </div>
     <br>
@@ -59,6 +70,7 @@
                 <th style="background-color: #002140; color: white;">Ngày đăng ký</th>
                 <th style="background-color: #002140; color: white;">Mã đơn đăng kí</th>
                 <th style="background-color: #002140; color: white;">Tên sinh viên</th>
+                <th style="background-color: #002140; color: white;">Giới tính</th>
                 <th style="background-color: #002140; color: white;">Mã sinh viên</th>
                 <th style="background-color: #002140; color: white;">Số điện thoại</th>
                 <th style="background-color: #002140; color: white;">Địa chỉ</th>
@@ -74,6 +86,8 @@
                 <td>{{ data.dateCreated | date : "dd-MM-yyyy" }}</td>
                 <td>{{ data.contractCode }}</td>
                 <td>{{ data.studentName }}</td>
+                <td *ngIf="data.gender == 1">Nam</td>
+                <td *ngIf="data.gender == 0">Nữ</td>
                 <td>{{ data.studentCode }}</td>
                 <td>{{ data.studentPhone }}</td>
                 <td>{{ data.adress }}</td>

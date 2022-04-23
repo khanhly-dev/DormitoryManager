@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ContractDto, RoomSelectDto } from 'src/app/dto/output-dto';
+import { BaseSelectDto, ContractConfigSelect, ContractDto, RoomSelectDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
+import { AreaServiceProxy } from 'src/app/service/admin-service/area-service-proxy';
+import { ContracConfigServiceProxy } from 'src/app/service/admin-service/contract-config-service-proxy';
 import { ContracServiceProxy } from 'src/app/service/admin-service/contract-service-proxy';
 import { RoomServiceProxy } from 'src/app/service/admin-service/room-service-proxy';
 
@@ -21,14 +23,29 @@ export class CompletedContractComponent implements OnInit {
   selectedRoom: any;
   selectedContract: number = 0;
 
-  fromDateFilter! : Date;
-  toDateFilter! : Date;
+  semesterFilter!:number
+  areaFilter!:number
+  roomFilter!:number
+  statusFilter!:number
+  typeFilter!:number
 
-  constructor(private contractService: ContracServiceProxy, private roomService: RoomServiceProxy) {
+  //select
+  roomSelect: BaseSelectDto[] = []
+  areaSelect: BaseSelectDto[] = []
+  contractConfigSelect: ContractConfigSelect[] = []
+
+  constructor(
+    private contractService: ContracServiceProxy, 
+    private roomService: RoomServiceProxy,
+    private areaService : AreaServiceProxy,
+    private configService : ContracConfigServiceProxy) {
   }
 
   ngOnInit(): void {
     this.getListContract("", this.pageIndex, 10)
+    this.getRoomSelect();
+    this.getAreaSelect();
+    this.getContractConfigSelect();
   }
 
   getListContract(keyWord: string, pageIndex: number, pageSize: number) {
@@ -94,5 +111,25 @@ export class CompletedContractComponent implements OnInit {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+  }
+
+  //filter 
+  getRoomSelect()
+  {
+    this.roomService.getListSelect().subscribe(x => {
+      this.roomSelect = x;
+    })
+  }
+  getAreaSelect()
+  {
+    this.areaService.getListSelect().subscribe(x => {
+      this.areaSelect = x
+    })
+  }
+  getContractConfigSelect()
+  {
+    this.configService.getListSelect().subscribe(x => {
+      this.contractConfigSelect = x
+    })
   }
 }

@@ -4,7 +4,8 @@
 </div>
 <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
     <div nz-row>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="8">
+            <label for="">Tìm kiếm</label><br>
             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                 <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
             </nz-input-group>
@@ -13,7 +14,17 @@
                         (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
             </ng-template>
         </div>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="10">
+            <label for="">Trạng thái sv duyệt</label><br>
+            <nz-select [(ngModel)]="statusFilter" style="width: 150px;" (ngModelChange)="changeStatusFilter()">
+                <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
+                <nz-option [nzValue]="0" nzLabel="Chờ duyệt"></nz-option>
+                <nz-option [nzValue]="1" nzLabel="Từ chối"></nz-option>
+                <nz-option [nzValue]="2" nzLabel="Chấp nhận"></nz-option>
+            </nz-select>
+        </div>
+        <div nz-col nzSpan="6">
+            <label for="">&nbsp;</label><br>
             <button nz-button [nzType]="'primary'" style="float: right;" (click)="autoScheduleRoom()">
                 <span>Xếp phòng tự động</span>
             </button>

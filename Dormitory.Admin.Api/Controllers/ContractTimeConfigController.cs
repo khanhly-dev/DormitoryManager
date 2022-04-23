@@ -22,6 +22,12 @@ namespace Dormitory.Admin.Api.Controllers
             var listArea = await _contractTimeConfigRepo.GetList(request);
             return Ok(listArea);
         }
+        [HttpGet("get-list-select")]
+        public async Task<IActionResult> GetListContractConfigSelect()
+        {
+            var listArea = await _contractTimeConfigRepo.GetListSelect();
+            return Ok(listArea);
+        }
         [HttpPost("create-or-update")]
         public async Task<IActionResult> CreateOrUpdateContractConfig([FromForm] ContractTimeConfigEntity request)
         {

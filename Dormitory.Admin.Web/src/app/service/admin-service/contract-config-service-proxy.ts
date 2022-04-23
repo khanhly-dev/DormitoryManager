@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { ContractConfig } from 'src/app/dto/output-dto';
+import { ContractConfig, ContractConfigSelect } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class ContracConfigServiceProxy {
@@ -21,6 +21,11 @@ export class ContracConfigServiceProxy {
         let url = this.baseUrl + `/api/contract-time-config/get-list?Keyword=${keyWord}&PageIndex=${pageIndex}&PageSize=${pageSize}`;
         url = url.replace(/[?&]$/, "");
         return this.http.get<PageResultBase<ContractConfig>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+    getListSelect(): Observable<ContractConfigSelect[]> {
+        let url = this.baseUrl + `/api/contract-time-config/get-list-select`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<ContractConfigSelect[]>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
     delete(id: number): Observable<any> {

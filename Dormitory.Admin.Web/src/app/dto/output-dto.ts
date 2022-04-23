@@ -236,3 +236,11 @@ export interface AreaChartDto {
     studentCount: number;
 }
 
+export interface ContractConfigSelect {
+    id: number;
+    name: string;
+    fromDate: Date;
+    toDate: Date
+}
+
+

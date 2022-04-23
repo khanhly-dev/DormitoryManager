@@ -4,7 +4,7 @@
 </div>
 <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
     <div nz-row>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="8">
             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                 <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
             </nz-input-group>
@@ -14,24 +14,63 @@
             </ng-template>
         </div>
     </div>
-    
     <br>
-    <div nz-row [nzGutter]="16">
-        <div nz-col class="gutter-row" [nzSpan]="4">
-            <div class="inner-box">
-                Từ ngày: 
-                <input [(ngModel)]="fromDateFilter" class="form-control" type="date" style="width : 100%">
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="4">
-            <div class="inner-box">
-                Đến ngày:
-                <input [(ngModel)]="toDateFilter" class="form-control" type="date" style="width : 100%">
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="8">
-            <div class="inner-box">
-                <button nz-button nzType="primary" style="height: 60px;">Lọc</button>
+    <div nz-row>
+        <div nz-col nzSpan="14">
+            <div nz-row>
+                <div nz-col class="gutter-row" [nzSpan]="4">
+                    <div class="inner-box">
+                        <label for="">Kỳ</label><br>
+                        <nz-select [(ngModel)]="semesterFilter" style="width: 150px;">
+                            <nz-option *ngFor="let item in contractConfigSelect" [nzValue]="item.toDate" [nzLabel]="item.name"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="4">
+                    <div class="inner-box">
+                        <label for="">Khu</label><br>
+                        <nz-select [(ngModel)]="areaFilter" style="width: 150px;">
+                            <nz-option *ngFor="let item in areaSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="4">
+                    <div class="inner-box">
+                        <label for="">Phòng</label><br>
+                        <nz-select [(ngModel)]="roomFilter" style="width: 150px;">
+                            <nz-option *ngFor="let item in roomSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="4">
+                    <div class="inner-box">
+                        <label for="">Trạng thái</label><br>
+                        <nz-select [(ngModel)]="statusFilter" style="width: 150px;">
+                            <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
+                            <nz-option [nzValue]="0" nzLabel="Đã hủy"></nz-option>
+                            <nz-option [nzValue]="1" nzLabel="Còn hạn"></nz-option>
+                            <nz-option [nzValue]="2" nzLabel="Hết hạn"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="4">
+                    <div class="inner-box">
+                        <label for="">Loại hợp đồng</label><br>
+                        <nz-select [(ngModel)]="typeFilter" style="width: 150px;">
+                            <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
+                            <nz-option [nzValue]="0" nzLabel="Thường"></nz-option>
+                            <nz-option [nzValue]="1" nzLabel="Gia hạn"></nz-option>
+                            <nz-option [nzValue]="2" nzLabel="Hè"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div>
+                    <label for="">&nbsp;</label><br>
+                    <button nz-button [nzType]="'primary'" style="float: right;">
+                        <span>Lọc</span>
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -82,10 +121,13 @@
                 <td>{{ data.fromDate | date : "dd-MM-yyyy" }}</td>
                 <td>{{ data.toDate | date : "dd-MM-yyyy" }}</td>
 
-                <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract" style="color: #efbf38;">Thường</td>
-                <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract" style="color: #25da91;">Gia hạn</td>
+                <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract"
+                    style="color: #efbf38;">Thường</td>
+                <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract"
+                    style="color: #25da91;">Gia hạn</td>
                 <td *ngIf="data.isDelete == true" style="color: #c0c3c8;">Đã huỷ</td>
-                <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract" style="color: #11bde7;">Kỳ hè</td>
+                <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract"
+                    style="color: #11bde7;">Kỳ hè</td>
 
                 <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
                 <td *ngIf="compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>

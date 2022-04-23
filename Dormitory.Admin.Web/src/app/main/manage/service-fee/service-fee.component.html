@@ -4,7 +4,8 @@
 </div>
 <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
     <div nz-row>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="8">
+            <label for="">Tìm kiếm</label>
             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                 <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
             </nz-input-group>
@@ -13,7 +14,16 @@
                         (click)="getListRoom(inputSearch.value, 1, 10)"></i></button>
             </ng-template>
         </div>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="10">
+            <label for="">Trạng thái đóng</label><br>
+            <nz-select [(ngModel)]="paidFilter" style="width: 150px;" (ngModelChange)="changePaidFilter()">
+                <nz-option [nzValue]="undefined" nzLabel="Tất cả"></nz-option>
+                <nz-option [nzValue]="false" nzLabel="Chưa đóng"></nz-option>
+                <nz-option [nzValue]="true" nzLabel="Đã đóng"></nz-option>
+            </nz-select>
+        </div>
+        <div nz-col nzSpan="6">
+            <label for="">&nbsp;</label><br>
             <button nz-button [nzType]="'primary'" style="float: right;" (click)="open()">
                 <span>Thêm hoá đơn điện nước</span>
             </button>

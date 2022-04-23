@@ -87,5 +87,18 @@ namespace Dormitory.Admin.Application.Catalog.ContractTimeConfigRepository
             };
             return pageResult;
         }
+
+        public async Task<List<ContractConfigSelectDto>> GetListSelect()
+        {
+            var data = await _dbContext.ContractTimeConfigEntities.Select(x => new ContractConfigSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                FromDate = x.FromDate,
+                ToDate = x.ToDate
+            }).ToListAsync();
+
+            return data;
+        }
     }
 }

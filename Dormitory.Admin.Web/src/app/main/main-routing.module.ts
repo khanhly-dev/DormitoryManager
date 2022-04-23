@@ -34,6 +34,7 @@ const routes: Routes = [
       { path: 'student-list', component: StudentListComponent, canActivate: [AuthGuardService] },
       { path: 'discipline', component: DisciplineComponent, canActivate: [AuthGuardService] },
       { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+      { path: '', redirectTo: 'dashboard', canActivate: [AuthGuardService] },
     ]
   },
 ];

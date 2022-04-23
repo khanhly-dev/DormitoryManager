@@ -15,6 +15,7 @@ export class WaitingRoomComponent implements OnInit {
   pageSize!: number;
   isVisible = false;
   isSpinning = false;
+  statusFilter : number = -1;
 
   constructor(private contractService: ContracServiceProxy) {
 
@@ -22,6 +23,21 @@ export class WaitingRoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListContractPending("", this.pageIndex, 10)
+  }
+
+  changeStatusFilter()
+  {
+    this.isSpinning = true;
+    this.contractService.getListAdminConfirmContractPending("", this.pageIndex, 10).subscribe(x => {
+      this.listContractPending = x;
+      if (this.statusFilter != -1) {
+        this.listContractPending.items = this.listContractPending.items.filter(x => x.studentConfirmStatus == this.statusFilter)
+      }
+      else {
+        this.listContractPending = x;
+      }
+      this.isSpinning = false;
+    })
   }
 
   getListContractPending(keyWord: string, pageIndex: number, pageSize: number) {
@@ -57,6 +73,7 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   autoScheduleRoom() {
+    this.listContractPending.items.sort((a ,b) => a.desiredPrice - b.desiredPrice)
     let listContractId = this.listContractPending.items.filter(x => !x.roomId).map(x => x.id)
     this.contractService.autoScheduleRoom(listContractId).subscribe(x => {
       this.getListContractPending("", 1, 10);

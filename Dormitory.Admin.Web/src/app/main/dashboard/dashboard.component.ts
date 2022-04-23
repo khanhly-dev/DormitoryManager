@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   listContractFee!: PageResultBase<FeeDto>
   listServiceFee!: PageResultBase<FeeDto>
   pageIndex = 1;
+  totalStudent : number = 0;
 
   constructor(private dashboardService: DashboardServiceProxy) { }
 
@@ -44,6 +45,7 @@ export class DashboardComponent implements OnInit {
   getGenderPercent()
   {
     this.dashboardService.getGenderPercent().subscribe(x => {
+      this.totalStudent = x.countFemale + x.countMale
       this.chartDatasets1 = [
         { data: [x.countMale, x.countFemale], label: 'Tổng sinh viên ở KTX' }
       ]
@@ -102,7 +104,7 @@ export class DashboardComponent implements OnInit {
     { data: [65, 59, 80], label: 'Biểu đồ phí điện nước' }
   ];
 
-  chartLabels2 = ['Red', 'Blue', 'Yellow'];
+  chartLabels2 = ['Chưa đóng', 'Đã đóng', 'Phải thu'];
 
   chartColors2 = [
     {

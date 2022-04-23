@@ -36,6 +36,8 @@ export class ServiceFeeComponent implements OnInit {
   fromDate!: Date;
   toDate!: Date;
 
+  paidFilter! : boolean;
+
   constructor(
     private roomService: RoomServiceProxy,
     private fb: FormBuilder,
@@ -64,6 +66,21 @@ export class ServiceFeeComponent implements OnInit {
     this.getListRoom("", this.pageIndex, 10);
     this.getListRoomSelect();
     this.getListSelect();
+  }
+
+  changePaidFilter()
+  {
+    this.isSpinning = true;
+    this.roomService.getList("", this.pageIndex, 10).subscribe(x => {
+      this.listRoom = x;
+      if (this.paidFilter != undefined) {
+        this.listRoom.items = this.listRoom.items.filter(x => x.isPaid == this.paidFilter)
+      }
+      else {
+        this.listRoom = x;
+      }
+      this.isSpinning = false;
+    })
   }
 
   deleteBillService(billId : number)
