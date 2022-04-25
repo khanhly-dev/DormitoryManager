@@ -244,7 +244,8 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 ContractCompletedStatus = DataConfigConstant.contractCompletedStatusOk,
                 IsDeleted = contract.IsDeleted,
                 IsExtendContract = DataConfigConstant.extendContract,
-                IsSummerSemesterContract = false
+                IsSummerSemesterContract = false,
+                SemesterId = contractTimeConfigToDate.Id
             };
           
 
@@ -307,7 +308,8 @@ namespace Dormitory.Student.Application.Catalog.SignUpDormitory
                 ContractCompletedStatus = contract.ContractCompletedStatus,
                 IsDeleted = contract.IsDeleted,
                 IsExtendContract = false,
-                IsSummerSemesterContract = true
+                IsSummerSemesterContract = true,
+                SemesterId = contractTimeConfigToDate.Id
             };
 
             _dbContext.ContractEntities.Add(extendContract);

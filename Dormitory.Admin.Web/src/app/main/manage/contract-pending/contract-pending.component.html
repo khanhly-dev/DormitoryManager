@@ -23,26 +23,26 @@
     </div>
     <br>
     <div nz-row>
-        <div nz-col nzSpan="8">
+        <div nz-col nzSpan="10">
             <div nz-row>
-                <div nz-col class="gutter-row" [nzSpan]="7">
+                <div nz-col class="gutter-row" [nzSpan]="6">
                     <div class="inner-box">
                         <label for="">Từ ngày</label>
                         <input class="form-control" [(ngModel)]="fromDateFilter" type="date"
-                            style="width : 150px; border-radius: 0; height: 32px;">
+                            style="width : 100%; border-radius: 0; height: 32px;">
                     </div>
                 </div>
-                <div nz-col class="gutter-row" [nzSpan]="7">
+                <div nz-col class="gutter-row" [nzSpan]="6">
                     <div class="inner-box">
                         <label for="">Đến này</label>
                         <input class="form-control" [(ngModel)]="toDateFilter" type="date"
-                            style="width : 150px; border-radius: 0; height: 32px;">
+                            style="width : 100%; border-radius: 0; height: 32px;">
                     </div>
                 </div>
-                <div nz-col class="gutter-row" [nzSpan]="7">
+                <div nz-col class="gutter-row" [nzSpan]="6">
                     <div class="inner-box">
                         <label for="">Trạng thái duyệt</label><br>
-                        <nz-select [(ngModel)]="statusFilter" style="width: 150px;">
+                        <nz-select [(ngModel)]="statusFilter" style="width: 100%;">
                             <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
                             <nz-option [nzValue]="0" nzLabel="Chờ duyệt"></nz-option>
                             <nz-option [nzValue]="1" nzLabel="Từ chối"></nz-option>
@@ -50,13 +50,26 @@
                         </nz-select>
                     </div>
                 </div>
-                <div>
-                    <label for="">&nbsp;</label><br>
-                    <button nz-button [nzType]="'primary'" style="float: right;">
-                        <span>Lọc</span>
-                    </button>
+                <div nz-col class="gutter-row" [nzSpan]="3">
+                    <div class="inner-box">
+                        <div>
+                            <label for="">&nbsp;</label><br>
+                            <button nz-button [nzType]="'primary'" style="float: right;" (click)="onFilter()">
+                                <span>Lọc</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-               
+                <div nz-col class="gutter-row" [nzSpan]="3">
+                    <div class="inner-box">
+                        <div>
+                            <label for="">&nbsp;</label><br>
+                            <button nz-button [nzType]="'primary'" style="float: right;" (click)="resetFilter()">
+                                <span>Reset</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -87,7 +87,9 @@ export interface ContractDto {
     contractCompletedStatus: number;
     roomPrice: number;
     isExtendContract: number;
-    isDelete: boolean
+    isDelete: boolean;
+    semesterId : number;
+    areaId: number
 }
 export interface ContractFeeStatusDto {
     id: number;

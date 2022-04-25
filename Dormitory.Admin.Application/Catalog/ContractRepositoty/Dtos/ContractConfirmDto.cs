@@ -22,6 +22,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty.Dtos
         public bool IsDeleted { get; set; }
         public bool IsExtendContract { get; set; }
         public bool IsSummerSemesterContract { get; set; }
+        public int? SemesterId { get; set; }
 
         public int Gender { get; set; }
         public int AcademicYear { get; set; }

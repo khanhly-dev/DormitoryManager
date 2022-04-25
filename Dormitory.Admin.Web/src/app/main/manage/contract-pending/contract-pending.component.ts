@@ -15,24 +15,56 @@ export class ContractPendingComponent implements OnInit {
   pageIndex: number = 1;
   pageSize!: number;
   isSpinning = false;
-  statusFilter : number = -1;
+  statusFilter: number = -1;
   fromDateFilter!: Date;
   toDateFilter!: Date;
 
   constructor(private contractService: ContracServiceProxy) {
- 
+
   }
 
   ngOnInit(): void {
     this.getListContractPending("", this.pageIndex, 10)
   }
-  changeStatusFilter()
-  {
 
+  onFilter() {
+    let fromDate = new Date();
+    let toDate = new Date();
+    if (this.fromDateFilter != undefined) {
+      fromDate = new Date(this.fromDateFilter)
+    }
+    else {
+      fromDate = new Date('1000-01-01')
+    }
+    if (this.toDateFilter != undefined) {
+      toDate = new Date(this.toDateFilter)
+    }
+    else {
+      toDate = new Date('3000-01-01')
+    }
+    console.log(this.statusFilter)
+
+    this.isSpinning = true
+    this.contractService.getListContractPending("", this.pageIndex, 10).subscribe(x => {
+      this.listContractPending = x;
+      if (this.statusFilter != -1) {
+        this.listContractPending.items = this.listContractPending.items.filter(t =>
+          (new Date(t.dateCreated)).getTime() > fromDate.getTime() &&
+          (new Date(t.dateCreated)).getTime() < toDate.getTime() &&
+          t.adminConfirmStatus == this.statusFilter
+        )
+      }
+      else {
+        this.listContractPending.items = this.listContractPending.items.filter(t =>
+          (new Date(t.dateCreated)).getTime() > fromDate.getTime() &&
+          (new Date(t.dateCreated)).getTime() < toDate.getTime()
+        )
+      }
+      this.isSpinning = false
+    })
   }
-  onChange(data: any)
-  {
-
+  resetFilter() {
+    this.getListContractPending("", this.pageIndex, 10);
   }
 
   getListContractPending(keyWord: string, pageIndex: number, pageSize: number) {

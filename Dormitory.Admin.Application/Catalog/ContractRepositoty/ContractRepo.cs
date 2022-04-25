@@ -125,7 +125,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                                           ContractCompletedStatus = a.ContractCompletedStatus,
                                           IsDeleted = a.IsDeleted,
                                           IsExtendContract = a.IsExtendContract,
-                                          IsSummerSemesterContract = a.IsSummerSemesterContract
+                                          IsSummerSemesterContract = a.IsSummerSemesterContract,
+                                          SemesterId = a.SemesterId
                                       }).ToListAsync();
             //lay cau hinh hop dong
             var contractTimeConfig = await _dbContext.ContractTimeConfigEntities.Where(x => x.FromDate < DateTime.Now && x.ToDate > DateTime.Now).FirstOrDefaultAsync();
@@ -150,6 +151,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     if (contractTimeConfig != null)
                     {
                         item.ToDate = contractTimeConfig.ToDate;
+                        item.SemesterId = contractTimeConfig.Id;
                     }
                     countRoomMale++;
                 }
@@ -167,6 +169,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     if (contractTimeConfig != null)
                     {
                         item.ToDate = contractTimeConfig.ToDate;
+                        item.SemesterId = contractTimeConfig.Id;
                     }
                     countRoomFemale++;
                 }
@@ -210,6 +213,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     {
                         childItem.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusApprove;
                         childItem.ToDate = contractTimeConfig.ToDate;
+                        childItem.SemesterId = contractTimeConfig.Id;
                     } 
                     continue;
                 }   
@@ -219,6 +223,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     {
                         childItem.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusApprove;
                         childItem.ToDate = contractTimeConfig.ToDate;
+                        childItem.SemesterId = contractTimeConfig.Id;
                     }
                     continue;
                 }
@@ -244,7 +249,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 ContractCompletedStatus = x.ContractCompletedStatus,
                 IsDeleted = x.IsDeleted,
                 IsExtendContract = x.IsExtendContract,
-                IsSummerSemesterContract = x.IsSummerSemesterContract
+                IsSummerSemesterContract = x.IsSummerSemesterContract,
+                SemesterId = x.SemesterId
             }).ToList();
 
             _dbContext.ContractEntities.UpdateRange(listUpdate);
@@ -374,7 +380,9 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     RoomPrice = x.a.RoomId.HasValue ? x.r.Price : null,
                     IsExtendContract = x.a.IsExtendContract,
                     IsDelete = x.a.IsDeleted,
-                    IsSummerContract = x.a.IsSummerSemesterContract
+                    IsSummerContract = x.a.IsSummerSemesterContract,
+                    SemesterId = x.a.SemesterId,
+                    AreaId = x.e != null ? x.e.Id : null,
                 }).ToListAsync();
 
             var pageResult = new PageResult<ContractDto>()
@@ -390,7 +398,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
         public async Task<PageResult<ContractPendingDto>> GetListContractPending(PageRequestBase request)
         {
             var query = from a in _dbContext.ContractEntities 
-                        where a.IsDeleted == false
+                        where a.IsDeleted == false && a.ContractCompletedStatus != DataConfigConstant.contractCompletedStatusOk
                         join s in _dbContext.StudentEntities on a.StudentId equals s.Id
                         join r in _dbContext.RoomEntities on a.RoomId equals r.Id into ra
                         from r in  ra.DefaultIfEmpty()

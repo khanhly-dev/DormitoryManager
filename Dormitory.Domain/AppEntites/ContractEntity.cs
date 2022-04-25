@@ -13,6 +13,7 @@ namespace Dormitory.Domain.AppEntities
         public DateTime DateCreated { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+        public int? SemesterId { get; set; }
         public int? RoomId { get; set; }
         public float? DesiredPrice { get; set; }
         public int StudentId { get; set; }

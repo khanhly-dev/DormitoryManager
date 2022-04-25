@@ -23,11 +23,11 @@ export class CompletedContractComponent implements OnInit {
   selectedRoom: any;
   selectedContract: number = 0;
 
-  semesterFilter!:number
-  areaFilter!:number
-  roomFilter!:number
-  statusFilter!:number
-  typeFilter!:number
+  semesterFilter!: number
+  areaFilter!: number
+  roomFilter!: number
+  statusFilter: number = -1
+  typeFilter: number = -1;
 
   //select
   roomSelect: BaseSelectDto[] = []
@@ -35,10 +35,10 @@ export class CompletedContractComponent implements OnInit {
   contractConfigSelect: ContractConfigSelect[] = []
 
   constructor(
-    private contractService: ContracServiceProxy, 
+    private contractService: ContracServiceProxy,
     private roomService: RoomServiceProxy,
-    private areaService : AreaServiceProxy,
-    private configService : ContracConfigServiceProxy) {
+    private areaService: AreaServiceProxy,
+    private configService: ContracConfigServiceProxy) {
   }
 
   ngOnInit(): void {
@@ -60,6 +60,25 @@ export class CompletedContractComponent implements OnInit {
     this.roomService.getListEmptyRoom().subscribe(x => {
       this.emptyRoom = x.filter(x => x.genderRoom == gender || !x.genderRoom);
     })
+  }
+
+  onFilter() {
+    this.contractService.getList("", this.pageIndex, 10).subscribe(x => {
+      this.listContract = x;
+      if (this.semesterFilter != undefined) {
+        this.listContract.items = this.listContract.items.filter(x => x.semesterId == this.semesterFilter)
+      }
+      if (this.roomFilter != undefined) {
+        this.listContract.items = this.listContract.items.filter(x => x.roomId == this.roomFilter)
+      }
+      if (this.areaFilter != undefined) {
+        this.listContract.items = this.listContract.items.filter(x => x.areaId == this.areaFilter)
+      }
+      this.isSpinning = false
+    })
+  }
+  reset() {
+
   }
 
   deleteContract(id: number) {
@@ -114,20 +133,17 @@ export class CompletedContractComponent implements OnInit {
   }
 
   //filter 
-  getRoomSelect()
-  {
+  getRoomSelect() {
     this.roomService.getListSelect().subscribe(x => {
       this.roomSelect = x;
     })
   }
-  getAreaSelect()
-  {
+  getAreaSelect() {
     this.areaService.getListSelect().subscribe(x => {
       this.areaSelect = x
     })
   }
-  getContractConfigSelect()
-  {
+  getContractConfigSelect() {
     this.configService.getListSelect().subscribe(x => {
       this.contractConfigSelect = x
     })
