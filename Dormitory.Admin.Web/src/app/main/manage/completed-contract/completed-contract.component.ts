@@ -23,9 +23,9 @@ export class CompletedContractComponent implements OnInit {
   selectedRoom: any;
   selectedContract: number = 0;
 
-  semesterFilter!: number
-  areaFilter!: number
-  roomFilter!: number
+  semesterFilter: number = 0
+  areaFilter: number = 0
+  roomFilter: number = 0
   statusFilter: number = -1
   typeFilter: number = -1;
 
@@ -65,20 +65,59 @@ export class CompletedContractComponent implements OnInit {
   onFilter() {
     this.contractService.getList("", this.pageIndex, 10).subscribe(x => {
       this.listContract = x;
-      if (this.semesterFilter != undefined) {
+      if (this.semesterFilter != 0) {
+        debugger
         this.listContract.items = this.listContract.items.filter(x => x.semesterId == this.semesterFilter)
       }
-      if (this.roomFilter != undefined) {
+      if (this.roomFilter != 0) {
         this.listContract.items = this.listContract.items.filter(x => x.roomId == this.roomFilter)
       }
-      if (this.areaFilter != undefined) {
+      if (this.areaFilter != 0) {
         this.listContract.items = this.listContract.items.filter(x => x.areaId == this.areaFilter)
+      }
+      if (this.typeFilter != -1) {
+        this.listContract.items = this.listContract.items.filter(x => this.getContractType(x) == this.typeFilter)
+      }
+      if (this.statusFilter != -1) {
+        this.listContract.items = this.listContract.items.filter(x => this.getContractStatus(x) == this.statusFilter)
       }
       this.isSpinning = false
     })
   }
-  reset() {
 
+  getContractType(data: ContractDto) {
+    if (data.isDelete == false && !data.isExtendContract && !data.isSummerContract) {
+      return 0
+    }
+    if (data.isDelete == false && data.isExtendContract && !data.isSummerContract) {
+      return 1
+    }
+    if (data.isDelete == false && !data.isExtendContract && data.isSummerContract) {
+      return 2
+    }
+    return -1
+  }
+
+  getContractStatus(data: ContractDto) {
+    if (!this.compareDate(data.toDate)) {
+      return 2
+    }
+    if (this.compareDate(data.toDate)) {
+      return 1
+    }
+    if (data.isDelete == true) {
+      return 0
+    }
+    return -1
+  }
+
+  reset() {
+    this.getListContract("", this.pageIndex, 10)
+    this.areaFilter = 0;
+    this.roomFilter = 0;
+    this.statusFilter = -1;
+    this.typeFilter = -1;
+    this.semesterFilter = 0;
   }
 
   deleteContract(id: number) {
