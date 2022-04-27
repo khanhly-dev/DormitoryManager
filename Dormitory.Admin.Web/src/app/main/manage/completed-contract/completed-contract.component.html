@@ -135,16 +135,17 @@
                 <td>{{ data.fromDate | date : "dd-MM-yyyy" }}</td>
                 <td>{{ data.toDate | date : "dd-MM-yyyy" }}</td>
 
-                <td *ngIf="data.isDelete == false && !data.isExtendContract && !data.isSummerContract"
+                <td *ngIf="!data.isExtendContract && !data.isSummerContract"
                     style="color: #efbf38;">Thường</td>
-                <td *ngIf="data.isDelete == false && data.isExtendContract && !data.isSummerContract"
+                <td *ngIf="data.isExtendContract && !data.isSummerContract"
                     style="color: #25da91;">Gia hạn</td>
-                <td *ngIf="data.isDelete == true" style="color: #c0c3c8;">Đã huỷ</td>
-                <td *ngIf="data.isDelete == false && !data.isExtendContract && data.isSummerContract"
+             
+                <td *ngIf="!data.isExtendContract && data.isSummerContract"
                     style="color: #11bde7;">Kỳ hè</td>
 
-                <td *ngIf="!compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
-                <td *ngIf="compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>
+                <td *ngIf="data.isDelete == false && !compareDate(data.toDate)" style="color: #f40404;">Hết hạn</td>
+                <td *ngIf="data.isDelete == false && compareDate(data.toDate)" style="color: #25da91;">Còn hạn</td>
+                <td *ngIf="data.isDelete == true" style="color: #c0c3c8;">Đã huỷ</td>
                 <td>
                     <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
                         <i nz-icon nzType="bars" nzTheme="outline"></i>

@@ -1,6 +1,15 @@
 <nz-layout style="height: 100%;">
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed">
-        <div class="logo"></div>
+        <div class="logo">
+            <div nz-row >
+                <div nz-col nzSpan="4" style="margin-top: 2%;">
+                    <img src="assets/logo.png" alt="" style="width: 25px">
+                </div>
+                <div nz-col nzSpan="20" *ngIf="!isCollapsed" style="margin-top: 3%;">
+                    <b style="color:white;">Quản lý ký túc xá</b>
+                </div>
+            </div>
+        </div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
             <li nz-menu-item routerLink="dashboard">
                 <i nz-icon nzType="bar-chart" nzTheme="outline"></i>

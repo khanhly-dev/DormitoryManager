@@ -78,7 +78,7 @@ export class CompletedContractComponent implements OnInit {
     })
   }
   reset() {
-
+    this.getListContract("", this.pageIndex, 10)
   }
 
   deleteContract(id: number) {
