@@ -89,7 +89,8 @@ export interface ContractDto {
     isExtendContract: number;
     isDelete: boolean;
     semesterId : number;
-    areaId: number
+    areaId: number;
+    isSummerContract: boolean
 }
 export interface ContractFeeStatusDto {
     id: number;

@@ -22,7 +22,8 @@
                     <div class="inner-box">
                         <label for="">Kỳ</label><br>
                         <nz-select [(ngModel)]="semesterFilter" style="width: 100%;">
-                            <nz-option *ngFor="let item of contractConfigSelect" [nzValue]="item.toDate" [nzLabel]="item.name"></nz-option>
+                            <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
+                            <nz-option *ngFor="let item of contractConfigSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
                         </nz-select>
                     </div>
                 </div>
@@ -30,6 +31,7 @@
                     <div class="inner-box">
                         <label for="">Khu</label><br>
                         <nz-select [(ngModel)]="areaFilter" style="width: 100%;">
+                            <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
                             <nz-option *ngFor="let item of areaSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
                         </nz-select>
                     </div>
@@ -38,6 +40,7 @@
                     <div class="inner-box">
                         <label for="">Phòng</label><br>
                         <nz-select [(ngModel)]="roomFilter" style="width: 100%;">
+                            <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
                             <nz-option *ngFor="let item of roomSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
                         </nz-select>
                     </div>
