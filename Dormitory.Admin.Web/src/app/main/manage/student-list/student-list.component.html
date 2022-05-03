@@ -31,6 +31,35 @@
         </ng-container>
     </nz-modal>
 
+    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Tạo tài khoản" (nzOnCancel)="handleCancel1()"
+        (nzOnOk)="handleOk1()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Tên tài khoản</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên tài khoản">
+                        <input nz-input formControlName="userName" />
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Mật khẩu</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
+                        <input nz-input formControlName="password" type="password"/>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Email</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <input nz-input formControlName="email" />
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </ng-container>
+    </nz-modal>
+
     <br>
     <nz-table #basicTable [nzData]="listStudent.items" *ngIf="listStudent != undefined" [nzFrontPagination]="false">
         <thead>
@@ -67,6 +96,9 @@
                     <td>
                         <button nz-button nzSize="small" nzType="primary" (click)="showModal(data)">
                             Chi tiết
+                        </button> &nbsp;
+                        <button nz-button nzSize="small" nzType="primary" (click)="showModal1(data)">
+                            Tạo TK
                         </button>
                     </td>
 

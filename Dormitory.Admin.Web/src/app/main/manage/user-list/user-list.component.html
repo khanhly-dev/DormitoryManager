@@ -1,0 +1,137 @@
+<div>
+    <h4>Danh sách cán bộ</h4>
+    <br>
+</div>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+    <div nz-row>
+        <div nz-col nzSpan="8">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Nhập từ khoá" #inputSearch />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"
+                        (click)="getListStudent(inputSearch.value, 1, 10)"></i></button>
+            </ng-template>
+        </div>
+        <div nz-col nzSpan="16">
+            <button nz-button [nzType]="'primary'" (click)="showModal()" style="float: right;">
+                <span>Thêm mới</span>
+            </button>
+        </div>
+    </div>
+
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm mới cán bộ" (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <div style="padding:10px;">
+                <form nz-form [formGroup]="createForm" (ngSubmit)="submitForm()">
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="7" nzRequired>Tên</nz-form-label>
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên tài khoản">
+                            <input nz-input formControlName="name" />
+                        </nz-form-control>
+                    </nz-form-item>
+    
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="7" nzRequired>Số điện thoại</nz-form-label>
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
+                            <input nz-input formControlName="phone" />
+                        </nz-form-control>
+                    </nz-form-item>
+    
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="7">Ngày sinh</nz-form-label>
+                        <nz-form-control [nzSpan]="12">
+                            <input class="form-control" formControlName="dob" type="date" style="width : 100%">
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="7" nzRequired>Chức vụ</nz-form-label>
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
+                            <input nz-input formControlName="position" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="7" nzRequired>Địa chỉ</nz-form-label>
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
+                            <input nz-input formControlName="adress" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </form>
+            </div>
+        </ng-container>
+    </nz-modal>
+
+    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Tạo tài khoản" (nzOnCancel)="handleCancel1()"
+        (nzOnOk)="handleOk1()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Tên tài khoản</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên tài khoản">
+                        <input nz-input formControlName="userName" />
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Mật khẩu</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
+                        <input nz-input formControlName="password" type="password"/>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Email</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <input nz-input formControlName="email" />
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </ng-container>
+    </nz-modal>
+
+    <br>
+    <nz-table #basicTable [nzData]="listUser.items" *ngIf="listUser != undefined" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th style="background-color: #002140; color: white;">STT</th>
+                <th style="background-color: #002140; color: white;">Tên cán bộ</th>
+                <th style="background-color: #002140; color: white;">SĐT</th>
+                <th style="background-color: #002140; color: white;">Ngày sinh</th>
+                <th style="background-color: #002140; color: white;">Chức vụ</th>
+                <th style="background-color: #002140; color: white;">Địa chỉ</th>
+                <th style="background-color: #002140; color: white;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let data of basicTable.data">
+                <tr>
+                    <td>{{ listUser.items.indexOf(data) + 1 }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.dob | date : "dd-MM-yyyy" }}</td>
+                    <td>{{ data.position }}</td>
+                    <td>{{ data.adress }}</td>
+                    <td>
+                        
+                        <button nz-button nzSize="small" nzType="primary" (click)="showModal1(data)">
+                            Tạo TK
+                        </button>&nbsp;
+                        <button nz-button nzSize="small" nzType="primary" nzDanger>
+                            Xoá
+                        </button> 
+                    </td>
+
+                </tr>
+            </ng-container>
+
+        </tbody>
+    </nz-table>
+    <nz-pagination *ngIf="listUser != undefined" [(nzPageIndex)]="pageIndex" [nzTotal]="listUser.totalRecords"
+        [nzPageSize]="10" (nzPageIndexChange)="getListUSer('', pageIndex, 10)">
+    </nz-pagination>
+</nz-spin>

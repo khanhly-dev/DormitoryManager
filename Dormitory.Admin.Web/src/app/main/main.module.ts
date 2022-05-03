@@ -45,7 +45,8 @@ import { StudentListComponent } from './manage/student-list/student-list.compone
 import { DisciplineComponent } from './manage/discipline/discipline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 //mdbootrap
-import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
+import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { UserListComponent } from './manage/user-list/user-list.component'
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
     StudentListComponent,
     DisciplineComponent,
     DashboardComponent,
+    UserListComponent,
   ],
   imports: [
     CommonModule,

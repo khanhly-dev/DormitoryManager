@@ -27,4 +27,24 @@ export class LoginServiceProxy {
 
         return this.http.post<loginInfo>(url_, content_);
     }
+
+    register(data: any) :Observable<any>{
+        let url_ = this.baseUrl + "/api/core/register";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (data.userName !== null && data.userName !== undefined)
+            content_.append("userName", data.userName);
+        if (data.password !== null && data.password !== undefined)
+            content_.append("password", data.password);
+        if (data.tenant !== null && data.tenant !== undefined)
+            content_.append("tenant", data.tenant);
+        if (data.email !== null && data.email !== undefined)
+            content_.append("email", data.email);
+        if (data.userInfoId !== null && data.userInfoId !== undefined)
+            content_.append("userInfoId", data.userInfoId);
+      
+
+        return this.http.post<any>(url_, content_);
+    }
 }

@@ -40,7 +40,6 @@ namespace Dormitory.Core.Application.Catalog.CoreRepository
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim("TenantId", tenantId.ToString()),
                 };
 

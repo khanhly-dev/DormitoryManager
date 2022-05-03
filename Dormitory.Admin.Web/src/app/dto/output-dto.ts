@@ -246,4 +246,14 @@ export interface ContractConfigSelect {
     toDate: Date
 }
 
+export interface UserInfoDto {
+    id: number;
+    name: string;
+    phone: string;
+    dob: Date;
+    position: string;
+    adress: string
+}
+
+
 

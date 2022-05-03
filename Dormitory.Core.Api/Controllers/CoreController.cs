@@ -68,7 +68,7 @@ namespace Dormitory.Core.Api.Controllers
             {
                 status = "error";
             }
-            return Ok(status);
+            return Ok(new { status });
 
         }
     }
