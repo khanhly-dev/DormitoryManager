@@ -29,10 +29,22 @@ namespace Dormitory.Admin.Api.Controllers
             var listUser = await _userRepo.GetListUser(request);
             return Ok(listUser);
         }
+        [HttpGet("get-by-user")]
+        public async Task<IActionResult> GetAccountByUser(int userInfoId, int tenant)
+        {
+            var listUser = await _userRepo.GetUserAccountByInfo(userInfoId, tenant);
+            return Ok(listUser);
+        }
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int id)
         {
             var listUser = await _userRepo.DeleteUser(id);
+            return Ok(listUser);
+        }
+        [HttpDelete("delete-account")]
+        public async Task<IActionResult> DeleteAccount(int id)
+        {
+            var listUser = await _userRepo.DeleteAccount(id);
             return Ok(listUser);
         }
         [HttpPost("create-or-update")]

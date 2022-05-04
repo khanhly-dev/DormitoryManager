@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StudentDto } from 'src/app/dto/output-dto';
+import { StudentDto, UserDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { StudentServiceProxy } from 'src/app/service/admin-service/student-service-proxy';
+import { UserServiceProxy } from 'src/app/service/admin-service/user-service-proxy';
 import { LoginServiceProxy } from 'src/app/service/core-service/core-service-proxy';
 
 @Component({
@@ -19,8 +20,9 @@ export class StudentListComponent implements OnInit {
   isSpinning = false;
   currentStudent!: StudentDto;
   validateForm!: FormGroup;
+  currentAccount!: UserDto
 
-  constructor(private studentService: StudentServiceProxy, private fb: FormBuilder, private coreService : LoginServiceProxy) {
+  constructor(private userService: UserServiceProxy, private studentService: StudentServiceProxy, private fb: FormBuilder, private coreService : LoginServiceProxy) {
     this.validateForm = this.fb.group({
       id: [],
       userName: ['', [Validators.required]],
@@ -33,6 +35,23 @@ export class StudentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListStudent("", this.pageIndex, 10)
+  }
+
+  deleteAccount(id: number)
+  {
+    this.userService.deleteAccount(id).subscribe(x => {
+      this.getListStudent("", this.pageIndex, 10)
+      alert(`Xoá thành công`)
+    })
+
+    this.isVisible1 = false
+  }
+
+  getAccountByUser(userInfoId : number)
+  {
+    this.userService.getAccountByUser(userInfoId,0).subscribe(x => {
+      this.currentAccount = x;
+    })
   }
 
   getListStudent(keyWord: string, pageIndex: number, pageSize: number) {
@@ -57,6 +76,7 @@ export class StudentListComponent implements OnInit {
 
   showModal1(data: StudentDto): void {
     this.currentStudent = data
+    this.getAccountByUser(data.id)
     this.isVisible1 = true;
   }
 

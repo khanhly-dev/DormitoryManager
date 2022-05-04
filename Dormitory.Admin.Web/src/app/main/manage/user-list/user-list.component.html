@@ -20,35 +20,44 @@
         </div>
     </div>
 
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm mới cán bộ" (nzOnCancel)="handleCancel()"
-        (nzOnOk)="handleOk()">
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm mới cán bộ" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
         <ng-container *nzModalContent>
             <div style="padding:10px;">
                 <form nz-form [formGroup]="createForm" (ngSubmit)="submitForm()">
 
                     <nz-form-item>
                         <nz-form-label [nzSpan]="7" nzRequired>Tên</nz-form-label>
-                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên tài khoản">
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập tên ">
                             <input nz-input formControlName="name" />
                         </nz-form-control>
                     </nz-form-item>
-    
+
                     <nz-form-item>
                         <nz-form-label [nzSpan]="7" nzRequired>Số điện thoại</nz-form-label>
-                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập sđt">
                             <input nz-input formControlName="phone" />
                         </nz-form-control>
                     </nz-form-item>
-    
+
                     <nz-form-item>
-                        <nz-form-label [nzSpan]="7">Ngày sinh</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
+                        <nz-form-label [nzSpan]="7" nzRequired>Ngày sinh</nz-form-label>
+                        <nz-form-control [nzSpan]="12" nzErrorTip="Hãy chọn ngày sinh">
                             <input class="form-control" formControlName="dob" type="date" style="width : 100%">
                         </nz-form-control>
                     </nz-form-item>
 
                     <nz-form-item>
-                        <nz-form-label [nzSpan]="7" nzRequired>Chức vụ</nz-form-label>
+                        <nz-form-label [nzSpan]="7" nzRequired>Giới tính</nz-form-label>
+                        <nz-form-control [nzSpan]="12">
+                            <nz-select formControlName="gender" nzErrorTip="Hãy chọn giới tính">
+                                <nz-option [nzValue]="1" nzLabel="Nam"></nz-option>
+                                <nz-option [nzValue]="0" nzLabel="Nữ"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="7" nzRequired>Mô tả công việc</nz-form-label>
                         <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
                             <input nz-input formControlName="position" />
                         </nz-form-control>
@@ -65,10 +74,10 @@
         </ng-container>
     </nz-modal>
 
-    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Tạo tài khoản" (nzOnCancel)="handleCancel1()"
-        (nzOnOk)="handleOk1()">
+    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Tạo tài khoản" (nzOnCancel)="handleCancel1()" (nzOnOk)="handleOk1()">
         <ng-container *nzModalContent>
-            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()"
+                *ngIf="currentAccount == null || currentAccount == undefined">
 
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Tên tài khoản</nz-form-label>
@@ -80,7 +89,7 @@
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Mật khẩu</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
-                        <input nz-input formControlName="password" type="password"/>
+                        <input nz-input formControlName="password" type="password" />
                     </nz-form-control>
                 </nz-form-item>
 
@@ -91,6 +100,13 @@
                     </nz-form-control>
                 </nz-form-item>
             </form>
+            <div *ngIf="currentAccount != null || currentAccount != undefined">
+                <h5>Tài khoản hiện tại:</h5> &nbsp;
+                <b>{{currentAccount.userName}}</b>
+                <button nz-button nzSize="small" nzType="primary" nzDanger style="float: right;" (click)="deleteAccount(currentAccount.id)">
+                    Xoá
+                </button>
+            </div>
         </ng-container>
     </nz-modal>
 
@@ -102,7 +118,8 @@
                 <th style="background-color: #002140; color: white;">Tên cán bộ</th>
                 <th style="background-color: #002140; color: white;">SĐT</th>
                 <th style="background-color: #002140; color: white;">Ngày sinh</th>
-                <th style="background-color: #002140; color: white;">Chức vụ</th>
+                <th style="background-color: #002140; color: white;">Giới tính</th>
+                <th style="background-color: #002140; color: white;">Mô tả công việc</th>
                 <th style="background-color: #002140; color: white;">Địa chỉ</th>
                 <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
@@ -114,16 +131,18 @@
                     <td>{{ data.name }}</td>
                     <td>{{ data.phone }}</td>
                     <td>{{ data.dob | date : "dd-MM-yyyy" }}</td>
+                    <td *ngIf="data.gender == 1">Nam</td>
+                    <td *ngIf="data.gender == 0">Nữ</td>
                     <td>{{ data.position }}</td>
                     <td>{{ data.adress }}</td>
                     <td>
-                        
+
                         <button nz-button nzSize="small" nzType="primary" (click)="showModal1(data)">
                             Tạo TK
                         </button>&nbsp;
-                        <button nz-button nzSize="small" nzType="primary" nzDanger>
+                        <button nz-button nzSize="small" nzType="primary" nzDanger (click)="deleteUser(data.id)">
                             Xoá
-                        </button> 
+                        </button>
                     </td>
 
                 </tr>

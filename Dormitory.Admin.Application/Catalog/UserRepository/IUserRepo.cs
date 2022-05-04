@@ -15,5 +15,7 @@ namespace Dormitory.Admin.Application.Catalog.UserRepository
         Task<PageResult<UserInfoEntity>> GetListUser(PageRequestBase request);
         Task<int> CreateOrUpdateUser(UserInfoEntity request);
         Task<int> DeleteUser(int id);
+        Task<int> DeleteAccount(int id);
+        Task<UserDto> GetUserAccountByInfo(int userInfoId, int tenant);
     }
 }

@@ -248,11 +248,18 @@ export interface ContractConfigSelect {
 
 export interface UserInfoDto {
     id: number;
+    gender: number;
     name: string;
     phone: string;
     dob: Date;
     position: string;
     adress: string
+}
+
+export interface UserDto {
+    id: number;
+    userName: string
+    password: string
 }
 
 

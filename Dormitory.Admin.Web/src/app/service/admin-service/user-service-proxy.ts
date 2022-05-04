@@ -3,7 +3,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PageResultBase } from 'src/app/dto/page-result-base';
-import { BaseSelectDto, DisciplineDto, StudentDto, UserInfoDto } from 'src/app/dto/output-dto';
+import { BaseSelectDto, DisciplineDto, StudentDto, UserDto, UserInfoDto } from 'src/app/dto/output-dto';
 
 @Injectable({ providedIn: 'root' })
 export class UserServiceProxy {
@@ -24,6 +24,12 @@ export class UserServiceProxy {
         return this.http.get<PageResultBase<UserInfoDto>>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
 
+    getAccountByUser(userInfoId : number, tenant: number): Observable<UserDto> {
+        let url = this.baseUrl + `/api/user/get-by-user?userInfoId=${userInfoId}&tenant=${tenant}`;
+        url = url.replace(/[?&]$/, "");
+        return this.http.get<UserDto>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
+
     addOrUpdateUser(data: any): Observable<any> {
         let url = this.baseUrl + `/api/user/create-or-update`;
         url = url.replace(/[?&]$/, "");
@@ -41,6 +47,9 @@ export class UserServiceProxy {
             content.append("position", data.position);
         if (data.adress !== null && data.adress !== undefined)
             content.append("adress", data.adress);
+        if (data.gender !== null && data.gender !== undefined)
+            content.append("gender", data.gender);
+
 
         return this.http.post<any>(url, content, { headers: this.headers, observe: 'body', responseType: 'json' } );
     }
@@ -50,5 +59,10 @@ export class UserServiceProxy {
 
         return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
     }
- 
+    deleteAccount(id: number): Observable<any> {
+        let url = this.baseUrl + `/api/user/delete-account?id=${id}`;
+        url = url.replace(/[?&]$/, "");
+
+        return this.http.delete<any>(url, { headers: this.headers, observe: 'body', responseType: 'json' });
+    }
 }

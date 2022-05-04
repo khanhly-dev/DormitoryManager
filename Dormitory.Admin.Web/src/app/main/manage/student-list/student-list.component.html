@@ -31,10 +31,10 @@
         </ng-container>
     </nz-modal>
 
-    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Tạo tài khoản" (nzOnCancel)="handleCancel1()"
-        (nzOnOk)="handleOk1()">
+    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Tạo tài khoản" (nzOnCancel)="handleCancel1()" (nzOnOk)="handleOk1()">
         <ng-container *nzModalContent>
-            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()"
+                *ngIf="currentAccount == null || currentAccount == undefined">
 
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Tên tài khoản</nz-form-label>
@@ -46,7 +46,7 @@
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Mật khẩu</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzErrorTip="Hãy nhập mật khẩu">
-                        <input nz-input formControlName="password" type="password"/>
+                        <input nz-input formControlName="password" type="password" />
                     </nz-form-control>
                 </nz-form-item>
 
@@ -57,6 +57,14 @@
                     </nz-form-control>
                 </nz-form-item>
             </form>
+            <div *ngIf="currentAccount != null || currentAccount != undefined">
+                <h5>Tài khoản hiện tại:</h5> &nbsp;
+                <b>{{currentAccount.userName}}</b>
+                <button nz-button nzSize="small" nzType="primary" nzDanger style="float: right;"
+                    (click)="deleteAccount(currentAccount.id)">
+                    Xoá
+                </button>
+            </div>
         </ng-container>
     </nz-modal>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserInfoDto } from 'src/app/dto/output-dto';
+import { UserDto, UserInfoDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { UserServiceProxy } from 'src/app/service/admin-service/user-service-proxy';
 import { LoginServiceProxy } from 'src/app/service/core-service/core-service-proxy';
@@ -20,6 +20,7 @@ export class UserListComponent implements OnInit {
   currentUser!: UserInfoDto;
   validateForm!: FormGroup;
   createForm!: FormGroup;
+  currentAccount!: UserDto
 
   constructor(private userService: UserServiceProxy, private fb: FormBuilder, private coreService : LoginServiceProxy) {
     this.validateForm = this.fb.group({
@@ -38,6 +39,7 @@ export class UserListComponent implements OnInit {
       dob: ['', [Validators.required]],
       position: ['', [Validators.required]],
       adress: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
     });
   }
 
@@ -52,6 +54,31 @@ export class UserListComponent implements OnInit {
       this.isSpinning = false
     })
   }
+
+  deleteUser(id: number)
+  {
+    this.userService.deleteUser(id).subscribe(x => {
+      this.getListUser("", this.pageIndex, 10)
+      alert(`Xoá thành công`)
+    })
+  }
+
+  deleteAccount(id: number)
+  {
+    this.userService.deleteAccount(id).subscribe(x => {
+      this.getListUser("", this.pageIndex, 10)
+      alert(`Xoá thành công`)
+    })
+
+    this.isVisible1 = false
+  }
+
+  getAccountByUser(userInfoId : number)
+  {
+    this.userService.getAccountByUser(userInfoId,1).subscribe(x => {
+      this.currentAccount = x;
+    })
+  }
   showModal(): void {
     this.isVisible = true;
   }
@@ -60,12 +87,7 @@ export class UserListComponent implements OnInit {
     this.isVisible = false;
     this.userService.addOrUpdateUser(this.createForm.value).subscribe(x => {
       this.getListUser("", this.pageIndex, 10)
-      if (x.status == 'success') {
-        alert(`Thêm cán bộ thành công`)
-      }
-      else {
-        alert("Thêm cán bộ không thành công")
-      }
+      alert(`Thêm cán bộ thành công`)
     })
   }
 
@@ -75,6 +97,7 @@ export class UserListComponent implements OnInit {
 
   showModal1(data: UserInfoDto): void {
     this.currentUser = data
+    this.getAccountByUser(data.id)
     this.isVisible1 = true;
   }
 
@@ -91,12 +114,7 @@ export class UserListComponent implements OnInit {
     this.validateForm.controls['tenant'].setValue(1);
     this.validateForm.controls['userInfoId'].setValue(this.currentUser.id);
     this.coreService.register(this.validateForm.value).subscribe(x => {
-      if (x.status == 'success') {
-        alert(`Tạo tài khoản thành công`)
-      }
-      else {
-        alert("Tạo tài khoản không thành công")
-      }
+      alert(`Tạo tài khoản thành công`)
     })
   }
 }

@@ -32,6 +32,16 @@ namespace Dormitory.Admin.Application.Catalog.UserRepository
             return await _adminDbContext.SaveChangesAsync();
         }
 
+        public async Task<int> DeleteAccount(int id)
+        {
+            var userAccount = await _adminDbContext.UserAccountEntities.FindAsync(id);
+            if (userAccount != null)
+            {
+                _adminDbContext.UserAccountEntities.Remove(userAccount);
+            }
+            return await _adminDbContext.SaveChangesAsync();
+        }
+
         public async Task<int> DeleteUser(int id)
         {
             var userInfo = await _adminDbContext.UserInfoEntities.FindAsync(id);
@@ -39,7 +49,7 @@ namespace Dormitory.Admin.Application.Catalog.UserRepository
             {
                 _adminDbContext.Remove(userInfo);
             }
-            var userAccount = await _adminDbContext.UserAccountEntities.FirstOrDefaultAsync(x => x.UserInfoId == id);
+            var userAccount = await _adminDbContext.UserAccountEntities.FirstOrDefaultAsync(x => x.UserInfoId == id && x.Tenant == 1);
             if(userAccount != null)
             {
                 _adminDbContext.UserAccountEntities.Remove(userAccount);
@@ -83,6 +93,17 @@ namespace Dormitory.Admin.Application.Catalog.UserRepository
                 Items = data
             };
             return pageResult;
+        }
+
+        public async Task<UserDto> GetUserAccountByInfo(int userInfoId, int tenant)
+        {
+            var userAccount = await _adminDbContext.UserAccountEntities.Where(x => x.UserInfoId == userInfoId && x.Tenant == tenant).Select(z => new UserDto
+            {
+                Id = z.Id,
+                UserName = z.UserName,
+                Password = ""
+            }).FirstOrDefaultAsync();
+            return userAccount;
         }
     }
 }
