@@ -485,6 +485,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     StudentConfirmStatus = x.a.StudentConfirmStatus,
                     RoomId = x.a.RoomId,
                     RoomName = x.r != null ? x.r.Name : null,
+                    RoomPrice = x.r != null ? x.r.Price : null,
                     AreaName = x.e != null ? x.e.Name : null,
                     Point = x.s.Point,
                     AcademicYear = x.s.AcademicYear,

@@ -50,6 +50,7 @@
                 <th style="background-color: #002140; color: white;">Giá phòng mong muốn</th>
                 <th style="background-color: #002140; color: white;">Khu ở</th>
                 <th style="background-color: #002140; color: white;">Phòng ở</th>
+                <th style="background-color: #002140; color: white;">Giá phòng</th>
                 <th style="background-color: #002140; color: white;">Trạng thái SV xác nhận</th>
                 <th style="background-color: #002140; color: white;">Thao tác</th>
             </tr>
@@ -66,6 +67,7 @@
                 <td>{{ data.desiredPrice | currency : "VND"}}</td>
                 <td>{{ data.areaName }}</td>
                 <td>{{ data.roomName }}</td>
+                <td>{{ data.roomPrice | currency : "VND"}}</td>
                 <td *ngIf="data.studentConfirmStatus == 0" style="color: #efbf38;">Chờ duyệt</td>
                 <td *ngIf="data.studentConfirmStatus == 1" style="color: #f40404;">Từ chối</td>
                 <td *ngIf="data.studentConfirmStatus == 2" style="color: #25da91;">Chấp nhận</td>

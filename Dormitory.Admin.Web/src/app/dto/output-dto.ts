@@ -130,6 +130,7 @@ export interface ContractPendingDto {
     roomName: number;
     areaName: number;
     academicYear: string
+    roomPrice: number
 }
 
 export interface RoomSelectDto {
