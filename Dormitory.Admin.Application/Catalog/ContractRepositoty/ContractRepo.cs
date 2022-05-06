@@ -209,7 +209,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
 
                 if (nonConfirmMaleContract.Count > 0 && genderExamine == true)
                 {
-                    foreach (var childItem in nonConfirmMaleContract.Take(item.EmptySlot ?? 0).ToList())
+                    foreach (var childItem in nonConfirmMaleContract.Take(item.AvaiableSlot ?? 0).ToList())
                     {
                         childItem.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusApprove;
                         childItem.ToDate = contractTimeConfig.ToDate;
@@ -219,7 +219,7 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                 }   
                 if(nonConfirmFemaleContract.Count > 0 && genderExamine == false)
                 {
-                    foreach (var childItem in nonConfirmFemaleContract.Take(item.EmptySlot ?? 0).ToList())
+                    foreach (var childItem in nonConfirmFemaleContract.Take(item.AvaiableSlot ?? 0).ToList())
                     {
                         childItem.AdminConfirmStatus = DataConfigConstant.contractConfirmStatusApprove;
                         childItem.ToDate = contractTimeConfig.ToDate;
