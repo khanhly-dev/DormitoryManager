@@ -531,14 +531,25 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     .OrderBy(x => x.AvaiableSlot)
                     .FirstOrDefaultAsync();
 
-                //nếu không còn phòng trống thì bỏ điều kiện giá mong muốn
                 if(emptyRoom == null)
-                {
+				{
                     emptyRoom = await _dbContext.RoomEntities
-                       .Where(x => x.RoomGender == student.Gender && x.AvaiableSlot > 0)
-                       .OrderBy(x => x.AvaiableSlot)
-                       .FirstOrDefaultAsync();
-                }    
+                        .Where(x => x.RoomGender == null && x.Price == contract.DesiredPrice && x.AvaiableSlot > 0)
+                        .OrderBy(x => x.AvaiableSlot)
+                        .FirstOrDefaultAsync();
+
+                    if (emptyRoom == null)
+                    {
+                        //nếu không còn phòng trống thì bỏ điều kiện giá mong muốn
+                        if (emptyRoom == null)
+                        {
+                            emptyRoom = await _dbContext.RoomEntities
+                               .Where(x => x.RoomGender == student.Gender && x.AvaiableSlot > 0)
+                               .OrderBy(x => x.AvaiableSlot)
+                               .FirstOrDefaultAsync();
+                        }
+                    }
+                }
             }   
 
             if(emptyRoom != null)
@@ -549,6 +560,8 @@ namespace Dormitory.Admin.Application.Catalog.ContractRepositoty
                     contract.DesiredPrice = null;
                 }
                 emptyRoom.AvaiableSlot -= 1;
+                emptyRoom.RoomGender = student.Gender;
+                emptyRoom.RoomAcedemic = student.AcademicYear;
                 return await _dbContext.SaveChangesAsync();
             }
             #endregion
