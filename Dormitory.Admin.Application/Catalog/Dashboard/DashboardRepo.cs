@@ -41,7 +41,7 @@ namespace Dormitory.Admin.Application.Catalog.Dashboard
 
         public async Task<BaseStatDto> GetBaseStat()
         {
-            var totalSignUp = (await _dbContext.ContractEntities.Where(x => x.AdminConfirmStatus == null).ToListAsync()).Count;
+            var totalSignUp = (await _dbContext.ContractEntities.Where(x => x.AdminConfirmStatus == null || x.AdminConfirmStatus == DataConfigConstant.contractConfirmStatusPending).ToListAsync()).Count;
             var totalEmptySlot = (await _dbContext.RoomEntities.ToListAsync()).Sum(x => x.EmptySlot) ?? 0;
 
 
