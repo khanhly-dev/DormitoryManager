@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ContractDto, ContractPendingDto } from 'src/app/dto/output-dto';
+import { BaseSelectDto, ContractDto, ContractPendingDto } from 'src/app/dto/output-dto';
 import { PageResultBase } from 'src/app/dto/page-result-base';
 import { ContracServiceProxy } from 'src/app/service/admin-service/contract-service-proxy';
+import { RoomServiceProxy } from 'src/app/service/admin-service/room-service-proxy';
 
 @Component({
   selector: 'app-waiting-room',
@@ -16,15 +17,34 @@ export class WaitingRoomComponent implements OnInit {
   isVisible = false;
   isSpinning = false;
   statusFilter : number = -1;
+  roomFilter: number = 0
+  roomSelect: BaseSelectDto[] = []
 
-  constructor(private contractService: ContracServiceProxy) {
+  constructor(private contractService: ContracServiceProxy,  private roomService: RoomServiceProxy,) {
 
   }
 
   ngOnInit(): void {
     this.getListContractPending("", this.pageIndex, 10)
+    this.getRoomSelect();
   }
-
+  getRoomSelect() {
+    this.roomService.getListSelect().subscribe(x => {
+      this.roomSelect = x;
+    })
+  }
+  onRoomFilter()
+  {
+    this.isSpinning = true
+    this.contractService.getListAdminConfirmContractPending("", this.pageIndex, 10).subscribe(x => {
+      this.listContractPending = x;
+      if(this.roomFilter != 0)
+      {
+        this.listContractPending.items = this.listContractPending.items.filter(x => x.roomId == this.roomFilter)
+      }
+      this.isSpinning = false
+    })
+  }
   changeStatusFilter()
   {
     this.isSpinning = true;

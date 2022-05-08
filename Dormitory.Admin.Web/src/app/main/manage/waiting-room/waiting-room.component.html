@@ -14,16 +14,23 @@
                         (click)="getListContractPending(inputSearch.value, 1, 10)"></i></button>
             </ng-template>
         </div>
-        <div nz-col nzSpan="10">
-            <label for="">Trạng thái sv duyệt</label><br>
-            <nz-select [(ngModel)]="statusFilter" style="width: 150px;" (ngModelChange)="changeStatusFilter()">
+        <div nz-col nzSpan="3">
+            <label for="">Trạng thái SV duyệt</label><br>
+            <nz-select [(ngModel)]="statusFilter" style="width: 100%;" (ngModelChange)="changeStatusFilter()">
                 <nz-option [nzValue]="-1" nzLabel="Tất cả"></nz-option>
                 <nz-option [nzValue]="0" nzLabel="Chờ duyệt"></nz-option>
                 <nz-option [nzValue]="1" nzLabel="Từ chối"></nz-option>
                 <nz-option [nzValue]="2" nzLabel="Chấp nhận"></nz-option>
             </nz-select>
         </div>
-        <div nz-col nzSpan="6">
+        <div nz-col [nzSpan]="3" style="float: left;">
+            <label for="">Phòng</label><br>
+            <nz-select [(ngModel)]="roomFilter" style="width: 100%;" (ngModelChange)="onRoomFilter()">
+                <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
+                <nz-option *ngFor="let item of roomSelect" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+            </nz-select>
+        </div>
+        <div nz-col nzSpan="10">
             <label for="">&nbsp;</label><br>
             <button nz-button [nzType]="'primary'" style="float: right;" (click)="autoScheduleRoom()">
                 <span>Xếp phòng tự động</span>
@@ -33,7 +40,7 @@
     <br>
     <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
         <ng-container *nzModalContent>
-            
+
         </ng-container>
     </nz-modal>
 
